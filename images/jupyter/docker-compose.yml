@@ -1,0 +1,11 @@
+version: '3.4'
+services:
+  jupyter:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args: 
+        - CONTAINER_JUPYTER_PORT
+    image: jupyter
+    ports: 
+      - $HOST_JUPYTER_PORT:$CONTAINER_JUPYTER_PORT

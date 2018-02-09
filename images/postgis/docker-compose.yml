@@ -1,0 +1,12 @@
+version: '3.4'
+services:
+  postgis:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - CONTAINER_POSTGIS_PORT
+        - POSTGRES_PASSWORD
+    image: postgis
+    ports: 
+      - $HOST_POSTGIS_PORT:$CONTAINER_POSTGIS_PORT
