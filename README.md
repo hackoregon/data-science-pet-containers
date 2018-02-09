@@ -1,2 +1,2 @@
 # data-science-pet-containers
-Containers for data science
+Pet containers for data science
