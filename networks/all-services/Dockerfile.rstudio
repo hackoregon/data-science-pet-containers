@@ -12,7 +12,7 @@ RUN apt-get update \
 
 # add PostgreSQL client tools
 RUN mkdir -p /etc/apt/sources.list.d/
-COPY pgdg.list.rstudio /etc/apt/sources.list.d/
+COPY pgdg.list.rstudio /etc/apt/sources.list.d/pgdg.list
 RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
   && wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
   && apt-get update \
