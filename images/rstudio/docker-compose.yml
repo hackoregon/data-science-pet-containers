@@ -1,9 +1,0 @@
-version: '3.4'
-services:
-  rstudio:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: rstudio
-    ports:
-      - $HOST_RSTUDIO_PORT:8787
