@@ -1,10 +1,13 @@
-FROM intelpython/intelpython3_core
+FROM continuumio/miniconda3
 LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
 
-# need gnupg for PostgreSQL repo
+# add the MDB / ODBC tools
 RUN apt-get update \
   && apt-get install -qqy --no-install-recommends \
   gnupg \
+  mdbtools \
+  mdbtools-dev \
+  unixodbc-dev \
   && apt-get clean
 
 # add PostgreSQL client tools
@@ -19,15 +22,14 @@ RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-k
   && apt-get clean
 
 # add a non-privileged user
-RUN useradd -c "Hack Oregon" -s /bin/bash -U -m hacko
-RUN chown -R hacko:hacko /home/hacko
-WORKDIR /home/hacko
-USER hacko
+RUN useradd -s /bin/bash -U -m jupyter
+RUN chown -R jupyter:jupyter /home/jupyter
+WORKDIR /home/jupyter
+USER jupyter
+EXPOSE 8888
 
 # just add Jupyter, pandas and psycopg2 - let users install what they need!
 RUN conda create --yes --quiet -n jupyter python=3 jupyter pandas psycopg2
-ARG CONTAINER_JUPYTER_PORT
-EXPOSE $CONTAINER_JUPYTER_PORT
-RUN echo "source activate jupyter; jupyter notebook --no-browser --ip=0.0.0.0 --port=$CONTAINER_JUPYTER_PORT" \
-  > /home/hacko/start-notebook.bash
-CMD [ "/bin/bash", "-v", "/home/hacko/start-notebook.bash" ]
+RUN echo "source activate jupyter; jupyter notebook --no-browser --ip=0.0.0.0 --port=8888" \
+  > /home/jupyter/start-notebook.bash
+CMD [ "/bin/bash", "-v", "/home/jupyter/start-notebook.bash" ]
