@@ -4,8 +4,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      args: 
+      args:
         - CONTAINER_JUPYTER_PORT
     image: jupyter
-    ports: 
-      - $HOST_JUPYTER_PORT:$CONTAINER_JUPYTER_PORT
+    ports:
+      - $CONTAINER_JUPYTER_PORT:$CONTAINER_JUPYTER_PORT

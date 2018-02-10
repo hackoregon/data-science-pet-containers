@@ -24,8 +24,8 @@ RUN chown -R hacko:hacko /home/hacko
 WORKDIR /home/hacko
 USER hacko
 
-# just add Jupyter - let users install what they need!
-RUN conda create --yes --quiet -n jupyter python=3 jupyter
+# just add Jupyter, pandas and psycopg2 - let users install what they need!
+RUN conda create --yes --quiet -n jupyter python=3 jupyter pandas psycopg2
 ARG CONTAINER_JUPYTER_PORT
 EXPOSE $CONTAINER_JUPYTER_PORT
 RUN echo "source activate jupyter; jupyter notebook --no-browser --ip=0.0.0.0 --port=$CONTAINER_JUPYTER_PORT" \
