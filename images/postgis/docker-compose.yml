@@ -3,10 +3,21 @@ services:
   postgis:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.postgis
       args:
         - CONTAINER_POSTGRES_PORT
         - POSTGRES_PASSWORD
     image: postgis
     ports:
       - $HOST_POSTGRES_PORT:$CONTAINER_POSTGRES_PORT
+  pgadmin4:
+    build:
+      context: .
+      dockerfile: Dockerfile.pgadmin4
+    image: pgadmin4
+    ports:
+      - $HOST_PGADMIN_PORT:80
+    environment:
+      - PGADMIN_DEFAULT_EMAIL
+      - PGADMIN_DEFAULT_PASSWORD
+      - PGADMIN_ENABLE_TLS
