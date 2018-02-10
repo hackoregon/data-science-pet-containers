@@ -21,3 +21,19 @@ services:
       - PGADMIN_DEFAULT_EMAIL
       - PGADMIN_DEFAULT_PASSWORD
       - PGADMIN_ENABLE_TLS
+  rstudio:
+    build:
+      context: .
+      dockerfile: Dockerfile.rstudio
+    image: rstudio
+    ports:
+      - $HOST_RSTUDIO_PORT:8787
+  jupyter:
+    build:
+      context: .
+      dockerfile: Dockerfile.jupyter
+      args:
+        - CONTAINER_JUPYTER_PORT
+    image: jupyter
+    ports:
+      - $CONTAINER_JUPYTER_PORT:$CONTAINER_JUPYTER_PORT
