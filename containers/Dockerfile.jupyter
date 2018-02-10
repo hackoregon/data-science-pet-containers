@@ -8,7 +8,7 @@ RUN apt-get update \
   mdbtools \
   mdbtools-dev \
   unixodbc-dev \
-  vim-nox
+  vim-nox \
   && apt-get clean
 
 # add PostgreSQL client tools
