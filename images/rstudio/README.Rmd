@@ -10,7 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 1. Create a file named `.env` for your environment variables. This name appears in the top-level `.gitignore` file and thus will not be checked into Git!
 2. In `.env`, define the environment variables:
 
-    * `HOST_RSTUDIO_PORT`: the host port you want to use to connect to the PostgreSQL server
+    * `HOST_RSTUDIO_PORT`: the host port you want to use to browse to the RStudio server
 
     Example:
     

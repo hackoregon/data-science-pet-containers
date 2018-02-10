@@ -5,13 +5,11 @@ M. Edward (Ed) Borasky
 1.  Create a file named `.env` for your environment variables. This name appears in the top-level `.gitignore` file and thus will not be checked into Git!
 2.  In `.env`, define the environment variables:
 
-    -   `CONTAINER_JUPYTER_PORT`: the port you want the Jupyter notebook server to listen on in the container
-    -   `HOST_JUPYTER_PORT`: the host port you want to use to browse to the Jupyter notebook server
+    -   `CONTAINER_JUPYTER_PORT`: the port you want the Jupyter notebook server to listen on in the container. The host port will be the same, so make sure it's not in use elsewhere.
 
     Example:
 
-        CONTAINER_JUPYTER_PORT=8888
-        HOST_JUPYTER_PORT=8889
+        CONTAINER_JUPYTER_PORT=8889
 
 3.  Type `docker-compose up`. Don't run this in the background; you'll need to copy an authentication key from the terminal.
 
