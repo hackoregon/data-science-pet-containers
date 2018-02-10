@@ -5,8 +5,8 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        - CONTAINER_POSTGIS_PORT
+        - CONTAINER_POSTGRES_PORT
         - POSTGRES_PASSWORD
     image: postgis
-    ports: 
-      - $HOST_POSTGIS_PORT:$CONTAINER_POSTGIS_PORT
+    ports:
+      - $HOST_POSTGRES_PORT:$CONTAINER_POSTGRES_PORT
