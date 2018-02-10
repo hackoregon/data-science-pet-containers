@@ -5,5 +5,5 @@ services:
       context: .
       dockerfile: Dockerfile
     image: rstudio
-    ports: 
-      - $HOST_RSTUDIO_PORT:$CONTAINER_RSTUDIO_PORT
+    ports:
+      - $HOST_RSTUDIO_PORT:8787

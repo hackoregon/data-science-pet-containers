@@ -23,7 +23,6 @@ RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-k
 
 # install the R packages
 RUN R -e 'install.packages("Hmisc", quiet = TRUE)' \
-  && R -e 'install.packages("RPostgreSQL", quiet = TRUE)' \
   && R -e 'install.packages("RPostgres", quiet = TRUE)' \
   && R -e 'install.packages("RSQLite", quiet = TRUE)' \
   && R -e 'install.packages("odbc", quiet = TRUE)'
