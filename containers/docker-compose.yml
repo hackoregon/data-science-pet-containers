@@ -4,12 +4,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.postgis
-      args:
-        - CONTAINER_POSTGRES_PORT
-        - POSTGRES_PASSWORD
     image: postgis
     ports:
-      - $HOST_POSTGRES_PORT:$CONTAINER_POSTGRES_PORT
+      - $HOST_POSTGRES_PORT:5432
+    environment:
+      - POSTGRES_PASSWORD
   pgadmin4:
     build:
       context: .
@@ -32,8 +31,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.jupyter
-      args:
-        - CONTAINER_JUPYTER_PORT
     image: jupyter
     ports:
-      - $CONTAINER_JUPYTER_PORT:$CONTAINER_JUPYTER_PORT
+      - 8888:8888
