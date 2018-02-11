@@ -126,7 +126,8 @@ This service is based on the Anaconda, Inc. (formerly Continuum)
 `miniconda3` image: <https://hub.docker.com/r/continuumio/miniconda3/>.
 I’ve added a non-root user `jupyter` and created a Conda environment
 also named `jupyter` in its home directory. I’ve only put `jupyter`,
-`pandas` and `psycopg2` in the Conda environment for now.
+`pandas` and `psycopg2` in the Conda environment for now. The `vim-nox`
+editor is also available.
 
 By default the Jupyter notebook server starts when Docker brings up the
 service. Type `docker logs containers_jupyter_1`. You’ll see something
