@@ -19,7 +19,6 @@ services:
     environment:
       - PGADMIN_DEFAULT_EMAIL
       - PGADMIN_DEFAULT_PASSWORD
-      - PGADMIN_ENABLE_TLS=False
   rstudio:
     build:
       context: .
