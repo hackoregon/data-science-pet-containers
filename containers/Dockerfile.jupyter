@@ -24,13 +24,13 @@ RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-k
 
 # add a non-privileged user
 RUN useradd -s /bin/bash -U -m jupyter
-RUN chown -R jupyter:jupyter /home/jupyter
+COPY start-jupyter-notebook.bash /home/jupyter/
+RUN chmod +x /home/jupyter/start-jupyter-notebook.bash \
+  && chown -R jupyter:jupyter /home/jupyter/
 WORKDIR /home/jupyter
 USER jupyter
+RUN conda create --yes --quiet -n jupyter python=3 jupyter pandas psycopg2
 EXPOSE 8888
 
 # just add Jupyter, pandas and psycopg2 - let users install what they need!
-RUN conda create --yes --quiet -n jupyter python=3 jupyter pandas psycopg2
-RUN echo "source activate jupyter; jupyter notebook --no-browser --ip=0.0.0.0 --port=8888" \
-  > /home/jupyter/start-notebook.bash
-CMD [ "/bin/bash", "-v", "/home/jupyter/start-notebook.bash" ]
+CMD /home/jupyter/start-jupyter-notebook.bash
