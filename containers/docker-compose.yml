@@ -27,8 +27,6 @@ services:
     image: rstudio
     ports:
       - $HOST_RSTUDIO_PORT:8787
-    environment:
-      - PASSWORD=$RSTUDIO_PASSWORD
   jupyter:
     build:
       context: .
