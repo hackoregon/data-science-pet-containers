@@ -1,17 +1,13 @@
 FROM rocker/rstudio:latest
 LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
 
-# add the MDB and ODBC tools
+# add gnupg for PostgreSQL repo
 RUN apt-get update \
   && apt-get install -qqy --no-install-recommends \
   gnupg \
-  mdbtools \
-  mdbtools-dev \
-  unixodbc-dev \
-  vim-nox \
   && apt-get clean
 
-# add PostgreSQL client tools
+# add Debian packages
 RUN mkdir -p /etc/apt/sources.list.d/
 COPY pgdg.list.rstudio /etc/apt/sources.list.d/pgdg.list
 RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
@@ -19,10 +15,16 @@ RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-k
   && apt-get update \
   && apt-get install -qqy --no-install-recommends \
   libpq-dev \
+  mdbtools \
+  mdbtools-dev \
   postgresql-client-10 \
+  r-cran-dbi \
+  r-cran-rpostgresql \
+  r-cran-rodbc \
+  r-cran-rsqlite \
+  unixodbc-dev \
+  vim-nox \
   && apt-get clean
 
-# install the R packages
-RUN R -e 'install.packages("RPostgres", quiet = TRUE)' \
-  && R -e 'install.packages("RSQLite", quiet = TRUE)' \
-  && R -e 'install.packages("odbc", quiet = TRUE)'
+# install the new R database packages
+RUN R -e 'install.packages(c("RPostgres", "odbc"), quiet = TRUE)'
