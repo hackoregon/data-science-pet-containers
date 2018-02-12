@@ -36,6 +36,6 @@ WORKDIR /home/jupyter
 USER jupyter
 RUN conda config --add channels conda-forge \
   && conda create --yes --quiet --name jupyter python=3 \
-  jupyter cookiecutter psycopg2
+  jupyter psycopg2
 EXPOSE 8888
 CMD /home/jupyter/start-jupyter-notebook.bash
