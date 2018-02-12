@@ -78,12 +78,12 @@ After you log in, it will grind for a while again; this only happens the first t
 Give it any name you want. Then on the `Connection` tab, set the host to `postgis`, the port to `5432`, the maintenance database to `postgres`, the user name to `postgres` and the password to the value you set for `POSTGRES_PASSWORD`. Check the `Save password` box and press the `Save` button. pgAdmin will add the tree for the `postgis` service.
 
 ### RStudio
-This service is based on the `rocker/rstudio` image from Docker Hub: <https://hub.docker.com/r/rocker/rstudio/>. I've added some database connectivity tools and the `vim-nox` editor.
+This service is based on the `rocker/rstudio` image from Docker Hub: <https://hub.docker.com/r/rocker/rstudio/>. I've added some database connectivity tools and the `vim` editor.
 
 Browse to `localhost` on `HOST_RSTUDIO_PORT`. The user name and password are both `rstudio`. Note that if you're using Firefox, you'll have to adjust a setting to use the terminal feature. Go to `Tools -> Global Options -> Terminal`. For Firefox, you need to uncheck the `Connect with WebSockets` option. Other browsers I've tried, Microsoft Edge and Chromium, don't need this.
 
 ### Jupyter
-This service is based on the Anaconda, Inc. (formerly Continuum) `miniconda3` image: <https://hub.docker.com/r/continuumio/miniconda3/>. I've added a non-root user `jupyter` and created a Conda environment also named `jupyter` in its home directory. I've only put `jupyter`, `cookiecutter` and `psycopg2` in the Conda environment for now. The `vim-nox` editor is also available.
+This service is based on the Anaconda, Inc. (formerly Continuum) `miniconda3` image: <https://hub.docker.com/r/continuumio/miniconda3/>. I've added a non-root user `jupyter` and created a Conda environment also named `jupyter` in its home directory. I've only put `jupyter`, `cookiecutter` and `psycopg2` in the Conda environment for now. The `vim` editor is also available.
 
 By default the Jupyter notebook server starts when Docker brings up the service. Type `docker logs containers_jupyter_1`. You'll see something like this:
 
