@@ -24,8 +24,7 @@ RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-k
   && apt-get clean
 
 # Conda setup
-RUN conda config --add channels conda-forge \
-  && conda update --yes --all --quiet
+RUN conda update conda
 
 # add a non-privileged user
 RUN useradd -s /bin/bash -U -m jupyter \
