@@ -3,10 +3,9 @@ title: "Data Science Pet Containers"
 author: M. Edward (Ed) Borasky <znmeb@znmeb.net>
 date: "`r Sys.Date()`"
 output: 
-  html_document:
+  md_document:
     toc: true
     toc_depth: 4
-    keep_md: true
 ---
 
 ```{r setup, include=FALSE}
