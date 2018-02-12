@@ -22,6 +22,4 @@ RUN apt-get update \
 # 'postgres'-writeable directories
 RUN mkdir -p /home/postgres \
   && usermod --shell /bin/bash --home /home/postgres --move-home postgres \
-  && chown -R postgres:postgres /home/postgres \
-  && mkdir -p /interim \
-  && chown -R postgres:postgres /interim
+  && chown -R postgres:postgres /home/postgres
