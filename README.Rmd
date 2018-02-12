@@ -1,7 +1,4 @@
 ---
-title: "Data Science Pet Containers"
-author: M. Edward (Ed) Borasky <znmeb@znmeb.net>
-date: "`r Sys.Date()`"
 output: 
   md_document:
     toc: true
@@ -11,6 +8,9 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+# Data Science Pet Containers
+M. Edward (Ed) Borasky <znmeb@znmeb.net>, `r Sys.Date()`
 
 ## Quick start
 1. Clone this repository and `cd data-science-pet-containers/containers`.

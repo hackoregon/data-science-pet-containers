@@ -1,14 +1,20 @@
--   [Quick start](#quick-start)
--   [Using the services](#using-the-services)
-    -   [PostGIS and pgAdmin](#postgis-and-pgadmin)
-        -   [PostGIS](#postgis)
-        -   [pgAdmin](#pgadmin)
-        -   [Automatic restores](#automatic-restores)
-    -   [Jupyter](#jupyter)
-    -   [RStudio](#rstudio)
--   [Integration with host data
-    volumes](#integration-with-host-data-volumes)
--   [About the name](#about-the-name)
+-   [Data Science Pet Containers](#data-science-pet-containers)
+    -   [Quick start](#quick-start)
+    -   [Using the services](#using-the-services)
+        -   [PostGIS and pgAdmin](#postgis-and-pgadmin)
+            -   [PostGIS](#postgis)
+            -   [pgAdmin](#pgadmin)
+            -   [Automatic restores](#automatic-restores)
+        -   [Jupyter](#jupyter)
+        -   [RStudio](#rstudio)
+    -   [Integration with host data
+        volumes](#integration-with-host-data-volumes)
+    -   [About the name](#about-the-name)
+
+Data Science Pet Containers
+===========================
+
+M. Edward (Ed) Borasky <znmeb@znmeb.net>, 2018-02-12
 
 Quick start
 -----------
