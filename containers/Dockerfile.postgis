@@ -17,7 +17,6 @@ RUN apt-get update \
   postgresql-10-ogr-fdw \
   postgresql-10-python3-multicorn \
   unixodbc-dev \
-  vim-nox \
   && apt-get clean
 
 # 'postgres'-writeable directories
