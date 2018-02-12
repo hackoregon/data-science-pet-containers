@@ -7,35 +7,31 @@ RUN apt-get update \
   gnupg \
   && apt-get clean
 
-# add Debian packages
+# Official PostgreSQL repository
 RUN mkdir -p /etc/apt/sources.list.d/
 COPY pgdg.list.jupyter /etc/apt/sources.list.d/pgdg.list
+
 RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
   && wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
   && apt-get update \
   && apt-get install -qqy --no-install-recommends \
-  build-essential \
-  libpq-dev \
-  mdbtools \
-  mdbtools-dev \
-  postgresql-client-10 \
-  unixodbc-dev \
-  vim \
-  && apt-get clean
-
-# Conda setup
-RUN conda update conda --yes --quiet
-
-# add a non-privileged user
-RUN useradd -s /bin/bash -U -m jupyter \
+    build-essential \
+    libpq-dev \
+    mdbtools \
+    mdbtools-dev \
+    postgresql-client-10 \
+    unixodbc-dev \
+    vim \
+  && apt-get clean \
+  && conda update conda --yes --quiet \
+  && useradd -s /bin/bash -U -m jupyter \
   && mkdir -p /home/jupyter/Projects
+
 COPY start-jupyter-notebook.bash /home/jupyter/
 RUN chmod +x /home/jupyter/start-jupyter-notebook.bash \
   && chown -R jupyter:jupyter /home/jupyter/
 WORKDIR /home/jupyter
 USER jupyter
-RUN conda config --add channels conda-forge \
-  && conda create --yes --quiet --name jupyter python=3 \
-  jupyter psycopg2
+RUN conda create --yes --quiet --name jupyter python=3 jupyter psycopg2
 EXPOSE 8888
 CMD /home/jupyter/start-jupyter-notebook.bash

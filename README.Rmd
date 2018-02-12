@@ -41,10 +41,10 @@ knitr::opts_chunk$set(echo = TRUE)
     ```
     $ docker images
     REPOSITORY               TAG                 IMAGE ID            CREATED             SIZE
-    jupyter                  latest              7617c09618c4        27 seconds ago      2.69GB
-    rstudio                  latest              d04ea9cee239        5 minutes ago       1.4GB
-    pgadmin4                 latest              7ce769581b94        10 minutes ago      558MB
-    postgis                  latest              3f464c995eec        11 minutes ago      587MB
+    rstudio                  latest              bef08c6febf2        2 minutes ago       1.33GB
+    jupyter                  latest              f3ee8f4ba8d5        9 minutes ago       1.8GB
+    pgadmin4                 latest              a94bd08ddcec        16 minutes ago      558MB
+    postgis                  latest              743fdcf429a3        17 minutes ago      574MB
     ```
 
 ## Running
@@ -65,6 +65,16 @@ Creating containers_jupyter_1  ... done
 The `postgis` service is based on the official PostgreSQL image from the Docker Store: <https://store.docker.com/images/postgres>. It is running PostgreSQL 10, PostGIS 2.4, pgRouting and all of the foreign data wrappers that are available in a Debian PostgreSQL server. 
 
 Inside the network it can be accessed as host `postgis` on port `5432`. Outside the network, it's on `localhost` at port `HOST_POSTGRES_PORT`. Note that all of these images except `pgadmin4` acquire PostgreSQL and its accomplices from the official PostgreSQL Debian repositories: <https://www.postgresql.org/download/linux/debian/>.
+
+#### Automatic restores
+When the `postgis` service first starts, it initializes the database. After that, it looks in a directory called `/docker-entrypoint-initdb.d/` and restores any `.sql` or `sql.gz` files it finds. Then it looks for `.sh` scripts and runs them.
+
+We use this to restore databases as follows:
+
+1. For any database you want restored, create a file `<dbname>.backup` with either a pgAdmin `Backup` operation or with `pg_dump`.
+2. Before running `docker-compose build`, copy those backup files into `data-science-pet-containers/containers/Backups`. Note that `.gitignore` is set, so they won't be version-controlled.
+3. At build time, Docker copies the backup files into `/home/postgres/Backups` on the image. And it places a script `restore-all.sh` in `/docker-entrypoint-initdb.d/`.
+4. The first time the image runs, `restore-all.sh` will restore all the `.backup` files it finds in `/home/postgres/Backups`.
 
 ### pgAdmin4
 pgAdmin4 is available in two forms - as a desktop application and as a web application. This service is the web application. *Note that it can only access PostgreSQL services inside the network*.

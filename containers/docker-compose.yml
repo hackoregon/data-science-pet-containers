@@ -19,13 +19,6 @@ services:
     environment:
       - PGADMIN_DEFAULT_EMAIL
       - PGADMIN_DEFAULT_PASSWORD
-  rstudio:
-    build:
-      context: .
-      dockerfile: Dockerfile.rstudio
-    image: rstudio
-    ports:
-      - $HOST_RSTUDIO_PORT:8787
   jupyter:
     build:
       context: .
@@ -33,3 +26,10 @@ services:
     image: jupyter
     ports:
       - 8888:8888
+  rstudio:
+    build:
+      context: .
+      dockerfile: Dockerfile.rstudio
+    image: rstudio
+    ports:
+      - $HOST_RSTUDIO_PORT:8787
