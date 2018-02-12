@@ -24,10 +24,8 @@ RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-k
   && apt-get clean
 
 # Conda setup
-RUN conda update --yes --all --quiet \
-  && conda config --add channels conda-forge \
-  && conda config --add channels intel \
-  && conda config --show
+RUN conda config --add channels conda-forge \
+  && conda update --yes --all --quiet
 
 # add a non-privileged user
 RUN useradd -s /bin/bash -U -m jupyter \
@@ -38,11 +36,7 @@ RUN chmod +x /home/jupyter/start-jupyter-notebook.bash \
 WORKDIR /home/jupyter
 USER jupyter
 RUN conda config --add channels conda-forge \
-  && conda config --add channels intel \
-  && conda config --show \
   && conda create --yes --quiet --name jupyter python=3 \
-  jupyter ipyparallel cookiecutter pandas psycopg2 \
-  && source activate jupyter \
-  && ipcluster nbextension enable --user
+  jupyter ipyparallel cookiecutter pandas psycopg2
 EXPOSE 8888
 CMD /home/jupyter/start-jupyter-notebook.bash
