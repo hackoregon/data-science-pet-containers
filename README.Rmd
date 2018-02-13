@@ -19,15 +19,13 @@ M. Edward (Ed) Borasky <znmeb@znmeb.net>, `r Sys.Date()`
 1. Clone this repository and `cd data-science-pet-containers/containers`.
 2. You will need to define some environment variables. Some of the services have login IDs and passwords you'll need to define, and some will need their internal Docker network ports mapped into ports on the Docker host `localhost` IP address.
 
-    Copy the file `sample.env` to `.env`. For security reasons, `.env` is listed in `.gitignore`, so it won't be checked into version control. Edit `.env`. The variables you need to define are
+    Copy the file `sample.env` to `.env`. For security reasons, `.env` is listed in `.gitignore`, so it *won't* be checked into version control. Edit `.env`. The variables you need to define are
 
-    * HOST_POSTGRES_PORT: If you have PostgreSQL installed on your host, it's probably listening on port 5432. The `postgis` service listens on port 5432 inside the Docker network, so you'll need to map its port 5432 to another port. Set `HOST_POSTGRES_PORT` to the value you want; 5439 is what I use.
-    * POSTGRES_PASSWORD: To connect to the `postgis` service, you need a user name and a password. The user name is the default, `postgres`. Docker will set the password for the `postgres` user in the `postgis` service to the value of `POSTGRES_PASSWORD`.
-    * HOST_PGADMIN_PORT: The `pgadmin` service is a web server that listens on port 80 inside the Docker network. Docker will map that port into port `HOST_PGADMIN_PORT` on `localhost`.
-    * PGADMIN_DEFAULT_EMAIL: You log in to the `pgadmin` web service with an email address and password. Docker will set the email address to `PGADMIN_DEFAULT_EMAIL`.
-    * PGADMIN_DEFAULT_PASSWORD: The password
-    * HOST_RSTUDIO_PORT: The `rstudio` service listens on port 8787. Docker will map that port into `HOST_RSTUDIO_PORT` on `localhost`.
-
+    * `HOST_POSTGRES_PORT`: If you have PostgreSQL installed on your host, it's probably listening on port 5432. The `postgis` service listens on port 5432 inside the Docker network, so you'll need to map its port 5432 to another port. Set `HOST_POSTGRES_PORT` to the value you want; 5439 is what I use.
+    * `POSTGRES_PASSWORD`: To connect to the `postgis` service, you need a user name and a password. The user name is the default, `postgres`. Docker will set the password for the `postgres` user in the `postgis` service to the value of `POSTGRES_PASSWORD`.
+    * `HOST_PGADMIN_PORT`: The `pgadmin` service is a web server that listens on port 80 inside the Docker network. Docker will map that port into port `HOST_PGADMIN_PORT` on `localhost`.
+    * `PGADMIN_DEFAULT_EMAIL`, `PGADMIN_DEFAULT_PASSWORD`: You log in to the `pgadmin` web service with an email address and password. Docker will set the email address to `PGADMIN_DEFAULT_EMAIL`. `PGADMIN_DEFAULT_PASSWORD` is the password.
+    * `HOST_RSTUDIO_PORT`: The `rstudio` service listens on port 8787. Docker will map that port into `HOST_RSTUDIO_PORT` on `localhost`.
 
     Here's `sample.env`:
     
