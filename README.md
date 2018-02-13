@@ -3,9 +3,10 @@
     -   [Starting the services](#starting-the-services)
     -   [Using the services](#using-the-services)
         -   [PostGIS and pgAdmin](#postgis-and-pgadmin)
-            -   [pgAdmin on the host](#pgadmin-on-the-host)
-            -   [The `pgadmin` service inside the Docker
-                network.](#the-pgadmin-service-inside-the-docker-network.)
+            -   [Connecting with pgAdmin on the
+                host](#connecting-with-pgadmin-on-the-host)
+            -   [Connecting with the `pgadmin` service inside the Docker
+                network.](#connecting-with-the-pgadmin-service-inside-the-docker-network.)
         -   [Jupyter](#jupyter)
         -   [RStudio](#rstudio)
     -   [Integration with host data
@@ -130,7 +131,7 @@ The `pgadmin` service is based on an experimental image:
 <https://github.com/postgres/pgadmin4/blob/master/pkg/docker/Dockerfile>.
 Unlike the other images, it’s based on CentOS rather than Debian.
 
-#### pgAdmin on the host
+#### Connecting with pgAdmin on the host
 
 If you have pgAdmin on your host, you’ll be able to connect to the
 `postgis` service on `localhost:HOST_POSTGRES_PORT` with it. Right-click
@@ -141,7 +142,7 @@ name to `postgres` and the password to the value you set for
 `POSTGRES_PASSWORD`. Check the `Save password` box and press the `Save`
 button. `pgAdmin` will add the tree for the `postgis` service.
 
-#### The `pgadmin` service inside the Docker network.
+#### Connecting with the `pgadmin` service inside the Docker network.
 
 Browse to port `HOST_PGADMIN_PORT` on `localhost`. It will grind for a
 while, then give you a login form. The email address is the one you set

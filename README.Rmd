@@ -72,10 +72,10 @@ pgAdmin is available in two forms - as a desktop application and as a web applic
 
 The `pgadmin` service is based on an experimental image: <https://hub.docker.com/r/dpage/pgadmin4/>. The Dockerfile is here: <https://github.com/postgres/pgadmin4/blob/master/pkg/docker/Dockerfile>. Unlike the other images, it's based on CentOS rather than Debian.
 
-#### pgAdmin on the host
+#### Connecting with pgAdmin on the host
 If you have pgAdmin on your host, you'll be able to connect to the `postgis` service on `localhost:HOST_POSTGRES_PORT` with it. Right-click on `Servers` and create a server. Give it any name you want. Then on the `Connection` tab, set the host to `localhost`, the port to `HOST_POSTGRES_PORT`, the maintenance database to `postgres`, the user name to `postgres` and the password to the value you set for `POSTGRES_PASSWORD`. Check the `Save password` box and press the `Save` button. `pgAdmin` will add the tree for the `postgis` service.
 
-#### The `pgadmin` service inside the Docker network.
+#### Connecting with the `pgadmin` service inside the Docker network.
 Browse to port `HOST_PGADMIN_PORT` on `localhost`. It will grind for a while, then give you a login form. The email address is the one you set in `.env` for `PGADMIN_DEFAULT_EMAIL` and the password is the one you set for `PGADMIN_DEFAULT_PASSWORD`. After you log in, it will grind for a while again; this only happens the first time.
 
 Then you'll get the pgAdmin tree on the left. Right-click on `Servers` and create a server. Give it any name you want. Then on the `Connection` tab, set the host to `postgis`, the port to `5432`, the maintenance database to `postgres`, the user name to `postgres` and the password to the value you set for `POSTGRES_PASSWORD`. Check the `Save password` box and press the `Save` button. `pgAdmin` will add the tree for the `postgis` service.
