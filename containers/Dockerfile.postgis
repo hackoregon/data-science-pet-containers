@@ -24,7 +24,7 @@ RUN apt-get update \
   && mkdir -p /docker-entrypoint-initdb.d/
 
 # set up restores
-COPY Backups/*.backup /home/postgres/Backups/
-COPY restore-all.sh /docker-entrypoint-initdb.d/
+COPY Backups/* /home/postgres/Backups/
+COPY Backups/restore-all.sh /docker-entrypoint-initdb.d/
 RUN chown -R postgres:postgres /home/postgres \
   && chmod +x /docker-entrypoint-initdb.d/restore-all.sh
