@@ -1,5 +1,6 @@
 -   [Data Science Pet Containers](#data-science-pet-containers)
     -   [Setting up](#setting-up)
+    -   [Automatic database restores](#automatic-database-restores)
     -   [Starting the services](#starting-the-services)
     -   [Using the services](#using-the-services)
         -   [PostGIS and pgAdmin](#postgis-and-pgadmin)
@@ -66,31 +67,20 @@ Setting up
         # rstudio server container
         HOST_RSTUDIO_PORT=8786
 
-3.  Automatic database restores: When the `postgis` service first
-    starts, it initializes the database. After that, it looks in a
-    directory called `/docker-entrypoint-initdb.d/` and restores any
-    `.sql` or `sql.gz` files it finds. Then it looks for `.sh` scripts
-    and runs them.
+Automatic database restores
+---------------------------
+
+When the `postgis` service first starts, it initializes the database.
+After that, it looks in a directory called
+`/docker-entrypoint-initdb.d/` and restores any `.sql` or `sql.gz` files
+it finds. Then it looks for `.sh` scripts and runs them.
 
     We use this to restore databases as follows:
 
-    -   For any database you want restored, create a file
-        `<dbname>.backup` with either a pgAdmin `Backup` operation or
-        with `pg_dump`. The file must be in [`pg_dump`
-        format](https://www.postgresql.org/docs/current/static/app-pgdump.html).
-    -   Before running `docker-compose`, copy those backup files into
-        `data-science-pet-containers/containers/Backups`. Note that
-        `.gitignore` is set for `*.backup`, so these backup files won’t
-        be version-controlled.
-    -   At build time, Docker copies the backup files into
-        `/home/postgres/Backups` on the `postgis` image. And it places a
-        script `restore-all.sh` in `/docker-entrypoint-initdb.d/`.
-    -   The first time the image runs, `restore-all.sh` will restore all
-        the `.backup` files it finds in `/home/postgres/Backups`.
-        `restore-all.sh` creates a new database with the same name as
-        the file; for example, `passenger_census.backup` will be
-        restored to a freshly-created database called
-        `passenger_census`.
+    * For any database you want restored, create a file `<dbname>.backup` with either a pgAdmin `Backup` operation or with `pg_dump`. The file must be in [`pg_dump` format](https://www.postgresql.org/docs/current/static/app-pgdump.html).
+    * Before running `docker-compose`, copy those backup files into `data-science-pet-containers/containers/Backups`. Note that `.gitignore` is set for `*.backup`, so these backup files won't be version-controlled.
+    * At build time, Docker copies the backup files into `/home/postgres/Backups` on the `postgis` image. And it places a script `restore-all.sh` in `/docker-entrypoint-initdb.d/`.
+    * The first time the image runs, `restore-all.sh` will restore all the `.backup` files it finds in `/home/postgres/Backups`. `restore-all.sh` creates a new database with the same name as the file; for example, `passenger_census.backup` will be restored to a freshly-created database called `passenger_census`.
 
 Starting the services
 ---------------------

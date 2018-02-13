@@ -43,7 +43,8 @@ M. Edward (Ed) Borasky <znmeb@znmeb.net>, `r Sys.Date()`
     HOST_RSTUDIO_PORT=8786
     ```
 
-3. Automatic database restores: When the `postgis` service first starts, it initializes the database. After that, it looks in a directory called `/docker-entrypoint-initdb.d/` and restores any `.sql` or `sql.gz` files it finds. Then it looks for `.sh` scripts and runs them.
+## Automatic database restores
+When the `postgis` service first starts, it initializes the database. After that, it looks in a directory called `/docker-entrypoint-initdb.d/` and restores any `.sql` or `sql.gz` files it finds. Then it looks for `.sh` scripts and runs them.
 
     We use this to restore databases as follows:
 
