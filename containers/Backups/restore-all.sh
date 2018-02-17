@@ -1,16 +1,16 @@
 #! /bin/bash
 
-if [ -z "$(ls -A /home/postgres/Backups/*.backup)" ]
+if [ `( ls -1 /home/postgres/Backups/*.backup 2>/dev/null || true ) | wc -l` -gt "0" ]
 then
-   echo "No backup files - exiting"
-   exit
+  for file in /home/postgres/Backups/*.backup
+  do
+    echo "Restoring $file"
+    filename=$(basename "$file")
+    extension="${filename##*.}"
+    filename="${filename%.*}"
+    dropdb ${filename} || true
+    createdb ${filename}
+    pg_restore --verbose --dbname=${filename} $file
+    echo "Restore completed"
+  done
 fi
-for file in /home/postgres/Backups/*.backup
-do
-  filename=$(basename "$file")
-  extension="${filename##*.}"
-  filename="${filename%.*}"
-  dropdb ${filename} || true
-  createdb ${filename}
-  pg_restore --verbose --dbname=${filename} $file
-done
