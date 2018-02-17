@@ -19,6 +19,7 @@ RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-k
     mdbtools-dev \
     postgresql-client-10 \
     unixodbc-dev \
+    unrar-free \
     vim \
   && apt-get clean \
   && R -e 'install.packages(c("RPostgres", "odbc", "RSQLite"), quiet = TRUE)' \
