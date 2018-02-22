@@ -1,0 +1,38 @@
+---
+title: "Getting Started with PostgreSQL"
+author: "M. Edward (Ed) Borasky"
+date: "`r Sys.Date()`"
+output: revealjs::revealjs_presentation
+---
+
+# Desktop Install
+
+## Download the installer
+1. Go to EnterpriseDB download site <https://www.enterprisedb.com/downloads/postgres-postgresql-downloads>.
+2. Select the latest version (10.2)
+3. Select your operating system (Windows, Mac or Linux - yes, it works on Linux)
+
+## Installation
+1. 
+
+# pgAdmin
+
+## Connecting
+
+## Exploring the tree
+
+# Restoring a database
+
+## Slide 1
+
+# Backing up a database
+
+## Slide 1
+
+# Creating tables - DDL
+
+## pgAdmin
+
+# Roles and permissions
+
+## Creating a non-superuser role
