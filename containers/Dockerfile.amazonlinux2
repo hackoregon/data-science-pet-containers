@@ -3,11 +3,17 @@ LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
 
 # Packages from Amazon repos
 RUN amazon-linux-extras install postgresql9.6 vim \
-  && yum install -y postgresql-server \
-  && mkdir -p /var/lib/postgresql/ \
-  && chown -R postgres:postgres /var/lib/postgresql/
+  && yum install -y postgresql-server postgresql-contrib postgres-devel
 
 USER postgres
-WORKDIR /var/lib/postgresql/
-RUN initdb -D /var/lib/postgresql/data
+WORKDIR /var/lib/pgsql/
+
+# configure database data, listen to all hosts and require passwords
+RUN initdb -D /var/lib/pgsql/data \
+  && echo "listen_addresses = '*'" >> /var/lib/pgsql/data/postgresql.conf \
+  && echo "host all all all md5" >> /var/lib/pgsql/data/pg_hba.conf
+
+# expose the port
 EXPOSE 5432
+
+# to do - securely set 'postgres' password and add service startup
