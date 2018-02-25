@@ -1,0 +1,7 @@
+version: '3.4'
+services:
+  amazonlinux2:
+    build:
+      context: .
+      dockerfile: Dockerfile.amazonlinux2
+    image: amazonlinux2

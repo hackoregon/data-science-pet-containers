@@ -1,0 +1,13 @@
+FROM amazonlinux:2-with-sources
+LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
+
+# Packages from Amazon repos
+RUN amazon-linux-extras install postgresql9.6 vim \
+  && yum install -y postgresql-server \
+  && mkdir -p /var/lib/postgresql/ \
+  && chown -R postgres:postgres /var/lib/postgresql/
+
+USER postgres
+WORKDIR /var/lib/postgresql/
+RUN initdb -D /var/lib/postgresql/data
+EXPOSE 5432
