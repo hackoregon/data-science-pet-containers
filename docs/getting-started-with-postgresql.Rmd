@@ -2,10 +2,12 @@
 title: "Getting Started with PostgreSQL"
 author: "M. Edward (Ed) Borasky"
 date: "`r Sys.Date()`"
-output: revealjs::revealjs_presentation
+output: 
+  beamer_presentation:
+    theme: Montpellier
 ---
 
-# Desktop Install
+# PostgreSQL on the Desktop - single user
 
 ## Download the installer
 1. Go to EnterpriseDB download site <https://www.enterprisedb.com/downloads/postgres-postgresql-downloads>.
@@ -13,26 +15,59 @@ output: revealjs::revealjs_presentation
 3. Select your operating system (Windows, Mac or Linux - yes, it works on Linux)
 
 ## Installation
-1. 
+Install StackBuulder but don't start it yet
 
-# pgAdmin
-
-## Connecting
+## Connecting with pgAdmin
 
 ## Exploring the tree
 
-# Restoring a database
+## Creating a database
 
-## Slide 1
+## Creating tables - DDL
 
-# Backing up a database
+## Reading a CSV file into a table
 
-## Slide 1
+## Backing up a database
 
-# Creating tables - DDL
+## Restoring a database
 
-## pgAdmin
+## Creating a query
 
-# Roles and permissions
+# PostgreSQL on a (Linux) Server
 
-## Creating a non-superuser role
+## Two dialects of Linux
+* Ubuntu 16.04.x LTS (most popular)
+* RHEL 7 / CentOS 7
+
+## Docker container
+* Debian stable - similar to Ubuntu
+* Alpine - avoid this unless you want to do a lot of research
+
+## The PGDG repositories
+
+## Configuring
+* Initializing the cluster
+* Enabling and starting the service
+
+## Listening address and port
+
+## Authentication
+
+## Fine-grained permissions and roles
+
+## Tablespaces
+
+# PostGIS
+
+## Reading in GIS data
+* Shapefiles
+* "GDB" databases
+* OpenStreetMap data
+
+## Tagging points with a geometry column
+
+## Geocoding
+
+## Spatial joins
+
+## pgRouting - what it can do
