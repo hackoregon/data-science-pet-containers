@@ -6,19 +6,25 @@ bibliography: bibliography.bib
 output: 
   beamer_presentation:
     theme: Montpellier
+    slide_level: 2
 ---
 
-# PostgreSQL on the Desktop - single user
+# PostgreSQL on the Desktop - single user [@postgresql_home]
 
-## Download the installer
-1. Go to EnterpriseDB download site <https://www.enterprisedb.com/downloads/postgres-postgresql-downloads>.
-2. Select the latest version (10.2)
-3. Select your operating system (Windows or Mac)
+## Windows or Mac
+* Go to EnterpriseDB download site <https://www.enterprisedb.com/downloads/postgres-postgresql-downloads>.
+* Select the latest version (10.3)
+* Select your operating system (Windows or Mac)
+* Installation: install everything but don't run StackBuilder yet
 
-## Installation
-Install StackBuilder but don't start it yet
+## Linux: use the PGDG repositories
+* RHEL / CentOS / Fedora: <https://www.postgresql.org/download/linux/redhat/>
+* Ubuntu: <https://www.postgresql.org/download/linux/ubuntu/> (probably works for Linux Mint)
+* Debian: <https://www.postgresql.org/download/linux/debian/>
+* Installation: install PostgreSQL 10.3 and pgAdmin 4 for desktop
 
 ## Connecting with pgAdmin
+* Online manual: @pgadmin_manual
 * Reference: @Obe2017a, chapter 4
 
 ## Exploring the tree
