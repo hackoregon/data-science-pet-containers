@@ -84,3 +84,5 @@ output:
 * Reference: [@Obe2017]
 
 # References
+
+## References
