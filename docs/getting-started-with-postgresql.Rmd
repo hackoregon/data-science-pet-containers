@@ -2,6 +2,7 @@
 title: "Getting Started with PostgreSQL"
 author: "M. Edward (Ed) Borasky"
 date: "`r Sys.Date()`"
+bibliography: bibliography.bib
 output: 
   beamer_presentation:
     theme: Montpellier
@@ -12,12 +13,13 @@ output:
 ## Download the installer
 1. Go to EnterpriseDB download site <https://www.enterprisedb.com/downloads/postgres-postgresql-downloads>.
 2. Select the latest version (10.2)
-3. Select your operating system (Windows, Mac or Linux - yes, it works on Linux)
+3. Select your operating system (Windows or Mac)
 
 ## Installation
-Install StackBuulder but don't start it yet
+Install StackBuilder but don't start it yet
 
 ## Connecting with pgAdmin
+* Reference: @Obe2017a, chapter 4
 
 ## Exploring the tree
 
@@ -25,7 +27,7 @@ Install StackBuulder but don't start it yet
 
 ## Creating tables - DDL
 
-## Reading a CSV file into a table
+## Reading a CSV file into a table - COPY
 
 ## Backing up a database
 
@@ -59,15 +61,20 @@ Install StackBuulder but don't start it yet
 
 # PostGIS
 
-## Reading in GIS data
+## Reading in GIS data [@Obe2015, chapter 4]
 * Shapefiles
 * "GDB" databases
 * OpenStreetMap data
 
 ## Tagging points with a geometry column
 
-## Geocoding
+## Geocoding [@Obe2015, chapter 8]
 
 ## Spatial joins
 
-## pgRouting - what it can do
+# pgRouting - what it can do
+
+## Turn-by-turn directions
+* Reference: [@Obe2017]
+
+# References
