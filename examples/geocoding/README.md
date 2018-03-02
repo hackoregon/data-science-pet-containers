@@ -27,11 +27,11 @@
 4. Type `./make-images.bash`. It will take a while to run; it is downloading shapefiles, unpacking them and inserting the contents into the database. You can ignore errors and warnings.
 5. When the data acquisition is complete you'll see something like
 ```
-postgis-geocoder_1  | 2018-01-20 11:10:01.039 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
-postgis-geocoder_1  | 2018-01-20 11:10:01.039 UTC [1] LOG:  listening on IPv6 address "::", port 5432
-postgis-geocoder_1  | 2018-01-20 11:10:01.062 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
-postgis-geocoder_1  | 2018-01-20 11:10:01.103 UTC [68] LOG:  database system was shut down at 2018-01-20 11:10:00 UTC
-postgis-geocoder_1  | 2018-01-20 11:10:01.118 UTC [1] LOG:  database system is ready to accept connections
+geocoder_1  | 2018-01-20 11:10:01.039 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+geocoder_1  | 2018-01-20 11:10:01.039 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+geocoder_1  | 2018-01-20 11:10:01.062 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+geocoder_1  | 2018-01-20 11:10:01.103 UTC [68] LOG:  database system was shut down at 2018-01-20 11:10:00 UTC
+geocoder_1  | 2018-01-20 11:10:01.118 UTC [1] LOG:  database system is ready to accept connections
 ```
 
 When those messages appear, type `CTRL-C` to stop the service. The script will then shut down the service.
@@ -44,7 +44,7 @@ At this point you have
 4. A Docker image: `postgis-geocoder`.  The image is the image the scripts used to download the shapefiles and populate the database. Thus it has copies of all the scripts. Both are about 467 MB.
 
 ### Running the geocoder
-To start the service, type `docker-compose up -d`. `docker-compose` will start the service and you'll see `Creating docker_postgis_1 ... done
+To start the service, type `docker-compose up -d`. `docker-compose` will start the service and you'll see `Creating geocoding_geocoder_1 ... done
 `
 
 You'll be able to connect from the host to PostGIS in the container as `postgres` on host `localhost` port `5439` with the password you set above. Note that the port is ***5439*** to avoid conflicts with your host PostgreSQL service, which usually listens on port 5432.
