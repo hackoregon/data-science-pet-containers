@@ -1,5 +1,12 @@
 version: '3.4'
 services:
+  jupyter:
+    build:
+      context: .
+      dockerfile: Dockerfile.jupyter
+    image: jupyter
+    ports:
+      - 8888:8888
   postgis:
     build:
       context: .
@@ -9,10 +16,4 @@ services:
       - $HOST_POSTGRES_PORT:5432
     environment:
       - POSTGRES_PASSWORD
-  jupyter:
-    build:
-      context: .
-      dockerfile: Dockerfile.jupyter
-    image: jupyter
-    ports:
-      - 8888:8888
+      - PGDATA

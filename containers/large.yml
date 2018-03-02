@@ -1,14 +1,5 @@
 version: '3.4'
 services:
-  postgis:
-    build:
-      context: .
-      dockerfile: Dockerfile.postgis
-    image: postgis
-    ports:
-      - $HOST_POSTGRES_PORT:5432
-    environment:
-      - POSTGRES_PASSWORD
   jupyter:
     build:
       context: .
@@ -23,3 +14,13 @@ services:
     image: rstudio
     ports:
       - $HOST_RSTUDIO_PORT:8787
+  postgis:
+    build:
+      context: .
+      dockerfile: Dockerfile.postgis
+    image: postgis
+    ports:
+      - $HOST_POSTGRES_PORT:5432
+    environment:
+      - POSTGRES_PASSWORD
+      - PGDATA
