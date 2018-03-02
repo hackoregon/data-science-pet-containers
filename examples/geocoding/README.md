@@ -20,6 +20,8 @@
 
     2. `/d/pgdata` is mounted in the containers as `/var/lib/postgresql/data/pgdata`. This is where the containers keep their PostgreSQL data. This is also UID and GID 999. For the geocoders, this is easily recreated, either by re-running the scripts or by restoring `geocoder.backup` in `/data/gisdata`. But for other applications, you'll want to be careful not to corrupt it with host processes. `/d/pgdata` with just the Oregon geocoder database is currently about 2.7 GB.
 
+* Environment variables: to build the images and run the geocoder, you need to define some environment variables. First, copy the file `sample.env` to the hidden file `.env`. Then edit `.env` and change the `POSTGRES_PASSWORD` value to a strong password. You do not need to change any other variables.
+
 ### Buidling the database and the images
 1. Clone this repository.
 2. Open a terminal and type `cd data-science-pet-containers/oregon-geocoder`.
