@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+	<idinfo>
+		<citation>
+			<citeinfo>
+				<origin>Roadway Inventory and Classification (RICS) Unit, Oregon Department of Transportation (ODOT)</origin>
+				<title>Mileposts</title>
+				<edition>2014</edition>
+			</citeinfo>
+		</citation>
+		<descript>
+			<abstract>This data contains mileposts on state owned highways.</abstract>
+			<purpose>This GIS base layer can be used for planning purposes and as a reference layer on standard Oregon Department of Transportation (ODOT) city and county map formats.</purpose>
+		</descript>
+		<timeperd>
+			<timeinfo>
+				<sngdate>
+					<caldate>2014</caldate>
+				</sngdate>
+			</timeinfo>
+			<current>publication date</current>
+		</timeperd>
+		<status>
+			<progress>Complete</progress>
+			<update>As needed</update>
+		</status>
+		<spdom>
+			<bounding>
+				<westbc>-124.807486</westbc>
+				<eastbc>-116.419828</eastbc>
+				<northbc>46.218776</northbc>
+				<southbc>41.920156</southbc>
+			</bounding>
+		</spdom>
+		<keywords>
+			<theme>
+				<themekt>Mileposts</themekt>
+				<themekey>transportation</themekey>
+				<themekey>highway</themekey>
+				<themekey>mile</themekey>
+				<themekey>markers</themekey>
+				<themekey>mileposts</themekey>
+				<themekey>mile posts</themekey>
+				<themekey>mile markers</themekey>
+				<themekey>mileposts</themekey>
+				<themekey>Trans_GIS</themekey>
+				<themekey>roadnetwork</themekey>
+				<themekey>Transportation Network</themekey>
+			</theme>
+			<place>
+				<placekt>Oregon</placekt>
+				<placekey>Oregon</placekey>
+				<placekey>OR</placekey>
+				<placekey>Pacific Northwest</placekey>
+				<placekey>United States</placekey>
+				<placekey>US</placekey>
+				<placekey>USA</placekey>
+			</place>
+			<temporal>
+				<tempkt>2014</tempkt>
+				<tempkey>2014</tempkey>
+			</temporal>
+		</keywords>
+		<accconst>None</accconst>
+		<useconst>None</useconst>
+		<ptcontac>
+			<cntinfo>
+				<cntorgp>
+					<cntorg>Road Inventory and Classification Services (RICS) Unit, Oregon Department of Transportation (ODOT).</cntorg>
+				</cntorgp>
+				<cntpos>Senior Classification Specialist</cntpos>
+				<cntaddr>
+					<addrtype>mailing</addrtype>
+					<address>555 13th St. NE, Suite # 2</address>
+					<city>Salem</city>
+					<state>OR</state>
+					<postal>97301-4178</postal>
+					<country>USA</country>
+				</cntaddr>
+				<cntvoice>(503) 986-4386</cntvoice>
+				<cntemail>Charles.H.McConnell@odot.state.or.us</cntemail>
+				<hours>7:00am - 3:30pm PST M - F</hours>
+				<cntinst>Call, email, or write</cntinst>
+			</cntinfo>
+		</ptcontac>
+		<datacred>Roadway Inventory and Classification (RICS) Unit, Oregon Department of Transportation (ODOT)</datacred>
+		<native>Windows XP Professional SP3, Geomedia Professional v6.0,  ArcGIS v10.0</native>
+	</idinfo>
+	<dataqual>
+		<attracc>
+			<attraccr>HWYNAME, HWYNUMB, ST_HWY_SFX, RDWY_ID, MLGE_TYP, OVLP_CD, MP, MP_DESC, MP_DISP, LRS_KEY and LRM_KEY were obtained from the Oregon Department of Transportation (ODOT) current TransInfo (TI) database. LAT, LONGTD, HRZ_COL_M, CRD_RF_DTM, Shape, GIS_PRC_DT and EFFECTV_DT were determined by the Geographic Information Services (GIS) Unit.</attraccr>
+		</attracc>
+		<complete>The file is complete at the time of posting.</complete>
+		<posacc>
+			<horizpa>
+				<horizpar>File was based on the accuracy of the TransInfo (TI) database and the existing road network.</horizpar>
+			</horizpa>
+			<vertacc>
+				<vertaccr>No vertical positional accuracy has been determined</vertaccr>
+			</vertacc>
+		</posacc>
+		<lineage>
+			<procstep>
+				<procdesc>The data for Mileposts was extracted from TransInfo using Bentley's Transportation Intelligence Gateway extract tool.  It was output as a shapefile containing fields for HWYNAME, HWYNUMB, ST_HWY_SFX, RDWY_ID, MLGE_TYP, OVLP_CD, MP, MP_DESC, MP_DISP, LRS_KEY, LRM_KEY, LAT, LONGTD, HRZ_COL_M, CRD_RF_DTM, GIS_PRC_DT and EFFECTV_DT.</procdesc>
+				<procdate>20130910</procdate>
+				<proccont>
+					<cntinfo>
+						<cntorgp>
+							<cntorg>Road Inventory and Classification Services (RICS) Unit, Oregon Department of Transportation (ODOT).</cntorg>
+						</cntorgp>
+						<cntpos>Senior Classification Specialist</cntpos>
+						<cntaddr>
+							<addrtype>mailing address</addrtype>
+							<address>555 13th St. NE, Suite # 2</address>
+							<city>Salem</city>
+							<state>OR</state>
+							<postal>97301-4178</postal>
+							<country>USA</country>
+						</cntaddr>
+						<cntvoice>(503) 986-4386</cntvoice>
+						<cntemail>Charles.H.McConnell@odot.state.or.us</cntemail>
+						<hours>7:00am - 3:30pm PST M - F</hours>
+						<cntinst>Call, email, or write</cntinst>
+					</cntinfo>
+				</proccont>
+			</procstep>
+		</lineage>
+	</dataqual>
+	<spref>
+		<horizsys>
+			<planar>
+				<mapproj>
+					<mapprojn>Lambert Conformal Conic</mapprojn>
+					<lambertc>
+						<stdparll>43.000000</stdparll>
+						<stdparll>45.500000</stdparll>
+						<longcm>-120.500000</longcm>
+						<latprjo>41.750000</latprjo>
+						<feast>400000.000000</feast>
+						<fnorth>0.000000</fnorth>
+					</lambertc>
+				</mapproj>
+				<planci>
+					<plance>Coordinate Pair</plance>
+					<coordrep>
+						<absres>0.004096</absres>
+						<ordres>0.004096</ordres>
+					</coordrep>
+					<plandu>International Feet</plandu>
+				</planci>
+			</planar>
+			<geodetic>
+				<horizdn>North American Datum of 1983</horizdn>
+				<ellips>Geodetic Reference System 80</ellips>
+				<semiaxis>6378137.000000</semiaxis>
+				<denflat>298.257000</denflat>
+			</geodetic>
+		</horizsys>
+		<vertdef>
+			<altsys>
+				<altdatum>North American Vertical Datum of 1988</altdatum>
+				<altunits>feet</altunits>
+				<altenc>Explicit elevation coordinate included with horizontal coordinates</altenc>
+			</altsys>
+		</vertdef>
+	</spref>
+	<eainfo>
+		<overview>
+			<eaover>mileposts contains HWYNAME, HWYNUMB, ST_HWY_SFX, RDWY_ID, MLGE_TYP, OVLP_CD, MP, MP_DESC, MP_DISP, LRS_KEY, LRM_KEY, LAT, LONGTD, HRZ_COL_M, CRD_RF_DTM, Shape,  GIS_PRC_DT and EFFECTV_DT.</eaover>
+		</overview>
+		<detailed>
+			<attr>
+				<attrlabl>HWYNAME</attrlabl>
+				<attrdef>The official state highway name.</attrdef>
+				<attrdefs>TransInfo (TI) database, Oregon Department of Transportation (ODOT)</attrdefs>
+				<attrdomv>
+					<udom>The official name of the state highway that is stored in the TransInfo (TI) database, Oregon Department of Transportation (ODOT).</udom>
+				</attrdomv>
+			</attr>
+			<attr>
+				<attrlabl>HWYNUMB</attrlabl>
+				<attrdef>Designated State Highway number.</attrdef>
+				<attrdefs>TransInfo (TI) database, Oregon Department of Transportation (ODOT)</attrdefs>
+				<attrdomv>
+					<rdom>
+						<rdommin>1</rdommin>
+						<rdommax>493</rdommax>
+					</rdom>
+				</attrdomv>
+			</attr>
+			<attr>
+				<attrlabl>ST_HWY_SFX</attrlabl>
+				<attrdef>The main road or highway identifier is a three digit numeric code.  Frontage roads and connections are identified by the three digits plus a two alpha-character suffix code.</attrdef>
+				<attrdefs>TransInfo (TI) database, Oregon Department of Transportation (ODOT)</attrdefs>
+			</attr>
+			<attr>
+				<attrlabl>RDWY_ID</attrlabl>
+				<attrdef>The roadway identifier is a one digit code used in conjunction with the highway number and milepoint to identify the alignment on which the milepoint exists.</attrdef>
+				<attrdefs>TransInfo (TI) database, Oregon Department of Transportation (ODOT)</attrdefs>
+				<attrdomv>
+					<edom>
+						<edomv>1</edomv>
+						<edomvd>Primary Roadway/ Add Miles (except Hwy 001)</edomvd>
+						<edomvds>TransInfo (TI) database, Oregon Department of Transportation (ODOT)</edomvds>
+					</edom>
+					<edom>
+						<edomv>2</edomv>
+						<edomvd>Non-Add Miles (except Hwy 001)</edomvd>
+						<edomvds>TransInfo (TI) database, Oregon Department of Transportation (ODOT)</edomvds>
+					</edom>
+					<edom>
+						<edomv>3</edomv>
+						<edomvd>Split Roadway / Add Miles</edomvd>
+						<edomvds>TransInfo (TI) database, Oregon Department of Transportation (ODOT)</edomvds>
+					</edom>
+					<edom>
+						<edomv>5</edomv>
+						<edomvd>Located Line</edomvd>
+						<edomvds>TransInfo (TI) database, Oregon Department of Transportation (ODOT)</edomvds>
+					</edom>
+				</attrdomv>
+			</attr>
+			<attr>
+				<attrlabl>MLGE_TYP</attrlabl>
+				<attrdef>Mileage Type Codes</attrdef>
+				<attrdefs>TransInfo (TI) database, Oregon Department of Transportation (ODOT)</attrdefs>
+				<attrdomv>
+					<edom>
+						<edomv>Z</edomv>
+						<edomvd>Z Miles</edomvd>
+						<edomvds>TransInfo (TI) database, Oregon Department of Transportation (ODOT)</edomvds>
+					</edom>
+				</attrdomv>
+			</attr>
+			<attr>
+				<attrlabl>OVLP_CD</attrlabl>
+				<attrdef>Number indicating order in which instances of Z-Miles were added to the highway.</attrdef>
+				<attrdefs>TransInfo (TI) database, Oregon Department of Transportation (ODOT)</attrdefs>
+				<attrdomv>
+					<udom>Integer value</udom>
+				</attrdomv>
+			</attr>
+			<attr>
+				<attrlabl>MP</attrlabl>
+				<attrdef>A number that represents the distance in miles from the original beginning of the highway.</attrdef>
+				<attrdefs>TransInfo (TI) database, Oregon Department of Transportation (ODOT)</attrdefs>
+				<attrdomv>
+					<rdom>
+						<rdommin>-999.99</rdommin>
+						<rdommax>999.99</rdommax>
+						<attrunit>mile</attrunit>
+						<attrmres>0.010000</attrmres>
+					</rdom>
+				</attrdomv>
+				<attrvai>
+					<attrvae>TransInfo (TI) measurements are based on features located to +/- 0.02 mile.</attrvae>
+				</attrvai>
+			</attr>
+			<attr>
+				<attrlabl>MP_DESC</attrlabl>
+				<attrdef>Milepoint Description</attrdef>
+				<attrdefs>TransInfo (TI) database, Oregon Department of Transportation (ODOT)</attrdefs>
+			</attr>
+			<attr>
+				<attrlabl>MP_DISP</attrlabl>
+				<attrdef>Milepoint display used for labeling purposes.</attrdef>
+				<attrdefs>TransInfo (TI) database, Oregon Department of Transportation (ODOT)</attrdefs>
+			</attr>
+			<attr>
+				<attrlabl>LRS_KEY</attrlabl>
+				<attrdef>Linear Referencing System (LRS) highway identifier. This is a representation of elements contained in the TransInfo (TI) database used to identify a highway, connection or frontage road. The first nine characters are the inventory route numbers and the last three characters are the sub-route numbers.</attrdef>
+				<attrdefs>TransInfo (TI) database, Oregon Department of Transportation (ODOT)</attrdefs>
+				<attrdomv>
+					<udom>The twelve digit alphanumeric string is broken down into its components as: 1 - Place holder 0 (zero); 2-4 - Hwy Number 001 - 499; 5-6 - Hwy Suffix 00 (zero zero), AA-ZZ (alphabetic characters); 7 - Roadway Identifier (1-5); 8 - Mileage Type (Z, T, Y); 9 - Overlap Mileage Code (0-9); 10 - Jurisdiction Code (S); 11-12 - Two Place holders 00 (zero zero)</udom>
+				</attrdomv>
+			</attr>
+			<attr>
+				<attrlabl>LRM_KEY</attrlabl>
+				<attrdef>Linear Reference Method highway identifier. This is a representation of elements contained in the TransInfo (TI) database used to identify a highway, connection or frontage road. The first five characters are the inventory route numbers and the last three characters are the sub-route numbers.</attrdef>
+				<attrdefs>TransInfo (TI) database, Oregon Department of Transportation (ODOT)</attrdefs>
+				<attrdomv>
+					<udom>The eight character alphanumeric string is broken down into its components as: 1-3:Hwy Number 001 to 499 4-5:Hwy Suffix 00 (zero zero) or AA-ZZ (alphabetic characters) 6:Roadway Identifier (I, D) 7:Mileage Type (Z, P) 8:Overlap Mileage Code (0-9)</udom>
+				</attrdomv>
+			</attr>
+			<attr>
+				<attrlabl>LAT</attrlabl>
+				<attrdef>Latitudinal Coordinate in decimal degrees format.</attrdef>
+				<attrdefs>Geographic Information Services (GIS) Unit, Oregon Department of Transportation (ODOT)</attrdefs>
+			</attr>
+			<attr>
+				<attrlabl>LONGTD</attrlabl>
+				<attrdef>Longitudinal Coordinate in decimal degrees format.</attrdef>
+				<attrdefs>Geographic Information Services (GIS) Unit, Oregon Department of Transportation (ODOT)</attrdefs>
+			</attr>
+			<attr>
+				<attrlabl>HRZ_COL_M</attrlabl>
+				<attrdef>Horizontal collection method</attrdef>
+				<attrdefs>Geographic Information Services (GIS) Unit, Oregon Department of Transportation (ODOT)</attrdefs>
+				<attrdomv>
+					<edom>
+						<edomv>3</edomv>
+						<edomvd>GIS Software derived based on highway and milepoint (dynamic segmentation).</edomvd>
+						<edomvds>Geographic Information Services (GIS) Unit, Oregon Department of Transportation (ODOT).</edomvds>
+					</edom>
+				</attrdomv>
+			</attr>
+			<attr>
+				<attrlabl>CRD_RF_DTM</attrlabl>
+				<attrdef>Coordinate Reference Datum: the name that describes the reference datum used in determining the easting (x) and northing (y) coordinates.</attrdef>
+				<attrdefs>Geographic Information Services (GIS) Unit, Oregon Department of Transportation (ODOT)</attrdefs>
+			</attr>
+			<attr>
+				<attrlabl>EFFECTV_DT</attrlabl>
+				<attrdef>The date or time period in which the data extract is relevant or current.</attrdef>
+				<attrdefs>Geographic Information Services (GIS) Unit, Oregon Department of Transportation (ODOT)</attrdefs>
+			</attr>
+			<attr>
+				<attrlabl>GIS_PRC_DT</attrlabl>
+				<attrdef>The date that the data was processed.</attrdef>
+				<attrdefs>Geographic Information Services (GIS) Unit, Oregon Department of Transportation (ODOT)</attrdefs>
+			</attr>
+			<attr>
+				<attrlabl>Shape</attrlabl>
+				<attrdef>The characteristic appearance or visible form of a geographic object as represented on a map. A GIS uses points, lines, and polygons to represent the shapes of geographic objects.</attrdef>
+				<attrdefs>Environmental Systems Research Institute (ESRI)</attrdefs>
+				<attrdomv>
+					<edom>
+						<edomv>Point Feature</edomv>
+						<edomvd>Point Features are a geometric element that represents a place or thing that has neither length nor area at a given scale and defined by a pair of x,y coordinates.</edomvd>
+						<edomvds>Environmental Systems Research Institute (ESRI)</edomvds>
+					</edom>
+				</attrdomv>
+			</attr>
+		</detailed>
+	</eainfo>
+	<distinfo>
+		<distrib>
+			<cntinfo>
+				<cntorgp>
+					<cntorg>Geographic Information Services (GIS) Unit, Oregon Department of Transportation (ODOT).</cntorg>
+				</cntorgp>
+				<cntaddr>
+					<addrtype>mailing and physical address</addrtype>
+					<address>555 13th St. NE, Suite #2</address>
+					<city>Salem</city>
+					<state>OR</state>
+					<postal>97301-4178</postal>
+					<country>USA</country>
+				</cntaddr>
+				<cntvoice>503.986.3154</cntvoice>
+				<cntfax>503.986.4249</cntfax>
+				<cntemail>odot.maps@odot.state.or.us</cntemail>
+				<hours>Monday through Friday, 8:00 AM to 5:00 PM.</hours>
+				<cntinst>Call, email, or write.</cntinst>
+			</cntinfo>
+		</distrib>
+		<distliab>This product is for informational purposes and may not have been prepared for legal, engineering or surveying purposes.  Users of this information should review or consult the primary data and information sources to ascertain the usabaility of the information.</distliab>
+	</distinfo>
+	<metainfo>
+		<metd>20150812</metd>
+		<metrd>2015</metrd>
+		<metc>
+			<cntinfo>
+				<cntorgp>
+					<cntorg>Geographic Information Services (GIS) Unit, Oregon Department of Transportation (ODOT).</cntorg>
+				</cntorgp>
+				<cntaddr>
+					<addrtype>mailing and physical address</addrtype>
+					<address>555 13th St. NE, Suite #2</address>
+					<city>Salem</city>
+					<state>OR</state>
+					<postal>97301-4178</postal>
+					<country>USA</country>
+				</cntaddr>
+				<cntvoice>503.986.3154</cntvoice>
+				<cntfax>503.986.4249</cntfax>
+				<cntemail>odot.maps@odot.state.or.us</cntemail>
+				<hours>Monday through Friday, 8:00 AM to 5:00 PM.</hours>
+				<cntinst>Call, email, or write.</cntinst>
+			</cntinfo>
+		</metc>
+		<metstdn>FGDC Content Standards for Digital Geospatial Metadata</metstdn>
+		<metstdv>FGDC-STD-001-1998</metstdv>
+		<mettc>local time</mettc>
+		<metac>none</metac>
+		<metuc>none</metuc>
+	</metainfo>
+	<Esri><DataProperties><itemProps><itemLocation><linkage Sync="TRUE">file://\\S6000e\GISwork\GIS11_18_Data_Management_sharing\GIS11_18_04_Data_update_preps-status\FTP_ready\Mileposts_2014\Mileposts_Metadata_2014</linkage><protocol Sync="TRUE">Local Area Network</protocol></itemLocation></itemProps><copyHistory><copy source="\\S6000e\GISwork\GIS11_18_Data_Management_sharing\GIS11_18_04_Data_update_preps-status\FTP_ready\Mileposts_Metadata_2014" dest="\\S6000e\GISwork\GIS11_18_Data_Management_sharing\GIS11_18_04_Data_update_preps-status\FTP_ready\Mileposts_2014\Mileposts_Metadata_2014" date="20150923" time="14121700"></copy></copyHistory></DataProperties></Esri></metadata>
