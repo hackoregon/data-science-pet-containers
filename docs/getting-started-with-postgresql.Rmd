@@ -8,8 +8,51 @@ output:
     theme: Montpellier
     slide_level: 2
 ---
+# Introduction: PostgreSQL in Context
 
-# PostgreSQL on the Desktop - single user [@postgresql_home]
+## Industry trends: NoSQL databases [@Redmond2012]
+* Graph databases
+* Key-value stores
+* JSON document stores
+* In-memory databases
+
+## Industry trends: Backend frameworks (Apache/PHP, Ruby on Rails, Django)
+* Work with *any* database (MySQL/MariaDB, SQLite, PostgreSQL)
+* Just do the CRUD in the database, application logic is all in PHP / Ruby / Python / JavaScript code!
+    - Create
+    - Read (aka SELECT)
+    - Update
+    - Delete
+
+## If all you want ...
+* If all you want is an industrial-strength open-source permissive-licensed CRUD engine that
+    - Is fully ACID compliant
+    - Scales to huge installations
+    - Has replication / failover / high availability as standard equipment
+* Yeah, PostgreSQL's got that.
+
+## But if you also want ...
+* Full-text search
+* Stored procedures in Python, Perl, Ruby, R, Tcl and Lua
+* Foreign data (Text files, GIS data, MySQL/MariaDB, Redis) mapped into your database (foreign data wrappers)
+* Key-value stores (hstore)
+* JSON document stores (jsonb)
+* Yeah, PostgreSQL's got that too!
+
+## Speaking of industrial strength ...
+* Geographic Information Systems (GIS)
+* PostGIS
+    - Read and write GIS data files
+    - Process geometric, geographic and topology GIS data types
+    - Both vector and raster data
+     - Geocoding, reverse geocoding, address standardization
+* pgRouting
+    - Shortest / lowest cost routes from point A to point B
+    - Traveling salesperson problem
+    - Turn-by-turn directions for cars, bikes and pedestrians!
+* Yeah, I want that stuff too!
+
+# PostgreSQL on the Desktop - single user
 
 ## Windows or Mac
 * Go to EnterpriseDB download site <https://www.enterprisedb.com/downloads/postgres-postgresql-downloads>.
@@ -24,7 +67,6 @@ output:
 * Installation: install PostgreSQL 10.3 and pgAdmin 4 for desktop
 
 ## Connecting with pgAdmin
-* Online manual: @pgadmin_manual
 * Reference: @Obe2017a, chapter 4
 
 ## Exploring the tree
