@@ -118,6 +118,9 @@ output:
 ## Tagging points with a geometry column
 
 ## Geocoding [@Obe2015, chapter 8]
+* There's a demo using a Docker container at <https://github.com/hackoregon/data-science-pet-containers/tree/master/examples/geocoding>.
+* This uses a container running Debian Linux with a full PostgreSQL / PostGIS / pgRouting stack.
+* ***I have not tested it on a Windows Docker host, just Linux. It undoubtedly needs some adjustments for the volumes mounted on host filesystems.***
 
 ## Spatial joins
 
