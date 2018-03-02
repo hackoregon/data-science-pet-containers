@@ -1,10 +1,10 @@
 version: '3.4'
 services:
-  postgis:
+  geocoder:
     build:
       context: .
-      dockerfile: Dockerfile.postgis
-    image: postgis
+      dockerfile: Dockerfile
+    image: geocoder
     ports:
       - $HOST_POSTGRES_PORT:5432
     environment:
