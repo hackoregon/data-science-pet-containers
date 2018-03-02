@@ -74,9 +74,40 @@ output:
 
 ## Creating a database
 
-## Creating tables - DDL
+## Creating tables - Data Definition Language (DDL)
+To create a table, you need to do two things:
+
+1. Define the names and data types of every column in the table.
+2. Load the data into the table.
+
+We'll be working with a sample file of Oregon highway mileposts. You'll find it in <https://github.com/hackoregon/data-science-pet-containers/blob/master/examples/mileposts/Mileposts_2014/Mileposts_2014.csv>.
+
+## A cheat code if you're in a hurry
+If you don't know the data types, you can always just set them all to `text` and re-cast them to the correct type later! But in this case it's mostly obvious which columns are numeric or timestamps, and we can use text for the rest.
+
+For the mileposts, we'll use `double precision` for the latitude and longitude and `date` for `GIS_PRC_DATE` and `text` for the others. 
+
+## The finished DDL
+```{sql eval=FALSE}
+CREATE TABLE mileposts_2014 (
+  hwyname text, hwynumb text, st_hwy_sfx text,
+  rdwy_id text, mlge_typ text, ovlp_cd text,
+  mp text, mp_desc text, mp_disp text,
+  lrs_key text, lrm_key text, 
+  lat double precision, longtd double precision, 
+  hrz_col_m text, crd_rf_dtm text, effectv_dt text,
+  gis_prc_dt date);
+```
+
+## Hey, Ed, what's with all the lower case names?
+PostgreSQL requires special care in coding SQL queries when column names have anything besides lower-case letters, numbers or underscores. You have to enclose them in double-quotes. It's a real hassle, so "snake_case" rules!
 
 ## Reading a CSV file into a table - COPY
+```{sql eval=FALSE}
+COPY mileposts_2014 FROM
+'/d/Projects/data-science-pet-containers/examples/mileposts/Mileposts_2014/Mileposts_2014.csv'
+  WITH CSV HEADER;
+```
 
 ## Backing up a database
 
