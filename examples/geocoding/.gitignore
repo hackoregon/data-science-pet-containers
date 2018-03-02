@@ -1,2 +1,3 @@
 geocoder.backup
 *.html
+.env
