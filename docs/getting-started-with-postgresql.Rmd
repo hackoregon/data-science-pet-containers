@@ -105,6 +105,7 @@ output:
 * So the PostgreSQL Global Development Group (PGDG) maintains up-to-date binary repositories for all the major Linux distros.
 * These binaries are as well tested and supported as those that ship with the Linux distros.
 * Download page: <https://www.postgresql.org/download/>
+
 ## Configuring
 * Initializing the cluster
 * Enabling and starting the service
