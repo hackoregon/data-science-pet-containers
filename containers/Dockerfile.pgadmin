@@ -1,9 +1,0 @@
-FROM dpage/pgadmin4
-LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
-
-# add a non-privileged user
-RUN useradd -s /bin/bash -U -m pgadmin \
-  && chown -R pgadmin:pgadmin /home/pgadmin
-
-# force TLS false
-ENV PGADMIN_ENABLE_TLS=False

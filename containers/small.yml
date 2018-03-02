@@ -9,13 +9,3 @@ services:
       - $HOST_POSTGRES_PORT:5432
     environment:
       - POSTGRES_PASSWORD
-  pgadmin:
-    build:
-      context: .
-      dockerfile: Dockerfile.pgadmin
-    image: pgadmin
-    ports:
-      - $HOST_PGADMIN_PORT:80
-    environment:
-      - PGADMIN_DEFAULT_EMAIL
-      - PGADMIN_DEFAULT_PASSWORD
