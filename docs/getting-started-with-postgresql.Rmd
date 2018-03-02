@@ -18,7 +18,8 @@ output:
 
 ## Industry trends: Backend frameworks (Apache/PHP, Ruby on Rails, Django)
 * Work with *any* database (MySQL/MariaDB, SQLite, PostgreSQL)
-* Just do the CRUD in the database, application logic is all in PHP / Ruby / Python / JavaScript code!
+* Just use the database for CRUD, application logic is all in PHP / Ruby / Python / JavaScript code!
+* Wait - CRUD?
     - Create
     - Read (aka SELECT)
     - Update
@@ -47,10 +48,10 @@ output:
     - Both vector and raster data
      - Geocoding, reverse geocoding, address standardization
 * pgRouting
-    - Shortest / lowest cost routes from point A to point B
+    - Shortest / fastest / lowest cost routes from point A to point B
     - Traveling salesperson problem
     - Turn-by-turn directions for cars, bikes and pedestrians!
-* Yeah, I want that stuff too!
+* Yeah, I want that CRUD too!
 
 # PostgreSQL on the Desktop - single user
 
