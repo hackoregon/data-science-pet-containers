@@ -1,0 +1,125 @@
+---
+title: Windows Installation Screenshots
+author: M. Edward (Ed) Borasky
+date: "`r Sys.Date()`"
+bibliography: bibliography.bib
+output: 
+  beamer_presentation:
+    theme: Montpellier
+    slide_level: 2
+---
+## head
+
+![](screenshots/2018-03-02 10_24_10-Setup.png)
+
+
+## head
+
+![](screenshots/2018-03-02 10_25_38-Setup.png)
+
+
+## head
+
+![](screenshots/2018-03-02 10_26_16-Setup.png)
+
+
+## head
+
+![](screenshots/2018-03-02 10_26_41-Setup.png)
+
+
+## head
+
+![](screenshots/2018-03-02 10_27_22-Setup.png)
+
+
+## head
+
+![](screenshots/2018-03-02 10_27_40-Setup.png)
+
+
+## head
+
+![](screenshots/2018-03-02 10_28_38-Setup.png)
+
+
+## head
+
+![](screenshots/2018-03-02 10_29_01-Setup.png)
+
+
+## head
+
+![](screenshots/2018-03-02 10_29_25-Setup.png)
+
+
+## head
+
+![](screenshots/2018-03-02 10_32_51-Setup.png)
+
+
+## head
+
+![](screenshots/2018-03-02 10_34_00-Stack Builder 4.1.0.png)
+
+
+## head
+
+![](screenshots/2018-03-02 10_35_06-Stack Builder 4.1.0.png)
+
+
+## head
+
+![](screenshots/2018-03-02 10_36_05-Stack Builder 4.1.0.png)
+
+
+## head
+
+![](screenshots/2018-03-02 10_37_25-Stack Builder 4.1.0.png)
+
+
+## head
+
+![](screenshots/2018-03-02 10_37_50-PostGIS Bundle 2.4.3 for PostgreSQL x64 10 Setup.png)
+
+
+## head
+
+![](screenshots/2018-03-02 10_38_19-PostGIS Bundle 2.4.3 for PostgreSQL x64 10 Setup.png)
+
+
+## head
+
+![](screenshots/2018-03-02 10_39_02-PostGIS Bundle 2.4.3 for PostgreSQL x64 10 Setup.png)
+
+
+## head
+
+![](screenshots/2018-03-02 10_39_36-PostGIS Bundle 2.4.3 for PostgreSQL x64 10 Setup_ Database Connection.png)
+
+
+## head
+
+![](screenshots/2018-03-02 10_39_56-PostGIS Bundle 2.4.3 for PostgreSQL x64 10 Setup_ Database Name.png)
+
+
+## head
+
+![](screenshots/2018-03-02 10_40_31-PostGIS Bundle 2.4.3 for PostgreSQL x64 10 Setup.png)
+
+
+## head
+
+![](screenshots/2018-03-02 10_40_54-PostGIS Bundle 2.4.3 for PostgreSQL x64 10 Setup.png)
+
+
+## head
+
+![](screenshots/2018-03-02 10_41_16-PostGIS Bundle 2.4.3 for PostgreSQL x64 10 Setup.png)
+
+
+## head
+
+![](screenshots/2018-03-02 10_42_03-Stack Builder 4.1.0.png)
+
+
