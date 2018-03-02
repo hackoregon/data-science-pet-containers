@@ -4,10 +4,15 @@ LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
 # Install the MDB / ODBC tools, PostGIS, pgRouting and foreign data wrappers
 RUN apt-get update \
   && apt-get install -qqy --no-install-recommends \
+    bzip2 \
     ca-certificates \
+    curl \
     gnupg \
     mdbtools \
     mdbtools-dev \
+    osm2pgsql \
+    osm2pgrouting \
+    p7zip \
     postgis \
     postgresql-10-postgis-2.4 \
     postgresql-10-postgis-2.4-scripts \
@@ -16,8 +21,10 @@ RUN apt-get update \
     postgresql-10-mysql-fdw \
     postgresql-10-ogr-fdw \
     postgresql-10-python3-multicorn \
+    tar \
     unixodbc-dev \
     unrar-free \
+    wget \
   && apt-get clean \
   && mkdir -p /home/postgres \
   && usermod --shell /bin/bash --home /home/postgres --move-home postgres \
