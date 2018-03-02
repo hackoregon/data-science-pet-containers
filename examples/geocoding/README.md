@@ -12,7 +12,7 @@
   Docker version 18.01.0-ce, build 03596f51b1
   ```
 
-* Host disk space for persistence. The build process mounts two host directories as volumes inside containers. 
+* Host disk space for persistence. The build process mounts two host directories as volumes inside containers. If they do not exist, Docker will create them with the correct permissions / ownership.
         
     1. `/d/gisdata` is mounted in the containers as `/gisdata`. This is where the database population scripts save the downloaded TIGER/Line® shapefiles. Note that if you run this a few times, the Census Bureau will blacklist your IP address. So make sure you back this area up somewhere. As long as you have all the data, the scripts will run correctly even if you're blacklisted.
 
@@ -52,8 +52,6 @@ You'll be able to connect from the host to PostGIS in the container as `postgres
 Testing: type
 
 ```
-export PGPASSWORD="yourpasswordgoeshere"
-source env-postgis-geocoder
 ./test-geocoder.bash
 ```
 
