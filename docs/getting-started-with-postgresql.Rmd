@@ -100,7 +100,11 @@ output:
     - Docker hosting on a desktop / laptop isn't exactly end-user friendly yet
 
 ## The PGDG repositories
-
+* Linux distributions ship with the version of PostgreSQL that was stable when their release process froze features.
+* You'll still get security updates and bug fixes, but no new features.
+* So the PostgreSQL Global Development Group (PGDG) maintains up-to-date binary repositories for all the major Linux distros.
+* These binaries are as well tested and supported as those that ship with the Linux distros.
+* Download page: <https://www.postgresql.org/download/>
 ## Configuring
 * Initializing the cluster
 * Enabling and starting the service
