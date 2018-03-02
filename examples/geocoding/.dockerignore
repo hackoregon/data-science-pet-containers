@@ -2,5 +2,5 @@
 README*
 *.yml
 testing
-geocoder.pgdump
+geocoder.backup
 *.html

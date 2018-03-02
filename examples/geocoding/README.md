@@ -16,9 +16,9 @@
         
     1. `/d/gisdata` is mounted in the containers as `/gisdata`. This is where the database population scripts save the downloaded TIGER/Line® shapefiles. Note that if you run this a few times, the Census Bureau will blacklist your IP address. So make sure you back this area up somewhere. As long as you have all the data, the scripts will run correctly even if you're blacklisted.
 
-        `/d/gisdata` is also where the scripts save the `pg_dump` of the geocoder database. This directory will have UID and GID 999, which corresponds to the `postgres` user and group in the containers. Don't change this!` `/data/gisdata` is currently about 1.6 GB. The `geocoder.pgdump` file is about 848 MB.
+        `/d/gisdata` is also where the scripts save the `pg_dump` of the geocoder database. This directory will have UID and GID 999, which corresponds to the `postgres` user and group in the containers. Don't change this!` `/data/gisdata` is currently about 1.6 GB. The `geocoder.backup` file is about 848 MB.
 
-    2. `/d/pgdata` is mounted in the containers as `/var/lib/postgresql/data/pgdata`. This is where the containers keep their PostgreSQL data. This is also UID and GID 999. For the geocoders, this is easily recreated, either by re-running the scripts or by restoring `geocoder.pgdump` in `/data/gisdata`. But for other applications, you'll want to be careful not to corrupt it with host processes. `/d/pgdata` with just the Oregon geocoder database is currently about 2.7 GB.
+    2. `/d/pgdata` is mounted in the containers as `/var/lib/postgresql/data/pgdata`. This is where the containers keep their PostgreSQL data. This is also UID and GID 999. For the geocoders, this is easily recreated, either by re-running the scripts or by restoring `geocoder.backup` in `/data/gisdata`. But for other applications, you'll want to be careful not to corrupt it with host processes. `/d/pgdata` with just the Oregon geocoder database is currently about 2.7 GB.
 
 ### Buidling the database and the images
 1. Clone this repository.
@@ -38,7 +38,7 @@ When those messages appear, type `CTRL-C` to stop the service. The script will t
 
 At this point you have
 
-1. `/d/gisdata/geocoder.pgdump` - the geocoder database suitable for `pg_restore`,
+1. `/d/gisdata/geocoder.backup` - the geocoder database suitable for `pg_restore`,
 2. Downloaded shapefiles in `/d/gisdata/www2.census.gov/`,
 3. A PostgreSQL / PostGIS database in `/d/pgdata`,
 4. A Docker image: `postgis-geocoder`.  The image is the image the scripts used to download the shapefiles and populate the database. Thus it has copies of all the scripts. Both are about 467 MB.

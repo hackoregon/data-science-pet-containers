@@ -38,6 +38,6 @@ done
 echo "Installing any missing indexes"
 psql -d geocoder -c "SELECT install_missing_indexes();"
 echo "Creating a dump of the geocoder database"
-pg_dump -Fc geocoder > /gisdata/geocoder.pgdump
+pg_dump -Fc geocoder > /gisdata/geocoder.backup
 
 ./test-geocoder.bash
