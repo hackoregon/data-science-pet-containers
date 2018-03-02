@@ -24,6 +24,7 @@ RUN apt-get update \
     tar \
     unixodbc-dev \
     unrar-free \
+    unzip \
     wget \
   && apt-get clean \
   && mkdir -p /home/postgres \
