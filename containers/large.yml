@@ -13,7 +13,7 @@ services:
       dockerfile: Dockerfile.rstudio
     image: rstudio
     ports:
-      - $HOST_RSTUDIO_PORT:8787
+      - 8787:8787
   postgis:
     build:
       context: .
