@@ -1,10 +1,15 @@
 # Oregon Mileposts
 
+## Git LFS
+This example stores binary data using Git LFS. You'll need to install it to use it with Git. Instructions can be found at <https://git-lfs.github.com/>.
+
+## Getting the "ogr" tools
+They live in a package called `gdal`, which stands for Geographic Data Abstraction Library. If you installed PostGIS, you probably have it, because some PostGIS operations depend on it. You probably also have it if you're using any Python or R geospatial tools. And, of course, it's installed in the `postgis` Docker image in this repository. By the way, `gdal` is pronounced "goo-dal". If you don't have `gdal` you can get it from <https://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries>.
+
 ## How to make the CSV file
-1. Getting the "ogr" tools. They live in a package called `gdal`, which stands for Geographic Data Abstraction Library. If you installed PostGIS, you have it, because PostGIS depends on it for a number of operations. You probably also have it if you're using any Python or R geospatial tools. By the way, `gdal` is pronounced "goo-dal".
-2. Go to <http://spatialdata.oregonexplorer.info/geoportal/details;id=35defd130a394981acee60dbeb2e469a>.
-3. Download the file and unzip it. You'll get a directory `Mileposts_2014`.
-4. Type
+1. Go to <http://spatialdata.oregonexplorer.info/geoportal/details;id=35defd130a394981acee60dbeb2e469a>.
+2. Download the file and unzip it. You'll get a directory `Mileposts_2014`.
+3. Type
 
     ```
     cd Mileposts_2014
@@ -22,4 +27,4 @@
     ```
 
     Good news! You have a GDB (geographic database) that `ogr2ogr` can convert to CSV!
-5. Enter `ogr2ogr -f CSV Mileposts_2014.csv Mileposts_2014.gdb`. `ogr2ogr` will do the conversion.
+4. Enter `ogr2ogr -f CSV Mileposts_2014.csv Mileposts_2014.gdb`. `ogr2ogr` will do the conversion.
