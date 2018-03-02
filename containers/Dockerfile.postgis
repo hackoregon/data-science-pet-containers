@@ -7,6 +7,7 @@ RUN apt-get update \
     bzip2 \
     ca-certificates \
     curl \
+    gdal-bin \
     gnupg \
     mdbtools \
     mdbtools-dev \
@@ -21,6 +22,7 @@ RUN apt-get update \
     postgresql-10-mysql-fdw \
     postgresql-10-ogr-fdw \
     postgresql-10-python3-multicorn \
+    proj-bin \
     tar \
     unixodbc-dev \
     unrar-free \
