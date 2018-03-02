@@ -93,6 +93,10 @@ output:
 ## Docker container
 * Debian stable - similar to Ubuntu
 * Alpine - avoid this unless you want to do a lot of research
+* I have a full PostgreSQL / PostGIS / pgRouting stack in a container at <https://github.com/hackoregon/data-science-pet-containers>.
+    - The documentation's a bit sparse still
+    - Native executables will perform better
+    - Docker hosting on a desktop / laptop isn't exactly end-user friendly yet
 
 ## The PGDG repositories
 
