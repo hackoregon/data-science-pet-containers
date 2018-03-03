@@ -42,12 +42,12 @@ output:
 
 ## Speaking of industrial strength ...
 * Geographic Information Systems (GIS)
-* PostGIS
+* PostGIS [@Obe2015]
     - Read and write GIS data files
     - Process geometric, geographic and topology GIS data types
     - Both vector and raster data
      - Geocoding, reverse geocoding, address standardization
-* pgRouting
+* pgRouting [@Obe2017]
     - Shortest / fastest / lowest cost routes from point A to point B
     - Traveling salesperson problem
     - Turn-by-turn directions for cars, bikes and pedestrians!
@@ -67,7 +67,7 @@ output:
 * Debian: <https://www.postgresql.org/download/linux/debian/>
 * Installation: install PostgreSQL 10.3 and pgAdmin 4 for desktop
 
-## Connecting with pgAdmin - (@Obe2017a, chapter 4)
+## Connecting with pgAdmin - [@Obe2017a, chapter 4]
 1. Right-click on "Servers"
 2. Create a server
 3. Give it any name you want
@@ -175,19 +175,24 @@ PostgreSQL requires special care in coding SQL queries when column names have an
 
 ## Configuring
 * Initializing the cluster: `initdb`
+    - <https://www.postgresql.org/docs/10/static/app-initdb.html>
 * Enabling and starting the service: `systemctl`
 
 ## Listening address and port
 * Edit `postgresql.conf`
+    - <https://www.postgresql.org/docs/10/static/runtime-config.html>
+    - <https://www.postgresql.org/docs/10/static/config-setting.html#CONFIG-SETTING-CONFIGURATION-FILE>
 * Restart the service
 
 ## Authentication
 * Edit `pg_hba.conf`
+    - <https://www.postgresql.org/docs/10/static/auth-pg-hba-conf.html>
 * Restart the service
 
 ## Fine-grained permissions and roles
 * Adding a user  (pgAdmin live)
 * SQL `GRANT` and `REVOKE`
+    - <https://www.postgresql.org/docs/10/static/user-manag.html>
 
 # PostGIS
 
@@ -209,11 +214,6 @@ PostgreSQL requires special care in coding SQL queries when column names have an
 * There's a demo using a Docker container at <https://github.com/hackoregon/data-science-pet-containers/tree/master/examples/geocoding>.
 * This uses a container running Debian Linux with a full PostgreSQL / PostGIS / pgRouting stack.
 * ***I have not tested it on a Windows Docker host, just Linux. It undoubtedly needs some adjustments for the volumes mounted on host filesystems.***
-
-# pgRouting - what it can do
-
-## Turn-by-turn directions
-* Reference: [@Obe2017]
 
 # References
 
