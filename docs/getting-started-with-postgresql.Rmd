@@ -64,7 +64,7 @@ output:
 
 ## Linux: use the PGDG repositories
 * RHEL / CentOS / Fedora: <https://www.postgresql.org/download/linux/redhat/>
-* Linux Mint 18 / Ubuntu 16.06 LTS ("Xenial"): <https://github.com/hackoregon/data-science-pet-containers/blob/master/docs/Mint18-Xenial/README.md>
+* Linux Mint 18 / Ubuntu 16.04 LTS ("Xenial"): <https://github.com/hackoregon/data-science-pet-containers/blob/master/docs/Mint18-Xenial/README.md>
 * Debian: <https://www.postgresql.org/download/linux/debian/>
 * Installation: install PostgreSQL 10.3 and pgAdmin 4 for desktop
 
@@ -85,6 +85,7 @@ output:
 * Port: 5432
 * Maintenance database and user are the same as your Linux ID
 * Password is empty
+* See <https://github.com/hackoregon/data-science-pet-containers/blob/master/docs/Mint18-Xenial/README.md> for setup steps
 
 ## Exploring the tree (pgAdmin live)
 
@@ -118,7 +119,7 @@ CREATE TABLE mileposts_2014 (
 ## Hey, Ed, what's with all the lower case names?
 PostgreSQL requires special care in coding SQL queries when column names have anything besides lower-case letters, numbers or underscores. You have to enclose them in double-quotes. It's a real hassle, so "snake_case" rules!
 
-## Loading the data into the table: `psql` `\copy`!
+## Loading the data into the table: `psql` `\copy`
 * `psql` is the command-line PostgreSQL client.
 * It's fully scriptable - you can write programs in it.
 * It has string substitution.
@@ -177,6 +178,7 @@ PostgreSQL requires special care in coding SQL queries when column names have an
 ## Configuring
 * Initializing the cluster: `initdb`
     - <https://www.postgresql.org/docs/10/static/app-initdb.html>
+    - By the way, _cluster_ is a "cluster of databases"
 * Enabling and starting the service: `systemctl`
 
 ## Listening address and port
