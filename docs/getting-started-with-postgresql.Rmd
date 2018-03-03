@@ -63,12 +63,27 @@ output:
 
 ## Linux: use the PGDG repositories
 * RHEL / CentOS / Fedora: <https://www.postgresql.org/download/linux/redhat/>
-* Ubuntu: <https://www.postgresql.org/download/linux/ubuntu/> (probably works for Linux Mint)
+* Linux Mint 18 / Ubuntu 16.06 LTS ("Xenial"): <https://github.com/hackoregon/data-science-pet-containers/blob/master/docs/Mint18-Xenial/README.md>
 * Debian: <https://www.postgresql.org/download/linux/debian/>
 * Installation: install PostgreSQL 10.3 and pgAdmin 4 for desktop
 
-## Connecting with pgAdmin
-* Reference: @Obe2017a, chapter 4
+## Connecting with pgAdmin - (@Obe2017a, chapter 4)
+1. Right-click on "Servers"
+2. Create a server
+3. Give it any name you want
+4. Fill in the connection tab
+
+## EnterpriseDB connection
+* Host: localhost
+* Port: 5432
+* Maintenance database and user are postgres
+* Password is what you set when you installed
+
+## Linux connection (at least on Mint / Ubuntu)
+* Host: /var/run/postgresql
+* Port: 5432
+* Maintenance database and user are the same as your Linux ID
+* Password is empty
 
 ## Exploring the tree (pgAdmin live)
 
@@ -87,7 +102,7 @@ If you don't know the data types, you can always just set them all to `text` and
 
 For the mileposts, we'll use `double precision` for the latitude and longitude and `text` for the others.
 
-## The finished DDL
+## The DDL
 ```{sql eval=FALSE}
 CREATE TABLE mileposts_2014 (
   hwyname text, hwynumb text, st_hwy_sfx text,
@@ -102,44 +117,18 @@ CREATE TABLE mileposts_2014 (
 ## Hey, Ed, what's with all the lower case names?
 PostgreSQL requires special care in coding SQL queries when column names have anything besides lower-case letters, numbers or underscores. You have to enclose them in double-quotes. It's a real hassle, so "snake_case" rules!
 
-## Reading a CSV file into a table - SQL COPY (but don't do this!)
-```{sql eval=FALSE}
-COPY mileposts_2014 FROM
-'/d/Mileposts_2014.csv'
-  WITH CSV HEADER;
-```
-
-## Whoa! That doesn't work! I get a permission error!
-* I told you not to do it. ;-)
-* COPY is very finicky. To use the in-database COPY:
-    - The database superuser's *host* account has to have read permissions on the file
-    - The file has to be on the server's filesystem. In the desktop case, the server is your desktop, so that's not the problem.
-    - You have to run the COPY as the database superuser. An ordinary PostgreSQL user can't run it.
-    - You have to use an absolute path.
-* Bottom line: it really only works on Linux and you have to know what you're doing.
-
-## Solution: `psql` `\copy`!
+## Loading the data into the table: `psql` `\copy`!
 * `psql` is the command-line PostgreSQL client.
 * It's fully scriptable - you can write programs in it.
 * It has string substitution.
 * You can mix SQL statements and `psql` commands
 * It's great for reproducibility
 * But it's another language to learn 
-    - most folks will script in a language they know, like Python, that has its own PostgreSQL client libraries.
+    - most folks will script in a language they know, like Python, which has its own PostgreSQL client libraries.
 
-## But it has a `\copy` that works all the time!
-* SQL: `COPY mileposts_2014 FROM '/d/Mileposts_2014.csv' WITH CSV HEADER;`
-* psql: `\copy mileposts_2014 from 'Mileposts_2014.csv' with csv header`
-
-## Differences
-1. SQL statement ends with a semicolon
-2. `psql` command starts with a `\` and has no semicolon
-3. SQL looks for the CSV file on the ***server***, `psql` looks for it on the ***client***
-
-## So, instead of trying to wrestle COPY to the ground ...
-* We write a script in `psql`, with the SQL to create the table and the `psql` to copy the data in!
-* `psql` sees the SQL first, sends it off to the server.
-* Then it sees the `\copy` and sends the CSV to the server, a line at a time.
+## Mixing SQL and `psql`
+* Script: <https://github.com/hackoregon/data-science-pet-containers/blob/master/examples/mileposts/Mileposts_2014/ddl_and_copy.sql>
+* To run it, we type `psql -f ddl_and_copy.sql`.
 
 ## This is what it looks like in a Windows `cmd` window
 
@@ -151,19 +140,26 @@ COPY mileposts_2014 FROM
 
 ## Examining the table (pgAdmin live)
 
-## Backing up a database: `pg_dump`
+## Backing up a database: `pg_dump` (pgAdmin live)
 
-## Restoring a database: `pg_restore`
+## Restoring a database: `pg_restore` (pgAdmin live)
 
 # PostgreSQL on a (Linux) Server
 
-## Two dialects of Linux
+## And now for something completely different
+* On a desktop, you're usually the database superuser
+    - Everything works, and your machine's behind a firewall
+* On a server, there's a DBA and a SysAdmin that hands out privileges only with justification
+    - You don't get it unless you need it, and everything you do is logged and monitored
+* Bottom line: don't be surprised if you get told, "No! Find another way."
+
+## Two most common server dialects of Linux
 * Ubuntu 16.04.x LTS (most popular)
 * RHEL 7 / CentOS 7
 
 ## An aside - PostgreSQL in a Docker container
-* Debian stable - similar to Ubuntu
-* Alpine - avoid this unless you want to do a lot of research
+* Usually Debian stable - similar to Ubuntu
+* Sometimes Alpine - avoid this unless you want to do a lot of research
 * I have a full PostgreSQL / PostGIS / pgRouting stack in a container at <https://github.com/hackoregon/data-science-pet-containers>.
     - See <https://github.com/hackoregon/data-science-pet-containers/blob/master/containers/small.yml> for the Docker compose file
     - The documentation's a bit sparse still
@@ -192,8 +188,6 @@ COPY mileposts_2014 FROM
 ## Fine-grained permissions and roles
 * Adding a user  (pgAdmin live)
 * SQL `GRANT` and `REVOKE`
-
-## Tablespaces
 
 # PostGIS
 
