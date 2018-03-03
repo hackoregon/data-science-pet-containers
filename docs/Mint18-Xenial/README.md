@@ -27,3 +27,5 @@
         4. Password is empty. If it ever asks you for a password again, give it an empty string.
 
 4. Note that if you've installed older versions from the Mint / Ubuntu default repositories, you'll probably have to remove them before running this. I tested it on a Linux Mint 18 virtual machine, but it should work with any Ubuntu 16.04 LTS desktop.
+
+![](Screenshot_from_2018-03-02_20-41-52.png)
