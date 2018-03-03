@@ -1,0 +1,13 @@
+---
+title: "Getting the Oregon OpenStreetMap Data"
+author: "M. Edward (Ed) Borasky"
+date: "`r Sys.Date()`"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+1. Browse to <http://download.geofabrik.de/north-america/us/oregon.html>
+2. Download the file <http://download.geofabrik.de/north-america/us/oregon-latest.osm.pbf>
