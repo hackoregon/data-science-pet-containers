@@ -5,7 +5,7 @@ date: "`r Sys.Date()`"
 bibliography: bibliography.bib
 output: 
   beamer_presentation:
-    theme: Montpellier
+    theme: EastLansing
     slide_level: 2
 ---
 
