@@ -60,6 +60,7 @@ output:
 * Select the latest version (10.3)
 * Select your operating system (Windows or Mac)
 * Installation: install everything but don't run StackBuilder yet
+    - Screenshots: <https://github.com/hackoregon/data-science-pet-containers/blob/master/docs/windows-install-screenshots.pdf>
 
 ## Linux: use the PGDG repositories
 * RHEL / CentOS / Fedora: <https://www.postgresql.org/download/linux/redhat/>
@@ -149,7 +150,7 @@ PostgreSQL requires special care in coding SQL queries when column names have an
 ## And now for something completely different
 * On a desktop, you're usually the database superuser
     - Everything works, and your machine's behind a firewall
-* On a server, there's a DBA and a SysAdmin that hands out privileges only with justification
+* On a server, there's a DBA and a SysAdmin that hand out privileges only with justification
     - You don't get it unless you need it, and everything you do is logged and monitored
 * Bottom line: don't be surprised if you get told, "No! Find another way."
 
