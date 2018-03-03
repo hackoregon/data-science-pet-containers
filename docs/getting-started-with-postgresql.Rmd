@@ -70,9 +70,9 @@ output:
 ## Connecting with pgAdmin
 * Reference: @Obe2017a, chapter 4
 
-## Exploring the tree
+## Exploring the tree (pgAdmin live)
 
-## Creating a database
+## Creating a database (pgAdmin live)
 
 ## Creating tables - Data Definition Language (DDL)
 To create a table, you need to do two things:
@@ -83,9 +83,9 @@ To create a table, you need to do two things:
 We'll be working with a sample file of Oregon highway mileposts. You'll find it in <https://github.com/hackoregon/data-science-pet-containers/blob/master/examples/mileposts/Mileposts_2014/Mileposts_2014.csv>.
 
 ## A cheat code if you're in a hurry
-If you don't know the data types, you can always just set them all to `text` and re-cast them to the correct type later! But in this case it's mostly obvious which columns are numeric or timestamps, and we can use text for the rest.
+If you don't know the data types, you can always just set them all to `text` and re-cast them to the correct type with SQL later! But in this case it's mostly obvious which columns are numeric or timestamps, and we can use text for the rest.
 
-For the mileposts, we'll use `double precision` for the latitude and longitude and `date` for `GIS_PRC_DATE` and `text` for the others. 
+For the mileposts, we'll use `double precision` for the latitude and longitude and `text` for the others.
 
 ## The finished DDL
 ```{sql eval=FALSE}
@@ -96,24 +96,64 @@ CREATE TABLE mileposts_2014 (
   lrs_key text, lrm_key text, 
   lat double precision, longtd double precision, 
   hrz_col_m text, crd_rf_dtm text, effectv_dt text,
-  gis_prc_dt date);
+  gis_prc_dt text);
 ```
 
 ## Hey, Ed, what's with all the lower case names?
 PostgreSQL requires special care in coding SQL queries when column names have anything besides lower-case letters, numbers or underscores. You have to enclose them in double-quotes. It's a real hassle, so "snake_case" rules!
 
-## Reading a CSV file into a table - COPY
+## Reading a CSV file into a table - SQL COPY (but don't do this!)
 ```{sql eval=FALSE}
 COPY mileposts_2014 FROM
-'/d/Projects/data-science-pet-containers/examples/mileposts/Mileposts_2014/Mileposts_2014.csv'
+'/d/Mileposts_2014.csv'
   WITH CSV HEADER;
 ```
 
-## Backing up a database
+## Whoa! That doesn't work! I get a permission error!
+* I told you not to do it. ;-)
+* COPY is very finicky. To use the in-database COPY:
+    - The database superuser's *host* account has to have read permissions on the file
+    - The file has to be on the server's filesystem. In the desktop case, the server is your desktop, so that's not the problem.
+    - You have to run the COPY as the database superuser. An ordinary PostgreSQL user can't run it.
+    - You have to use an absolute path.
+* Bottom line: it really only works on Linux and you have to know what you're doing.
 
-## Restoring a database
+## Solution: `psql` `\copy`!
+* `psql` is the command-line PostgreSQL client.
+* It's fully scriptable - you can write programs in it.
+* It has string substitution.
+* You can mix SQL statements and `psql` commands
+* It's great for reproducibility
+* But it's another language to learn 
+    - most folks will script in a language they know, like Python, that has its own PostgreSQL client libraries.
 
-## Creating a query
+## But it has a `\copy` that works all the time!
+* SQL: `COPY mileposts_2014 FROM '/d/Mileposts_2014.csv' WITH CSV HEADER;`
+* psql: `\copy mileposts_2014 from 'Mileposts_2014.csv' with csv header`
+
+## Differences
+1. SQL statement ends with a semicolon
+2. `psql` command starts with a `\` and has no semicolon
+3. SQL looks for the CSV file on the ***server***, `psql` looks for it on the ***client***
+
+## So, instead of trying to wrestle COPY to the ground ...
+* We write a script in `psql`, with the SQL to create the table and the `psql` to copy the data in!
+* `psql` sees the SQL first, sends it off to the server.
+* Then it sees the `\copy` and sends the CSV to the server, a line at a time.
+
+## This is what it looks like in a Windows `cmd` window
+
+![](screenshots/2018-03-02_14_56_24-Command_Prompt.png)
+
+## And the `psql` script file looks like this
+
+![](screenshots/2018-03-02_14_57_40-Command_Prompt-vim_ddl_and_copy.sql.png)
+
+## Examining the table (pgAdmin live)
+
+## Backing up a database: `pg_dump`
+
+## Restoring a database: `pg_restore`
 
 # PostgreSQL on a (Linux) Server
 
@@ -121,7 +161,7 @@ COPY mileposts_2014 FROM
 * Ubuntu 16.04.x LTS (most popular)
 * RHEL 7 / CentOS 7
 
-## Docker container
+## An aside - PostgreSQL in a Docker container
 * Debian stable - similar to Ubuntu
 * Alpine - avoid this unless you want to do a lot of research
 * I have a full PostgreSQL / PostGIS / pgRouting stack in a container at <https://github.com/hackoregon/data-science-pet-containers>.
@@ -138,32 +178,43 @@ COPY mileposts_2014 FROM
 * Download page: <https://www.postgresql.org/download/>
 
 ## Configuring
-* Initializing the cluster
-* Enabling and starting the service
+* Initializing the cluster: `initdb`
+* Enabling and starting the service: `systemctl`
 
 ## Listening address and port
+* Edit `postgresql.conf`
+* Restart the service
 
 ## Authentication
+* Edit `pg_hba.conf`
+* Restart the service
 
 ## Fine-grained permissions and roles
+* Adding a user  (pgAdmin live)
+* SQL `GRANT` and `REVOKE`
 
 ## Tablespaces
 
 # PostGIS
 
-## Reading in GIS data [@Obe2015, chapter 4]
-* Shapefiles
-* "GDB" databases
-* OpenStreetMap data
+## Installing PostGIS
+* Windows and Mac - use the Stack Builder
+    - You'll get `pgRouting` too
+    - You'll get the command-line GIS utility `gdal`
+* Linux: use the PGDG repositories
+    - You'll need to install `pgRouting` and `gdal` explicitly
 
-## Tagging points with a geometry column
+## Reading in GIS data [@Obe2015, chapter 4]
+* Shapefiles (live command line demo)
+* "GDB" databases (live command line demo)
+* OpenStreetMap data (live command line demo)
+
+## Tagging points with a geometry column (pgAdmin live)
 
 ## Geocoding [@Obe2015, chapter 8]
 * There's a demo using a Docker container at <https://github.com/hackoregon/data-science-pet-containers/tree/master/examples/geocoding>.
 * This uses a container running Debian Linux with a full PostgreSQL / PostGIS / pgRouting stack.
 * ***I have not tested it on a Windows Docker host, just Linux. It undoubtedly needs some adjustments for the volumes mounted on host filesystems.***
-
-## Spatial joins
 
 # pgRouting - what it can do
 
