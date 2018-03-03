@@ -8,118 +8,97 @@ output:
     theme: Montpellier
     slide_level: 2
 ---
-## head
 
-![](screenshots/2018-03-02 10_24_10-Setup.png)
 
+## Welcome screen
 
-## head
+![](screenshots/2018-03-02 10_24_10-Setup.png){width=80%}
 
-![](screenshots/2018-03-02 10_25_38-Setup.png)
+## D: is my 1 TB magnetic drive; C: is a 128 GB SSD
 
+![](screenshots/2018-03-02 10_25_38-Setup.png){width=80%}
 
-## head
+## Install everything
 
-![](screenshots/2018-03-02 10_26_16-Setup.png)
+![](screenshots/2018-03-02 10_26_16-Setup.png){width=80%}
 
+## Put the data on the 1 TB drive too
 
-## head
+![](screenshots/2018-03-02 10_26_41-Setup.png){width=80%}
 
-![](screenshots/2018-03-02 10_26_41-Setup.png)
+## Set the `postgres` password
 
+![](screenshots/2018-03-02 10_27_22-Setup.png){width=80%}
 
-## head
+## The default port
 
-![](screenshots/2018-03-02 10_27_22-Setup.png)
+![](screenshots/2018-03-02 10_27_40-Setup.png){width=80%}
 
+## Set the locale to English, US
 
-## head
+![](screenshots/2018-03-02 10_28_38-Setup.png){width=80%}
 
-![](screenshots/2018-03-02 10_27_40-Setup.png)
+## Check for errors; use `Back` to fix
 
+![](screenshots/2018-03-02 10_29_01-Setup.png){width=80%}
 
-## head
+## Let's do this!
 
-![](screenshots/2018-03-02 10_28_38-Setup.png)
+![](screenshots/2018-03-02 10_29_25-Setup.png){width=80%}
 
+## All done! Uncheck the Stack Builder and finish
 
-## head
+![](screenshots/2018-03-02 10_32_51-Setup.png){width=80%}
 
-![](screenshots/2018-03-02 10_29_01-Setup.png)
+## The Stack Builder is in your Start Menu - start it
 
+![](screenshots/2018-03-02 10_34_00-Stack Builder 4.1.0.png){width=80%}
 
-## head
+## The goodies we're installing are listed at the bottom
 
-![](screenshots/2018-03-02 10_29_25-Setup.png)
+![](screenshots/2018-03-02 10_35_06-Stack Builder 4.1.0.png){width=80%}
 
+## I save all my installers on my 1 TB drive
 
-## head
+![](screenshots/2018-03-02 10_36_05-Stack Builder 4.1.0.png){width=80%}
 
-![](screenshots/2018-03-02 10_32_51-Setup.png)
+## Press "Next"
 
+![](screenshots/2018-03-02 10_37_25-Stack Builder 4.1.0.png){width=80%}
 
-## head
+## Accept the license
 
-![](screenshots/2018-03-02 10_34_00-Stack Builder 4.1.0.png)
+![](screenshots/2018-03-02 10_37_50-PostGIS Bundle 2.4.3 for PostgreSQL x64 10 Setup.png){width=80%}
 
+## Accept the sample database
 
-## head
+![](screenshots/2018-03-02 10_38_19-PostGIS Bundle 2.4.3 for PostgreSQL x64 10 Setup.png){width=80%}
 
-![](screenshots/2018-03-02 10_35_06-Stack Builder 4.1.0.png)
+## You shouldn't have to change this
 
+![](screenshots/2018-03-02 10_39_02-PostGIS Bundle 2.4.3 for PostgreSQL x64 10 Setup.png){width=80%}
 
-## head
+## Sign in with the password you set when you installed PostgreSQL
 
-![](screenshots/2018-03-02 10_36_05-Stack Builder 4.1.0.png)
+![](screenshots/2018-03-02 10_39_36-PostGIS Bundle 2.4.3 for PostgreSQL x64 10 Setup_ Database Connection.png){width=80%}
 
+## Don't change this
 
-## head
+![](screenshots/2018-03-02 10_39_56-PostGIS Bundle 2.4.3 for PostgreSQL x64 10 Setup_ Database Name.png){width=80%}
 
-![](screenshots/2018-03-02 10_37_25-Stack Builder 4.1.0.png)
+## Yes
 
+![](screenshots/2018-03-02 10_40_31-PostGIS Bundle 2.4.3 for PostgreSQL x64 10 Setup.png){width=80%}
 
-## head
+## Yes
 
-![](screenshots/2018-03-02 10_37_50-PostGIS Bundle 2.4.3 for PostgreSQL x64 10 Setup.png)
+![](screenshots/2018-03-02 10_40_54-PostGIS Bundle 2.4.3 for PostgreSQL x64 10 Setup.png){width=80%}
 
+## Yes
 
-## head
+![](screenshots/2018-03-02 10_41_16-PostGIS Bundle 2.4.3 for PostgreSQL x64 10 Setup.png){width=80%}
 
-![](screenshots/2018-03-02 10_38_19-PostGIS Bundle 2.4.3 for PostgreSQL x64 10 Setup.png)
+## Finish!
 
-
-## head
-
-![](screenshots/2018-03-02 10_39_02-PostGIS Bundle 2.4.3 for PostgreSQL x64 10 Setup.png)
-
-
-## head
-
-![](screenshots/2018-03-02 10_39_36-PostGIS Bundle 2.4.3 for PostgreSQL x64 10 Setup_ Database Connection.png)
-
-
-## head
-
-![](screenshots/2018-03-02 10_39_56-PostGIS Bundle 2.4.3 for PostgreSQL x64 10 Setup_ Database Name.png)
-
-
-## head
-
-![](screenshots/2018-03-02 10_40_31-PostGIS Bundle 2.4.3 for PostgreSQL x64 10 Setup.png)
-
-
-## head
-
-![](screenshots/2018-03-02 10_40_54-PostGIS Bundle 2.4.3 for PostgreSQL x64 10 Setup.png)
-
-
-## head
-
-![](screenshots/2018-03-02 10_41_16-PostGIS Bundle 2.4.3 for PostgreSQL x64 10 Setup.png)
-
-
-## head
-
-![](screenshots/2018-03-02 10_42_03-Stack Builder 4.1.0.png)
-
+![](screenshots/2018-03-02 10_42_03-Stack Builder 4.1.0.png){width=80%}
 
