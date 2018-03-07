@@ -1,4 +1,4 @@
-FROM continuumio/miniconda3
+FROM continuumio/anaconda3
 LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
 
 # add gnupg for PostgreSQL repo
@@ -12,7 +12,6 @@ RUN mkdir -p /etc/apt/sources.list.d/
 COPY pgdg.list.jupyter /etc/apt/sources.list.d/pgdg.list
 
 RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
-  && wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
   && apt-get update \
   && apt-get install -qqy --no-install-recommends \
     build-essential \
@@ -33,6 +32,5 @@ RUN chmod +x /home/jupyter/start-jupyter-notebook.bash \
   && chown -R jupyter:jupyter /home/jupyter/
 WORKDIR /home/jupyter
 USER jupyter
-RUN conda create --yes --quiet --name jupyter python=3 jupyter psycopg2
 EXPOSE 8888
 CMD /home/jupyter/start-jupyter-notebook.bash

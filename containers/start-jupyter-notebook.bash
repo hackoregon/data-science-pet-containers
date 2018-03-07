@@ -1,3 +1,3 @@
 #! /bin/bash
-source activate jupyter
+source activate base
 jupyter notebook --no-browser --ip=0.0.0.0 --port=8888

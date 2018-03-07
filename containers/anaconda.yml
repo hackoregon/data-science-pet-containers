@@ -1,9 +1,9 @@
 version: '3.4'
 services:
-  jupyter:
+  anaconda:
     build:
       context: .
-      dockerfile: Dockerfile.jupyter
-    image: jupyter
+      dockerfile: Dockerfile.anaconda
+    image: anaconda
     ports:
       - 8888:8888
