@@ -10,7 +10,6 @@ RUN apt-get update \
     gdal-bin \
     gnupg \
     mdbtools \
-    mdbtools-dev \
     osm2pgsql \
     osm2pgrouting \
     p7zip \
@@ -23,10 +22,13 @@ RUN apt-get update \
     postgresql-10-ogr-fdw \
     postgresql-10-python3-multicorn \
     proj-bin \
+    python3-csvkit \
+    spatialite-bin \
     tar \
-    unixodbc-dev \
+    unixodbc \
     unrar-free \
     unzip \
+    vim \
     wget \
   && apt-get clean \
   && mkdir -p /home/postgres \
