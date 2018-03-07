@@ -9,4 +9,3 @@ services:
       - $HOST_POSTGRES_PORT:5432
     environment:
       - POSTGRES_PASSWORD
-      - PGDATA
