@@ -7,3 +7,13 @@ services:
     image: anaconda
     ports:
       - 8888:8888
+  postgis:
+    build:
+      context: .
+      dockerfile: Dockerfile.postgis
+    image: postgis
+    ports:
+      - $HOST_POSTGRES_PORT:5432
+    environment:
+      - POSTGRES_PASSWORD
+      - PGDATA

@@ -7,3 +7,13 @@ services:
     image: rstudio
     ports:
       - 8787:8787
+  postgis:
+    build:
+      context: .
+      dockerfile: Dockerfile.postgis
+    image: postgis
+    ports:
+      - $HOST_POSTGRES_PORT:5432
+    environment:
+      - POSTGRES_PASSWORD
+      - PGDATA
