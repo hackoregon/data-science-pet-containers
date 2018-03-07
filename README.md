@@ -10,8 +10,6 @@
                 host](#connecting-with-qgis-on-the-host)
         -   [Anaconda](#anaconda)
         -   [RStudio](#rstudio)
-    -   [Integration with host data
-        volumes](#integration-with-host-data-volumes)
     -   [About the name](#about-the-name)
 
 Data Science Pet Containers
@@ -110,14 +108,31 @@ PostgreSQL Global Development Group (PGDG) Debian repositories:
 
 #### Connecting with pgAdmin on the host
 
-If you have pgAdmin on your host, you’ll be able to connect to the
-`postgis` service on `localhost:HOST_POSTGRES_PORT` with it. Right-click
-on `Servers` and create a server. Give it any name you want. Then on the
-`Connection` tab, set the host to `localhost`, the port to
-`HOST_POSTGRES_PORT`, the maintenance database to `postgres`, the user
-name to `postgres` and the password to the value you set for
-`POSTGRES_PASSWORD`. Check the `Save password` box and press the `Save`
-button. `pgAdmin` will add the tree for the `postgis` service.
+Note: A previous version of this image set had a pgAdmin image. pgAdmin
+in a container is of limited usefulness; it can only connect to servers
+inside the Docker network. pgAdmin on your desktop can connect to
+servers inside the Docker network *and* on your desktop *and* out on the
+Internet.
+
+If you’ve installed the EnterpriseDB PostgreSQL distribution, you
+probably already have pgAdmin, although it may not be the latest
+version. Here are the links if you want to install it without
+PostgreSQL:
+
+-   macOS installer: <https://www.pgadmin.org/download/pgadmin-4-macos/>
+-   Windows: <https://www.pgadmin.org/download/pgadmin-4-windows/>
+
+To connect to the `postgis` service on `localhost:HOST_POSTGRES_PORT`
+with pgAdmin:
+
+1.  Right-click on `Servers` and create a server. Give it any name you
+    want.
+2.  On the `Connection` tab, set the host to `localhost`, the port to
+    `HOST_POSTGRES_PORT`, the maintenance database to `postgres`, the
+    user name to `postgres` and the password to the value you set for
+    `POSTGRES_PASSWORD`.
+3.  Check the `Save password` box and press the `Save` button. `pgAdmin`
+    will add the tree for the `postgis` service.
 
 #### Connecting with QGIS on the host
 
@@ -169,11 +184,6 @@ setting to use the terminal feature. Go to
 `Tools -> Global Options -> Terminal`. For Firefox, you need to uncheck
 the `Connect with WebSockets` option. Other browsers I’ve tried,
 Microsoft Edge and Chromium, don’t need this.
-
-Integration with host data volumes
-----------------------------------
-
-TBD
 
 About the name
 --------------

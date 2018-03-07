@@ -60,7 +60,18 @@ We use this to restore databases as follows:
 The `postgis` service is based on the official PostgreSQL image from the Docker Store: <https://store.docker.com/images/postgres>. It is running PostgreSQL 10, PostGIS 2.4, pgRouting 2.5 and all of the foreign data wrappers that are available in a Debian PostgreSQL server. Note that all of these images acquire PostgreSQL and its accomplices from the official PostgreSQL Global Development Group (PGDG) Debian repositories: <https://www.postgresql.org/download/linux/debian/>.
 
 #### Connecting with pgAdmin on the host
-If you have pgAdmin on your host, you'll be able to connect to the `postgis` service on `localhost:HOST_POSTGRES_PORT` with it. Right-click on `Servers` and create a server. Give it any name you want. Then on the `Connection` tab, set the host to `localhost`, the port to `HOST_POSTGRES_PORT`, the maintenance database to `postgres`, the user name to `postgres` and the password to the value you set for `POSTGRES_PASSWORD`. Check the `Save password` box and press the `Save` button. `pgAdmin` will add the tree for the `postgis` service.
+Note: A previous version of this image set had a pgAdmin image. pgAdmin in a container is of limited usefulness; it can only connect to servers inside the Docker network. pgAdmin on your desktop can connect to servers inside the Docker network *and* on your desktop *and* out on the Internet.
+
+If you've installed the EnterpriseDB PostgreSQL distribution, you probably already have pgAdmin, although it may not be the latest version. Here are the links if you want to install it without PostgreSQL:
+
+* macOS installer: https://www.pgadmin.org/download/pgadmin-4-macos/
+* Windows: https://www.pgadmin.org/download/pgadmin-4-windows/
+
+To connect to the `postgis` service on `localhost:HOST_POSTGRES_PORT` with pgAdmin:
+
+1. Right-click on `Servers` and create a server. Give it any name you want. 
+2. On the `Connection` tab, set the host to `localhost`, the port to `HOST_POSTGRES_PORT`, the maintenance database to `postgres`, the user name to `postgres` and the password to the value you set for `POSTGRES_PASSWORD`. 
+3. Check the `Save password` box and press the `Save` button. `pgAdmin` will add the tree for the `postgis` service.
 
 #### Connecting with QGIS on the host
 TBD
@@ -93,9 +104,6 @@ The Jupyter "New Terminal" works, but the terminal is coming up in `sh` instead 
 This service is based on the `rocker/rstudio` image from Docker Hub: <https://hub.docker.com/r/rocker/rstudio/>. I've added some database connectivity tools and the `vim` editor.
 
 Browse to `localhost:8787`. The user name and password are both `rstudio`. Note that if you're using Firefox, you'll have to adjust a setting to use the terminal feature. Go to `Tools -> Global Options -> Terminal`. For Firefox, you need to uncheck the `Connect with WebSockets` option. Other browsers I've tried, Microsoft Edge and Chromium, don't need this.
-
-## Integration with host data volumes
-TBD
 
 ## About the name
 This all started with an infamous "cattle, not pets" blog post. For some history, see <http://cloudscaling.com/blog/cloud-computing/the-history-of-pets-vs-cattle/>. In the Red Hat / Kubernetes / OpenShift universe, it's common for people to have a workstation that's essentially a Docker / Kubernetes host with all the actual work being done in containers. See <https://rhelblog.redhat.com/2016/06/08/in-defense-of-the-pet-container-part-1-prelude-the-only-constant-is-complexity/> and <https://www.projectatomic.io/blog/2018/02/fedora-atomic-workstation/>.
