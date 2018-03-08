@@ -16,6 +16,8 @@
     libudunits2-dev \
     mdbtools-dev \
     openssh-client \
+    osm2pgrouting \
+    osm2pgsql \
     p7zip \
     postgresql-client-10 \
     proj-bin \
