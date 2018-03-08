@@ -59,9 +59,10 @@ We use this to restore databases as follows:
 The `postgis` service is based on the official PostgreSQL image from the Docker Store: <https://store.docker.com/images/postgres>. It is running PostgreSQL 10, PostGIS 2.4, pgRouting 2.5 and all of the foreign data wrappers that are available in a Debian PostgreSQL server. All of these images acquire PostgreSQL and its accomplices from the official PostgreSQL Global Development Group (PGDG) Debian repositories: <https://www.postgresql.org/download/linux/debian/>.
 
 Connecting to the service:
-    * From the host, connect to `localhost`, port `HOST_POSTGRES_PORT`.
-    * Inside the Docker network, connect to `postgis`, port 5432.
-    * In both cases, the username and maintenance database are `postgres` and the password is `POSTGRES_PASSWORD`.
+
+* From the host, connect to `localhost`, port `HOST_POSTGRES_PORT`.
+* Inside the Docker network, connect to `postgis`, port 5432.
+* In both cases, the username and maintenance database are `postgres` and the password is `POSTGRES_PASSWORD`.
 
 #### Connecting with pgAdmin on the host
 If you've installed the EnterpriseDB PostgreSQL distribution, you probably already have pgAdmin, although it may not be the latest version. Here are the links if you want to install it without PostgreSQL:

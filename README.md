@@ -105,10 +105,12 @@ images acquire PostgreSQL and its accomplices from the official
 PostgreSQL Global Development Group (PGDG) Debian repositories:
 <https://www.postgresql.org/download/linux/debian/>.
 
-Connecting to the service: \* From the host, connect to `localhost`,
-port `HOST_POSTGRES_PORT`. \* Inside the Docker network, connect to
-`postgis`, port 5432. \* In both cases, the username and maintenance
-database are `postgres` and the password is `POSTGRES_PASSWORD`.
+Connecting to the service:
+
+-   From the host, connect to `localhost`, port `HOST_POSTGRES_PORT`.
+-   Inside the Docker network, connect to `postgis`, port 5432.
+-   In both cases, the username and maintenance database are `postgres`
+    and the password is `POSTGRES_PASSWORD`.
 
 #### Connecting with pgAdmin on the host
 
