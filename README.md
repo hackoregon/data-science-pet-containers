@@ -6,8 +6,8 @@
         -   [PostGIS](#postgis)
             -   [Connecting with pgAdmin on the
                 host](#connecting-with-pgadmin-on-the-host)
-            -   [Connecting with QGIS on the
-                host](#connecting-with-qgis-on-the-host)
+            -   [Using the command line in the `postgis`
+                server](#using-the-command-line-in-the-postgis-server)
         -   [Anaconda](#anaconda)
         -   [RStudio](#rstudio)
     -   [About the name](#about-the-name)
@@ -22,14 +22,11 @@ Setting up
 
 1.  Clone this repository and
     `cd data-science-pet-containers/containers`.
-2.  You will need to define some environment variables. Some of the
-    services have login IDs and passwords you’ll need to define, and
-    some will need their internal Docker network ports mapped into ports
-    on the Docker host `localhost` IP address.
+2.  You will need to define some environment variables. Copy the file
+    `sample.env` to `.env`. For security reasons, `.env` is listed in
+    `.gitignore`, so it ***won’t*** be checked into version control.
 
-    Copy the file `sample.env` to `.env`. For security reasons, `.env`
-    is listed in `.gitignore`, so it ***won’t*** be checked into version
-    control. Edit `.env`. The variables you need to define are
+    Next, edit `.env`. The variables you need to define are
 
     -   `HOST_POSTGRES_PORT`: If you have PostgreSQL installed on your
         host, it’s probably listening on port 5432. The `postgis`
@@ -67,7 +64,9 @@ We use this to restore databases as follows:
     version-controlled.
 -   At build time, Docker copies the backup files into
     `/home/postgres/Backups` on the `postgis` image. And it places a
-    script `restore-all.sh` in `/docker-entrypoint-initdb.d/`.
+    script `restore-all.sh` in `/docker-entrypoint-initdb.d/`. ***If you
+    change any of the backups, you will need to rebuild the `postgis`
+    image.***
 -   The first time the image runs, `restore-all.sh` will restore all the
     `.backup` files it finds in `/home/postgres/Backups`.
     `restore-all.sh` creates a new database with the same name as the
@@ -134,17 +133,27 @@ with pgAdmin:
 3.  Check the `Save password` box and press the `Save` button. `pgAdmin`
     will add the tree for the `postgis` service.
 
-#### Connecting with QGIS on the host
+#### Using the command line in the `postgis` server
 
-TBD
+There are two Linux accounts available, `root`, the Linux superuser, and
+`postgres`, the database superuser. Type
+`docker exec -it -u <account> containers_postgis_1 /bin/bash` and you’ll
+be logged in.
+
+I’ve tried to provide a comprehensive command line experience. `Git` and
+`vim` are there, as are all of the command-line GIS stack (`gdal`,
+`proj`, `spatialite-tools`, `osm2pgsql` and `osm2pgrouting`), and of
+course `psql`. I’ve also included `python3-csvkit`, `unixodbc` and
+`mdbtools` for handling Microsoft Access files.
 
 ### Anaconda
 
 This service is based on the Anaconda, Inc. (formerly Continuum)
 `anaconda3` image: <https://hub.docker.com/r/continuumio/anaconda3/>.
 I’ve added a non-root user `jupyter` to avoid the security issues
-associated with running Jupyter notebooks as “root”. The `vim` editor is
-also available.
+associated with running Jupyter notebooks as “root”. All of the command
+line tools from the `postgis` image except `osm2pgsql` and
+`osm2pgrouting` are available.
 
 By default the Jupyter notebook server starts when Docker brings up the
 service. Type `docker logs containers_anaconda_1`. You’ll see something
@@ -175,12 +184,13 @@ instead of `bash`. So if you use the terminal, type
 ### RStudio
 
 This service is based on the `rocker/rstudio` image from Docker Hub:
-<https://hub.docker.com/r/rocker/rstudio/>. I’ve added some database
-connectivity tools and the `vim` editor.
+<https://hub.docker.com/r/rocker/rstudio/>. All of the command line
+tools from the `postgis` image except `osm2pgsql` and `osm2pgrouting`
+are available.
 
 Browse to `localhost:8787`. The user name and password are both
-`rstudio`. Note that if you’re using Firefox, you’ll have to adjust a
-setting to use the terminal feature. Go to
+`rstudio`. ***Note that if you’re using Firefox, you’ll have to adjust a
+setting to use the terminal feature.*** Go to
 `Tools -> Global Options -> Terminal`. For Firefox, you need to uncheck
 the `Connect with WebSockets` option. Other browsers I’ve tried,
 Microsoft Edge and Chromium, don’t need this.
