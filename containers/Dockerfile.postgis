@@ -46,6 +46,7 @@ RUN apt-get update \
   && mkdir -p /home/postgres \
   && usermod --shell /bin/bash --home /home/postgres --move-home postgres \
   && mkdir -p /home/postgres/Backups/ \
+  && mkdir -p /home/postgres/Projects/ \
   && mkdir -p /docker-entrypoint-initdb.d/
 
 # set up restores
