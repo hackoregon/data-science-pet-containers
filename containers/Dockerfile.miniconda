@@ -1,4 +1,4 @@
-FROM continuumio/anaconda3
+FROM continuumio/miniconda3
 LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
 
 # add gnupg for PostgreSQL repo

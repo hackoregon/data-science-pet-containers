@@ -22,9 +22,13 @@ RUN apt-get update \
     command-not-found \
     curl \
     gdal-bin \
+    geotiff-bin \
     git \
     libgdal-dev \
+    libgeotiff-dev \
     libpq-dev \
+    librasterlite-dev \
+    libspatialite-dev \
     libudunits2-dev \
     mdbtools-dev \
     openssh-client \
@@ -32,6 +36,7 @@ RUN apt-get update \
     postgresql-client-10 \
     proj-bin \
     python3-csvkit \
+    rasterlite-bin \
     spatialite-bin \
     tar \
     udunits-bin \
