@@ -8,7 +8,7 @@
                 host](#connecting-with-pgadmin-on-the-host)
             -   [Using the command line in the `postgis`
                 server](#using-the-command-line-in-the-postgis-server)
-        -   [Anaconda](#anaconda)
+        -   [Miniconda](#miniconda)
         -   [RStudio](#rstudio)
     -   [About the name](#about-the-name)
 
@@ -84,8 +84,8 @@ Starting the services
     -   `postgis.yml`: PostGIS only. If you’re doing all the analysis on
         the host and just want the PostGIS service and its restored
         databases, choose this.  
-    -   `anaconda.yml`: PostGIS and Anaconda. Choose this if you want to
-        run a Jupyter notebook server inside the Docker network.
+    -   `Miniconda.yml`: PostGIS and Miniconda. Choose this if you want
+        to run a Jupyter notebook server inside the Docker network.
     -   `rstudio.yml`: PostGIS and RStudio Server. Choose this if you
         want an RStudio Server inside the Docker network.
 
@@ -146,21 +146,21 @@ I’ve tried to provide a comprehensive command line experience. `Git` and
 course `psql`. I’ve also included `python3-csvkit`, `unixodbc` and
 `mdbtools` for handling Microsoft Access files.
 
-### Anaconda
+### Miniconda
 
 This service is based on the Anaconda, Inc. (formerly Continuum)
-`anaconda3` image: <https://hub.docker.com/r/continuumio/anaconda3/>.
+`miniconda3` image: <https://hub.docker.com/r/continuumio/miniconda3/>.
 I’ve added a non-root user `jupyter` to avoid the security issues
 associated with running Jupyter notebooks as “root”. All of the command
 line tools from the `postgis` image except `osm2pgsql` and
 `osm2pgrouting` are available.
 
 By default the Jupyter notebook server starts when Docker brings up the
-service. Type `docker logs containers_anaconda_1`. You’ll see something
+service. Type `docker logs containers_miniconda_1`. You’ll see something
 like this:
 
     ```
-    $ docker logs containers_anaconda_1 
+    $ docker logs containers_miniconda_1 
     [I 02:40:47.554 NotebookApp] Writing notebook server cookie secret to /home/jupyter/.local/share/jupyter/runtime/notebook_cookie_secret
     [I 02:40:47.877 NotebookApp] Serving notebooks from local directory: /home/jupyter
     [I 02:40:47.877 NotebookApp] 0 active kernels
