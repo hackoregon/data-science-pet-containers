@@ -4,6 +4,8 @@ LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
 # Install the MDB / ODBC tools, PostGIS, pgRouting and foreign data wrappers
 RUN apt-get update \
   && apt-get install -qqy --no-install-recommends \
+    osm2pgrouting \
+    osm2pgsql \
     postgis \
     postgresql-10-postgis-2.4 \
     postgresql-10-postgis-2.4-scripts \
@@ -25,13 +27,10 @@ RUN apt-get update \
     libpq-dev \
     libudunits2-dev \
     mdbtools-dev \
-    osm2pgrouting \
-    osm2pgsql \
     p7zip \
     postgresql-client-10 \
     proj-bin \
     python3-csvkit \
-    rclone \
     spatialite-bin \
     tar \
     udunits-bin \

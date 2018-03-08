@@ -27,13 +27,10 @@ RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-k
     libpq-dev \
     libudunits2-dev \
     mdbtools-dev \
-    osm2pgrouting \
-    osm2pgsql \
     p7zip \
     postgresql-client-10 \
     proj-bin \
     python3-csvkit \
-    rclone \
     spatialite-bin \
     tar \
     udunits-bin \
