@@ -26,7 +26,7 @@ RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-k
     libgdal-dev \
     libgeotiff-dev \
     libpq-dev \
-    librasterlite-dev \
+    librasterlite2-dev \
     libspatialite-dev \
     libudunits2-dev \
     mdbtools-dev \
@@ -37,7 +37,7 @@ RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-k
     postgresql-client-10 \
     proj-bin \
     python3-csvkit \
-    rasterlite-bin \
+    rasterlite2-bin \
     spatialite-bin \
     tar \
     udunits-bin \
