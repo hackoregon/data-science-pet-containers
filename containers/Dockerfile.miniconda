@@ -17,32 +17,11 @@ RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-k
     awscli \
     bash-completion \
     build-essential \
-    bzip2 \
-    ca-certificates \
     command-not-found \
     curl \
-    gdal-bin \
-    geotiff-bin \
     git \
-    libgdal-dev \
-    libgeotiff-dev \
-    libpq-dev \
-    librasterlite-dev \
-    libspatialite-dev \
-    libudunits2-dev \
-    mdbtools-dev \
+    lynx \
     openssh-client \
-    p7zip \
-    postgresql-client-10 \
-    proj-bin \
-    python3-csvkit \
-    rasterlite-bin \
-    spatialite-bin \
-    tar \
-    udunits-bin \
-    unixodbc-dev \
-    unrar-free \
-    unzip \
     vim \
     wget \
   && apt-get clean \
