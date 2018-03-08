@@ -4,10 +4,12 @@ LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
 # Install the MDB / ODBC tools, PostGIS, pgRouting and foreign data wrappers
 RUN apt-get update \
   && apt-get install -qqy --no-install-recommends \
+    build-essential \
     bzip2 \
     ca-certificates \
     curl \
     gdal-bin \
+    git \
     gnupg \
     mdbtools \
     osm2pgsql \

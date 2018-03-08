@@ -13,7 +13,9 @@ COPY pgdg.list.rstudio /etc/apt/sources.list.d/pgdg.list
 RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
   && apt-get update \
   && apt-get install -qqy --no-install-recommends \
+    build-essential \
     gdal-bin \
+    git \
     libgdal-dev \
     libpq-dev \
     libudunits2-dev \
