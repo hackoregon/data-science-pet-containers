@@ -4,9 +4,11 @@ LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
 # Install the MDB / ODBC tools, PostGIS, pgRouting and foreign data wrappers
 RUN apt-get update \
   && apt-get install -qqy --no-install-recommends \
+    bash-completion \
     build-essential \
     bzip2 \
     ca-certificates \
+    command-not-found \
     curl \
     gdal-bin \
     git \
@@ -33,6 +35,8 @@ RUN apt-get update \
     vim \
     wget \
   && apt-get clean \
+  && apt-file update \
+  && update-command-not-found \
   && mkdir -p /home/postgres \
   && usermod --shell /bin/bash --home /home/postgres --move-home postgres \
   && mkdir -p /home/postgres/Backups/ \

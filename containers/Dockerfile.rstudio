@@ -13,7 +13,9 @@ COPY pgdg.list.rstudio /etc/apt/sources.list.d/pgdg.list
 RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
   && apt-get update \
   && apt-get install -qqy --no-install-recommends \
+    bash-completion \
     build-essential \
+    command-not-found \
     gdal-bin \
     git \
     libgdal-dev \
@@ -27,6 +29,8 @@ RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-k
     unrar-free \
     vim \
   && apt-get clean \
+  && apt-file update \
+  && update-command-not-found \
   && R -e 'install.packages(c("RPostgres", "odbc", "RSQLite"), quiet = TRUE)' \
   && mkdir -p /home/rstudio/Projects/ \
   && chown -R rstudio:rstudio /home/rstudio/
