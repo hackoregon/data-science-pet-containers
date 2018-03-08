@@ -11,6 +11,7 @@
     libpq-dev \
     libudunits2-dev \
     mdbtools-dev \
+    openssh-client \
     p7zip \
     postgresql-client-10 \
     proj-bin \

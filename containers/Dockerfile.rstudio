@@ -26,6 +26,7 @@ RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-k
     libpq-dev \
     libudunits2-dev \
     mdbtools-dev \
+    openssh-client \
     p7zip \
     postgresql-client-10 \
     proj-bin \
