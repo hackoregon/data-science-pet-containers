@@ -1,0 +1,36 @@
+    awscli \
+    bash-completion \
+    build-essential \
+    bzip2 \
+    ca-certificates \
+    command-not-found \
+    curl \
+    gdal-bin \
+    geotiff-bin \
+    git \
+    libgdal-dev \
+    libgeotiff-dev \
+    libpq-dev \
+    libspatialite-dev \
+    librasterlite-dev \
+    libudunits2-dev \
+    mdbtools-dev \
+    openssh-client \
+    osm2pgrouting \
+    osm2pgsql \
+    p7zip \
+    postgresql-client-10 \
+    proj-bin \
+    python3-csvkit \
+    rasterlite-bin \
+    spatialite-bin \
+    tar \
+    udunits-bin \
+    unixodbc-dev \
+    unrar-free \
+    unzip \
+    vim \
+    wget \
+  && apt-get clean \
+  && apt-file update \
+  && update-command-not-found \

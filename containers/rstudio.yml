@@ -1,12 +1,12 @@
 version: '3.4'
 services:
-  jupyter:
+  rstudio:
     build:
       context: .
-      dockerfile: Dockerfile.jupyter
-    image: jupyter
+      dockerfile: Dockerfile.rstudio
+    image: rstudio
     ports:
-      - 8888:8888
+      - 8787:8787
   postgis:
     build:
       context: .
