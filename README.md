@@ -15,28 +15,29 @@
 Data Science Pet Containers
 ===========================
 
-M. Edward (Ed) Borasky <znmeb@znmeb.net>, 2018-03-07
+M. Edward (Ed) Borasky <znmeb@znmeb.net>, 2018-03-08
 
 Setting up
 ----------
 
 1.  Clone this repository and
     `cd data-science-pet-containers/containers`.
-2.  You will need to define some environment variables. Copy the file
-    `sample.env` to `.env`. For security reasons, `.env` is listed in
-    `.gitignore`, so it ***won’t*** be checked into version control.
-
-    Next, edit `.env`. The variables you need to define are
-
-    -   `HOST_POSTGRES_PORT`: If you have PostgreSQL installed on your
-        host, it’s probably listening on port 5432. The `postgis`
-        service listens on port 5432 inside the Docker network, so
-        you’ll need to map its port 5432 to another port. Set
-        `HOST_POSTGRES_PORT` to the value you want; 5439 is what I use.
-    -   `POSTGRES_PASSWORD`: To connect to the `postgis` service, you
-        need a user name and a password. The user name is the default,
-        `postgres`. Docker will set the password for the `postgres` user
-        in the `postgis` service to the value of `POSTGRES_PASSWORD`.
+2.  Define the environment variables.
+    -   Copy the file `sample.env` to `.env`. For security reasons,
+        `.env` is listed in `.gitignore`, so it ***won’t*** be checked
+        into version control.
+    -   Edit `.env`. The variables you need to define are
+        -   `HOST_POSTGRES_PORT`: If you have PostgreSQL installed on
+            your host, it’s probably listening on port 5432. The
+            `postgis` service listens on port 5432 inside the Docker
+            network, so you’ll need to map its port 5432 to another
+            port. Set `HOST_POSTGRES_PORT` to the value you want; 5439
+            is what I use.
+        -   `POSTGRES_PASSWORD`: To connect to the `postgis` service,
+            you need a user name and a password. The user name is the
+            default, the database superuser `postgres`. Docker will set
+            the password for the `postgres` user in the `postgis`
+            service to the value of `POSTGRES_PASSWORD`.
 
     Here’s `sample.env`:
 
@@ -69,10 +70,9 @@ We use this to restore databases as follows:
     image.***
 -   The first time the image runs, `restore-all.sh` will restore all the
     `.backup` files it finds in `/home/postgres/Backups`.
-    `restore-all.sh` creates a new database with the same name as the
-    file.
 
-    For example, `passenger_census.backup` will be restored to a
+    `restore-all.sh` creates a new database with the same name as the
+    file. For example, `passenger_census.backup` will be restored to a
     freshly-created database called `passenger_census`. The new
     databases will have the owner `postgres`.
 
@@ -84,7 +84,7 @@ Starting the services
     -   `postgis.yml`: PostGIS only. If you’re doing all the analysis on
         the host and just want the PostGIS service and its restored
         databases, choose this.  
-    -   `Miniconda.yml`: PostGIS and Miniconda. Choose this if you want
+    -   `miniconda.yml`: PostGIS and Miniconda. Choose this if you want
         to run a Jupyter notebook server inside the Docker network.
     -   `rstudio.yml`: PostGIS and RStudio Server. Choose this if you
         want an RStudio Server inside the Docker network.
@@ -100,18 +100,17 @@ Using the services
 The `postgis` service is based on the official PostgreSQL image from the
 Docker Store: <https://store.docker.com/images/postgres>. It is running
 PostgreSQL 10, PostGIS 2.4, pgRouting 2.5 and all of the foreign data
-wrappers that are available in a Debian PostgreSQL server. Note that all
-of these images acquire PostgreSQL and its accomplices from the official
+wrappers that are available in a Debian PostgreSQL server. All of these
+images acquire PostgreSQL and its accomplices from the official
 PostgreSQL Global Development Group (PGDG) Debian repositories:
 <https://www.postgresql.org/download/linux/debian/>.
 
-#### Connecting with pgAdmin on the host
+Connecting to the service: \* From the host, connect to `localhost`,
+port `HOST_POSTGRES_PORT`. \* Inside the Docker network, connect to
+`postgis`, port 5432. \* In both cases, the username and maintenance
+database are `postgres` and the password is `POSTGRES_PASSWORD`.
 
-Note: A previous version of this image set had a pgAdmin image. pgAdmin
-in a container is of limited usefulness; it can only connect to servers
-inside the Docker network. pgAdmin on your desktop can connect to
-servers inside the Docker network *and* on your desktop *and* out on the
-Internet.
+#### Connecting with pgAdmin on the host
 
 If you’ve installed the EnterpriseDB PostgreSQL distribution, you
 probably already have pgAdmin, although it may not be the latest
@@ -141,10 +140,11 @@ There are two Linux accounts available, `root`, the Linux superuser, and
 be logged in.
 
 I’ve tried to provide a comprehensive command line experience. `Git` and
-`vim` are there, as are all of the command-line GIS stack (`gdal`,
-`proj`, `spatialite-tools`, `osm2pgsql` and `osm2pgrouting`), and of
-course `psql`. I’ve also included `python3-csvkit`, `unixodbc` and
-`mdbtools` for handling Microsoft Access files.
+`vim` are there, as is most of the command-line GIS stack (`gdal`,
+`proj`, `spatialite`, `rasterlite`, `geotiff`, `osm2pgsql` and
+`osm2pgrouting`), and of course `psql`. I’ve also included
+`python3-csvkit` for Excel, CSV and other text files, `unixodbc` for
+ODBC connections and `mdbtools` for Microsoft Access files.
 
 ### Miniconda
 
@@ -174,19 +174,18 @@ like this:
         http://0.0.0.0:8888/?token=865963175cdf86fd8fb6c98a6ef880803cb9f1ef6cf10960
     ```
 
-That link is where you want to point your browser. Or you can just
-browse to `localhost:8888` and paste the token when it asks for it.
+Browse to `localhost:8888` and copy/paste the token when the server asks
+for it.
 
-The Jupyter “New Terminal” works, but the terminal is coming up in `sh`
+The Jupyter “New Terminal” works, but the terminal comes up in `sh`
 instead of `bash`. So if you use the terminal, type
-`bash; source activate base` to get a `bash` prompt.
+`bash; source activate jupyter` to get a `bash` prompt.
 
 ### RStudio
 
 This service is based on the `rocker/rstudio` image from Docker Hub:
 <https://hub.docker.com/r/rocker/rstudio/>. All of the command line
-tools from the `postgis` image except `osm2pgsql` and `osm2pgrouting`
-are available.
+tools from the `postgis` image are available.
 
 Browse to `localhost:8787`. The user name and password are both
 `rstudio`. ***Note that if you’re using Firefox, you’ll have to adjust a
