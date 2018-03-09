@@ -141,6 +141,16 @@ As noted above, to keep the image size down, I've only provided a Jupyter notebo
 3. Enter `source activate jupyter`.
 4. Use `conda search` to find packages in the Conda ecosystem, then install them with `conda install`. You can also install packages with `pip` if they're not in the Conda repositories.
 
+### Creating a Cookiecutter data science project
+Reference: <https://drivendata.github.io/cookiecutter-data-science/>
+
+1. Open a new terminal using the `New -> Terminal` dropdown at the upper right of the `Home` tab.
+2. Enter `./make-cookiecutter-project`.
+
+The script will install `cookiecutter` in the `jupyter` environment if necessary. Then it will launch the Cookiecutter data science interactive setup to create a new project in `/home/jupyter/Projects`.
+
+Follow the instructions to set up the project.
+
 ## RStudio
 This service is based on the `rocker/rstudio` image from Docker Hub: <https://hub.docker.com/r/rocker/rstudio/>. I've added header files so that the R packages `RPostgres`, `odbc`, `sf` and `devtools` will install from source, but there are no R packages on the image besides those that ship with `rocker/rstudio`.
 

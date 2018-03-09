@@ -12,6 +12,8 @@
     -   [Miniconda](#miniconda)
         -   [Setting up `git`](#setting-up-git-1)
         -   [Installing packages](#installing-packages)
+        -   [Creating a Cookiecutter data science
+            project](#creating-a-cookiecutter-data-science-project)
     -   [RStudio](#rstudio)
         -   [Setting up `git`](#setting-up-git-2)
         -   [Installing R packages](#installing-r-packages)
@@ -238,6 +240,20 @@ Jupyter notebook server. To install packages:
 4.  Use `conda search` to find packages in the Conda ecosystem, then
     install them with `conda install`. You can also install packages
     with `pip` if they’re not in the Conda repositories.
+
+### Creating a Cookiecutter data science project
+
+Reference: <https://drivendata.github.io/cookiecutter-data-science/>
+
+1.  Open a new terminal using the `New -> Terminal` dropdown at the
+    upper right of the `Home` tab.
+2.  Enter `./make-cookiecutter-project`.
+
+The script will install `cookiecutter` in the `jupyter` environment if
+necessary. Then it will launch the Cookiecutter data science interactive
+setup to create a new project in `/home/jupyter/Projects`.
+
+Follow the instructions to set up the project.
 
 RStudio
 -------
