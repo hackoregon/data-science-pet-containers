@@ -82,7 +82,9 @@ There are two Linux accounts available, `root`, the Linux superuser, and `postgr
 I've tried to provide a comprehensive command line experience. `Git` and `vim` are there, as is most of the command-line GIS stack (`gdal`, `proj`, `spatialite`, `rasterlite`, `geotiff`, `osm2pgsql` and `osm2pgrouting`), and of course `psql`. I've also included `python3-csvkit` for Excel, CSV and other text files, `unixodbc` for ODBC connections and `mdbtools` for Microsoft Access files.
 
 ### Miniconda
-This service is based on the Anaconda, Inc. (formerly Continuum) `miniconda3` image: <https://hub.docker.com/r/continuumio/miniconda3/>. I've added a non-root user `jupyter` to avoid the security issues associated with running Jupyter notebooks as "root". All of the command line tools from the `postgis` image except `osm2pgsql` and `osm2pgrouting` are available.
+This service is based on the Anaconda, Inc. (formerly Continuum) `miniconda3` image: <https://hub.docker.com/r/continuumio/miniconda3/>. I've added a non-root user `jupyter` to avoid the security issues associated with running Jupyter notebooks as "root". 
+
+The `jupyter` user has a Conda environment, also called `jupyter`. To keep the image size manageable, only the `jupyter` package is installed.
 
 By default the Jupyter notebook server starts when Docker brings up the service. Type `docker logs containers_miniconda_1`. You'll see something like this:
 
@@ -103,7 +105,7 @@ By default the Jupyter notebook server starts when Docker brings up the service.
 
 Browse to `localhost:8888` and copy/paste the token when the server asks for it.
 
-The Jupyter "New Terminal" works, but the terminal comes up in `sh` instead of `bash`. So if you use the terminal, type `bash; source activate jupyter` to get a `bash` prompt.
+The Jupyter "New Terminal" works, but the terminal comes up in `sh` instead of `bash`. So if you use the terminal, type `bash; source activate jupyter` to get a `bash` prompt. Once you have the `jupyter` environment activated, you can install all the packages you need via `conda install`.
 
 ### RStudio
 This service is based on the `rocker/rstudio` image from Docker Hub: <https://hub.docker.com/r/rocker/rstudio/>. All of the command line tools from the `postgis` image are available.
