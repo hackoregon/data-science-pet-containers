@@ -16,39 +16,21 @@ RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-k
     awscli \
     bash-completion \
     build-essential \
-    bzip2 \
-    ca-certificates \
     command-not-found \
     curl \
-    gdal-bin \
-    geotiff-bin \
     git \
     libgdal-dev \
-    libgeotiff-dev \
     libpq-dev \
-    librasterlite2-dev \
-    libspatialite-dev \
+    libssh2-1-dev \
     libudunits2-dev \
+    lynx \
     mdbtools-dev \
     openssh-client \
-    osm2pgrouting \
-    osm2pgsql \
-    p7zip \
-    postgresql-client-10 \
-    proj-bin \
-    python3-csvkit \
-    rasterlite2-bin \
-    spatialite-bin \
-    tar \
-    udunits-bin \
     unixodbc-dev \
-    unrar-free \
-    unzip \
     vim \
     wget \
   && apt-get clean \
   && apt-file update \
   && update-command-not-found \
-  && R -e 'install.packages(c("RPostgres", "odbc", "RSQLite"), quiet = TRUE)' \
   && mkdir -p /home/rstudio/Projects/ \
   && chown -R rstudio:rstudio /home/rstudio/
