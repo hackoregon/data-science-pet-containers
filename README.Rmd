@@ -108,7 +108,7 @@ Browse to `localhost:8888` and copy/paste the token when the server asks for it.
 The Jupyter "New Terminal" works, but the terminal comes up in `sh` instead of `bash`. So if you use the terminal, type `bash; source activate jupyter` to get a `bash` prompt. Once you have the `jupyter` environment activated, you can install all the packages you need via `conda install`.
 
 ### RStudio
-This service is based on the `rocker/rstudio` image from Docker Hub: <https://hub.docker.com/r/rocker/rstudio/>. All of the command line tools from the `postgis` image are available.
+This service is based on the `rocker/rstudio` image from Docker Hub: <https://hub.docker.com/r/rocker/rstudio/>. I've added header files so that the `RPostgres`, `odbc`, `sf` and `devtools` will install from source, but there are no R packages besides those that ship with `rocker/rstudio`.
 
 Browse to `localhost:8787`. The user name and password are both `rstudio`. ***Note that if you're using Firefox, you'll have to adjust a setting to use the terminal feature.*** Go to `Tools -> Global Options -> Terminal`. For Firefox, you need to uncheck the `Connect with WebSockets` option. Other browsers I've tried, Microsoft Edge and Chromium, don't need this.
 

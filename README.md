@@ -189,8 +189,10 @@ you need via `conda install`.
 ### RStudio
 
 This service is based on the `rocker/rstudio` image from Docker Hub:
-<https://hub.docker.com/r/rocker/rstudio/>. All of the command line
-tools from the `postgis` image are available.
+<https://hub.docker.com/r/rocker/rstudio/>. I've added header files so
+that the `RPostgres`, `odbc`, `sf` and `devtools` will install from
+source, but there are no R packages besides those that ship with
+`rocker/rstudio`.
 
 Browse to `localhost:8787`. The user name and password are both
 `rstudio`. ***Note that if you're using Firefox, you'll have to adjust a
