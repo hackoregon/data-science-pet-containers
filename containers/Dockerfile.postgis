@@ -30,6 +30,7 @@ RUN apt-get update \
     librasterlite2-dev \
     libspatialite-dev \
     libudunits2-dev \
+    lynx \
     mdbtools-dev \
     openssh-client \
     p7zip \
