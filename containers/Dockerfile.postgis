@@ -32,6 +32,7 @@ RUN apt-get update \
     libudunits2-dev \
     lynx \
     mdbtools-dev \
+    nano \
     openssh-client \
     p7zip \
     postgresql-client-10 \

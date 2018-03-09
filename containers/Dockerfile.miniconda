@@ -21,6 +21,7 @@ RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-k
     curl \
     git \
     lynx \
+    nano \
     openssh-client \
     vim \
     wget \

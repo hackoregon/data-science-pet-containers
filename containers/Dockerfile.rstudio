@@ -25,6 +25,7 @@ RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-k
     libssh2-1-dev \
     libudunits2-dev \
     lynx \
+    nano \
     mdbtools-dev \
     openssh-client \
     unixodbc-dev \
