@@ -1,4 +1,4 @@
-#! /bin/bash -v
+#! /bin/bash
 
 # set your email address
 git config --global user.email ""
