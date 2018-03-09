@@ -35,6 +35,7 @@ RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-k
 
 COPY configure-git.bash /home/jupyter/
 COPY start-jupyter-notebook.bash /home/jupyter/
+COPY make-cookiecutter-project.bash /home/jupyter/
 RUN chmod +x /home/jupyter/*.bash \
   && chown -R jupyter:jupyter /home/jupyter/
 WORKDIR /home/jupyter
