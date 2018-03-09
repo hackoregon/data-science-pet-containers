@@ -7,9 +7,10 @@ RUN apt-get update \
   gnupg \
   && apt-get clean
 
-# add Debian packages
+# Official PostgreSQL repository
 RUN mkdir -p /etc/apt/sources.list.d/
 COPY pgdg.list.stretch /etc/apt/sources.list.d/pgdg.list
+
 RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
   && apt-get update \
   && apt-get install -qqy --no-install-recommends \
