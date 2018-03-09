@@ -55,7 +55,7 @@ RUN apt-get update \
   && mkdir -p /home/postgres/Projects/ \
   && mkdir -p /docker-entrypoint-initdb.d/
 
-# set up restores
+# set up automatic restores
 COPY Backups/* /home/postgres/Backups/
 COPY Backups/restore-all.sh /docker-entrypoint-initdb.d/
 COPY configure-git.bash /home/postgres/
