@@ -20,14 +20,14 @@
 Data Science Pet Containers
 ===========================
 
-M. Edward (Ed) Borasky <znmeb@znmeb.net>, 2018-03-08
+M. Edward (Ed) Borasky <znmeb@znmeb.net>, 2018-03-09
 
 Setting up
 ----------
 
 1.  Clone this repository and
     `cd data-science-pet-containers/containers`.
-2.  Define the environment variables.
+2.  Define the environment variables:
     -   Copy the file `sample.env` to `.env`. For security reasons,
         `.env` is listed in `.gitignore`, so it ***won’t*** be checked
         into version control.
@@ -44,11 +44,11 @@ Setting up
             the password for the `postgres` user in the `postgis`
             service to the value of `POSTGRES_PASSWORD`.
 
-    Here’s `sample.env`:
+Here’s `sample.env`:
 
-        # postgis container
-        HOST_POSTGRES_PORT=5439
-        POSTGRES_PASSWORD=some.string.you.can.remember.that.nobody.else.can.guess
+    # postgis container
+    HOST_POSTGRES_PORT=5439
+    POSTGRES_PASSWORD=some.string.you.can.remember.that.nobody.else.can.guess
 
 Starting the services
 ---------------------
@@ -87,7 +87,7 @@ official PostgreSQL Global Development Group (PGDG) Debian repositories:
 ### Using the command line
 
 I’ve tried to provide a comprehensive command line experience. `Git`,
-`curl`, `wget`, `lynx` and `vim` are there, as is most of the
+`curl`, `wget`, `lynx`, `nano` and `vim` are there, as is most of the
 command-line GIS stack (`gdal`, `proj`, `spatialite`, `rasterlite`,
 `geotiff`, `osm2pgsql` and `osm2pgrouting`), and of course `psql`.
 
@@ -103,7 +103,7 @@ be logged in.
 
 ### Setting up `git`
 
-1.  Log in as `postgres` as described above.
+1.  Log in with `docker exec` as `postgres` as described above.
 2.  `cd /home/postgres`.
 3.  Edit `configure-git.bash`. You’ll need to supply your email address
     and name.
@@ -132,7 +132,8 @@ version. Here are the links if you want to install it without
 PostgreSQL:
 
 -   macOS installer: <https://www.pgadmin.org/download/pgadmin-4-macos/>
--   Windows: <https://www.pgadmin.org/download/pgadmin-4-windows/>
+-   Windows installer:
+    <https://www.pgadmin.org/download/pgadmin-4-windows/>
 
 To connect to the `postgis` service on `localhost:HOST_POSTGRES_PORT`
 with pgAdmin:
@@ -192,27 +193,25 @@ By default the Jupyter notebook server starts when Docker brings up the
 service. Type `docker logs containers_miniconda_1`. You’ll see something
 like this:
 
-    ```
     $ docker logs containers_miniconda_1 
-    [I 02:40:47.554 NotebookApp] Writing notebook server cookie secret to /home/jupyter/.local/share/jupyter/runtime/notebook_cookie_secret
-    [I 02:40:47.877 NotebookApp] Serving notebooks from local directory: /home/jupyter
-    [I 02:40:47.877 NotebookApp] 0 active kernels
-    [I 02:40:47.877 NotebookApp] The Jupyter Notebook is running at:
-    [I 02:40:47.877 NotebookApp] http://0.0.0.0:8888/?token=865963175cdf86fd8fb6c98a6ef880803cb9f1ef6cf10960
-    [I 02:40:47.877 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
-    [C 02:40:47.877 NotebookApp] 
-
-    Copy/paste this URL into your browser when you connect for the first time,
-    to login with a token:
-        http://0.0.0.0:8888/?token=865963175cdf86fd8fb6c98a6ef880803cb9f1ef6cf10960
-    ```
+    [I 08:00:22.931 NotebookApp] Writing notebook server cookie secret to /home/jupyter/.local/share/jupyter/runtime/notebook_cookie_secret
+    [I 08:00:23.238 NotebookApp] Serving notebooks from local directory: /home/jupyter
+    [I 08:00:23.238 NotebookApp] 0 active kernels
+    [I 08:00:23.238 NotebookApp] The Jupyter Notebook is running at:
+    [I 08:00:23.238 NotebookApp] http://0.0.0.0:8888/?token=d90b23c9368933095c9fd8e25f29d2ba48f7ce67247e216d
+    [I 08:00:23.238 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+    [C 08:00:23.238 NotebookApp] 
+        
+        Copy/paste this URL into your browser when you connect for the first time,
+        to login with a token:
+            http://0.0.0.0:8888/?token=d90b23c9368933095c9fd8e25f29d2ba48f7ce67247e216d
 
 Browse to `localhost:8888` and copy/paste the token when the server asks
 for it.
 
 ### Setting up `git`
 
-1.  Edit `configure-git.bash`with the Jupyter notebook file editor.
+1.  Edit `configure-git.bash` with the Jupyter notebook file editor.
     You’ll need to supply your email address and name.
 2.  Open a new terminal using the `New -> Terminal` dropdown at the
     upper right of the `Home` tab.
@@ -246,8 +245,8 @@ RStudio
 This service is based on the `rocker/rstudio` image from Docker Hub:
 <https://hub.docker.com/r/rocker/rstudio/>. I’ve added header files so
 that the R packages `RPostgres`, `odbc`, `sf` and `devtools` will
-install from source, but there are no R packages besides those that ship
-with `rocker/rstudio`.
+install from source, but there are no R packages on the image besides
+those that ship with `rocker/rstudio`.
 
 Browse to `localhost:8787`. The user name and password are both
 `rstudio`. ***Note that if you’re using Firefox, you’ll have to adjust a
