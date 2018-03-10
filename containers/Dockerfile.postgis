@@ -5,6 +5,7 @@ LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
 RUN apt-get update \
   && apt-get install -qqy --no-install-recommends \
     osm2pgsql \
+    osmosis \
     postgis \
     postgresql-10-postgis-2.4 \
     postgresql-10-postgis-2.4-scripts \
