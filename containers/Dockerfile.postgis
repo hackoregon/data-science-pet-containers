@@ -4,7 +4,6 @@ LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
 # Install the MDB / ODBC tools, PostGIS, pgRouting and foreign data wrappers
 RUN apt-get update \
   && apt-get install -qqy --no-install-recommends \
-    osm2pgrouting \
     osm2pgsql \
     postgis \
     postgresql-10-postgis-2.4 \
@@ -22,10 +21,13 @@ RUN apt-get update \
     cmake \
     command-not-found \
     curl \
+    expat \
     gdal-bin \
     geotiff-bin \
     git \
-    libboost-all-dev \
+    libboost-dev \
+    libboost-program-options-dev \
+    libexpat1-dev \
     libgdal-dev \
     libgeotiff-dev \
     libpq-dev \
@@ -57,7 +59,12 @@ RUN apt-get update \
   && usermod --shell /bin/bash --home /home/postgres --move-home postgres \
   && mkdir -p /home/postgres/Backups/ \
   && mkdir -p /home/postgres/Projects/ \
-  && mkdir -p /docker-entrypoint-initdb.d/
+  && mkdir -p /docker-entrypoint-initdb.d/ \
+  && mkdir -p /usr/local/src/
+
+# Install osm2pgrouting from source
+COPY osm2pgrouting-from-source.bash /usr/local/src/
+RUN bash /usr/local/src/osm2pgrouting-from-source.bash
 
 # set up automatic restores
 COPY Backups/* /home/postgres/Backups/
