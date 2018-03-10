@@ -10,7 +10,7 @@ unzip ../tm_boundary.zip
 echo "Converting shapefile to GeoJSON with bounding box"
 ogr2ogr -f GeoJSON -t_srs EPSG:4326 ../tm_boundary.geojson tm_boundary.shp -lco WRITE_BBOX=YES 
 cd ..
-bboxraw=`head -n 4 tm_boundary.geojson | grep bbox | sed 's/"bbox": \[ //' | sed 's/ \].*$//'`
+bboxraw=`head -n 5 tm_boundary.geojson | grep bbox | sed 's/"bbox": \[ //' | sed 's/ \].*$//'`
 IFS=', ' read -r -a bbox <<< "$bboxraw"
 echo "Bounding box = ${bbox[*]}"
 left=${bbox[0]}; bottom=${bbox[1]}; right=${bbox[2]}; top=${bbox[3]};
