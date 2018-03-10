@@ -19,14 +19,17 @@ RUN apt-get update \
     build-essential \
     bzip2 \
     ca-certificates \
+    cmake \
     command-not-found \
     curl \
     gdal-bin \
     geotiff-bin \
     git \
+    libboost-all-dev \
     libgdal-dev \
     libgeotiff-dev \
     libpq-dev \
+    libpqxx-dev \
     librasterlite2-dev \
     libspatialite-dev \
     libudunits2-dev \
