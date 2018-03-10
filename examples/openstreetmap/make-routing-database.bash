@@ -14,5 +14,9 @@ do
   psql -d osm_routing -c "CREATE SCHEMA $mode;"
   echo "Loading data for $mode"
   osm2pgrouting --conf /usr/share/osm2pgrouting/mapconfig_for_$mode.xml --schema $mode \
-  --username postgres --password $PGPASSWORD --host postgis --dbname osm_routing --file trimet-latest.osm
+  --username postgres --password $PGPASSWORD --host postgis --dbname osm_routing --file trimet-latest.osm \
+  --addnodes
 done
+
+echo "Backing up osm_routing"
+pg_dump --format=custom --dbname=osm_routing > osm_routing.backup
