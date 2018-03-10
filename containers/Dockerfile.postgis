@@ -5,6 +5,8 @@ LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
 RUN apt-get update \
   && apt-get install -qqy --no-install-recommends \
     osm2pgsql \
+    osmctools \
+    osmium-tool \
     osmosis \
     postgis \
     postgresql-10-postgis-2.4 \
@@ -26,6 +28,7 @@ RUN apt-get update \
     gdal-bin \
     geotiff-bin \
     git \
+    less \
     libboost-dev \
     libboost-program-options-dev \
     libexpat1-dev \
