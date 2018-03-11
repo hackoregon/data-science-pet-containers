@@ -74,6 +74,7 @@ In either case, once you've authenticated, `git` will cache your credentials for
 * From the host, connect to `localhost`, port `HOST_POSTGRES_PORT`.
 * Inside the Docker network, connect to `postgis`, port 5432.
 * In both cases, the username and maintenance database are `postgres` and the password is `POSTGRES_PASSWORD`.
+* From the command line, when you are logged in as the database superuser `postgres`, you do not need a password to connect.
 
 ### Connecting with pgAdmin on the host
 If you've installed the EnterpriseDB PostgreSQL distribution, you probably already have pgAdmin, although it may not be the latest version. Here are the links if you want to install it without PostgreSQL:
