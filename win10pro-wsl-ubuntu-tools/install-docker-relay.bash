@@ -29,7 +29,4 @@ sudo adduser $USER docker
 echo "Adding 'docker-compose' alias to '$HOME/.bashrc'"
 echo "alias docker-compose=docker-compose.exe" >> $HOME/.bashrc
 
-echo "Usage:"
-echo "1. Close this session and open another to activate 'docker' group membership."
-echo "2. Type 'sudo ~/docker-relay &' to start the relay process."
-echo "3. There is no step three - you can now use Docker and Docker Compose."
+echo "Close this session and open another to activate 'docker' group membership."
