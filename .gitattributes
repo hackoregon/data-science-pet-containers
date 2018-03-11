@@ -1,2 +1,4 @@
 * text eol=lf
-*.png
+*.png binary
+*.pdf binary
+*.html binary
