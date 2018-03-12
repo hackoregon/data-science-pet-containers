@@ -40,6 +40,12 @@ RUN chmod +x /home/jupyter/*.bash \
   && chown -R jupyter:jupyter /home/jupyter/
 WORKDIR /home/jupyter
 USER jupyter
-RUN conda create --yes --quiet --name jupyter python=3 jupyter
+RUN conda create --yes --quiet --name jupyter python=3 \
+  geopandas \
+  jupyter \
+  pandas \
+  psycopg2 \
+  requests \
+  statsmodels
 EXPOSE 8888
 CMD /home/jupyter/start-jupyter-notebook.bash
