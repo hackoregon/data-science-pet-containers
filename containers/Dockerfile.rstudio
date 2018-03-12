@@ -35,6 +35,6 @@ RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-k
   && apt-file update \
   && update-command-not-found \
   && mkdir -p /home/rstudio/Projects/
-COPY configure-git.bash /home/rstudio/
+COPY clone-me.bash configure-git.bash /home/rstudio/
 RUN chmod +x /home/rstudio/*.bash \
   && chown -R rstudio:rstudio /home/rstudio/

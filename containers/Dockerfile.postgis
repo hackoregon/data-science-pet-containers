@@ -73,7 +73,7 @@ RUN bash /usr/local/src/osm2pgrouting-from-source.bash
 # set up automatic restores
 COPY Backups/* /home/postgres/Backups/
 COPY Backups/restore-all.sh /docker-entrypoint-initdb.d/
-COPY configure-git.bash /home/postgres/
+COPY clone-me.bash configure-git.bash /home/postgres/
 RUN chown -R postgres:postgres /home/postgres \
   && chmod +x /home/postgres/*.bash \
   && chmod +x /docker-entrypoint-initdb.d/restore-all.sh
