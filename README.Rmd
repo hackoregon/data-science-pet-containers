@@ -1,12 +1,12 @@
 ---
 output:
-  md_document:
+  html_document:
     toc: yes
     toc_depth: 4
   pdf_document:
     toc: yes
     toc_depth: '4'
-  html_document:
+  md_document:
     toc: yes
     toc_depth: 4
 ---
@@ -60,6 +60,9 @@ I've also included `python3-csvkit` for Excel, CSV and other text files, `unixod
 
 There are two Linux accounts available, `root`, the Linux superuser, and `postgres`, the database superuser. Type `docker exec -it -u <account> containers_postgis_1 /bin/bash` and you'll be logged in.
 
+### Virtualenvwrapper
+You can use the Python `virtualenvwrapper` utility. Just enter `source /usr/share/virtualenvwrapper/virtualenvwrapper.sh`. See <https://virtualenvwrapper.readthedocs.io/en/latest/#> for the documentation.
+
 ### Setting up `git`
 1. Log in with `docker exec` as `postgres` as described above.
 2. `cd /home/postgres`.
@@ -69,6 +72,14 @@ There are two Linux accounts available, `root`, the Linux superuser, and `postgr
 To clone a repository, use its `https` URL. For a private repository, you'll need to authenticate when you clone. For a public one, you'll only have to authenticate if you want to push.
 
 In either case, once you've authenticated, `git` will cache your credentials for an hour. As you probably noticed, this timeout is adjustable in `configure-git.bash`.
+
+Cloning this repository:
+
+1. Log in with `docker exec` as `postgres` as described above.
+2. `cd /home/postgres`.
+3. Enter `./clone-me.bash`.
+
+You will find the repository in `$HOME/Projects/data-science-pet-containers`
 
 ### Connecting to the service
 * From the host, connect to `localhost`, port `HOST_POSTGRES_PORT`.
@@ -134,6 +145,13 @@ To clone a repository, use its `https` URL. For a private repository, you'll nee
 
 In either case, once you've authenticated, `git` will cache your credentials for an hour. As you probably noticed, this timeout is adjustable in `configure-git.bash`.
 
+Cloning this repository:
+
+1. Open a new terminal using the `New -> Terminal` dropdown at the upper right of the `Home` tab.
+2. Enter `./clone-me.bash`.
+
+You will find the repository in `$HOME/Projects/data-science-pet-containers`
+
 ### Installing packages
 As noted above, to keep the image size down, I've only provided a Jupyter notebook server. To install packages:
 
@@ -167,6 +185,12 @@ Browse to `localhost:8787`. The user name and password are both `rstudio`. ***No
 To clone a repository, use its `https` URL. For a private repository, you'll need to authenticate when you clone. For a public one, you'll only have to authenticate if you want to push.
 
 In either case, once you've authenticated, `git` will cache your credentials for an hour. As you probably noticed, this timeout is adjustable in `configure-git.bash`.
+
+Cloning this repository:
+
+1. Open a new terminal and enter `./clone-me.bash`.
+
+You will find the repository in `$HOME/Projects/data-science-pet-containers`
 
 ### Installing R packages
 As noted above, to keep the image size down, I've only installed header files so that the R packages `RPostgres`, `odbc`, `sf` and `devtools` will install. That covers the majority of use cases. 
