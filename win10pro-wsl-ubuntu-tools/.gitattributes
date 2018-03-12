@@ -1,4 +1,0 @@
-*.sh text eol=lf
-*.bash text eol=lf
-docker-relay text eol=lf
-pgdg.list.xenial text eol=lf
