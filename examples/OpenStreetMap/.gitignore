@@ -1,4 +1,4 @@
 oregon-latest.*
 trimet-latest.*
-tm_boundary.*
+tm_boundary*
 *.backup
