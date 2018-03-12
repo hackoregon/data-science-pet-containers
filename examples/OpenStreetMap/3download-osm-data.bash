@@ -1,8 +1,5 @@
 #! /bin/bash
 
-echo "Loading TriMet GIS data"
-./load-trimet-data.bash
-
 echo "Extracting TriMet service area bounding box"
 bboxraw=`grep -e '"bbox":' tm_boundary.geojson | head -n 1 | sed 's/"bbox": \[ //' | sed 's/ \].*$//' | sed 's/ //g'`
 echo "Bounding box = $bboxraw"
