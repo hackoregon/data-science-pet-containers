@@ -4,7 +4,7 @@ for mode in cars bicycles pedestrian
 do
   echo "Dropping old schema $mode"
   psql -d osm_routing -c "DROP SCHEMA IF EXISTS $mode CASCADE;"
-  echo "Creating schema $mode"
+  echo "Creating new schema $mode"
   psql -d osm_routing -c "CREATE SCHEMA $mode;"
   echo "Loading data for $mode"
   time osm2pgrouting --conf /usr/share/osm2pgrouting/mapconfig_for_$mode.xml --schema $mode \
