@@ -10,5 +10,7 @@ do
   unzip ../$table.zip
   ogr2ogr -f PostgreSQL -t_srs EPSG:4326 -lco PRECISION=NO -nlt PROMOTE_TO_MULTI \
     -lco SCHEMA=trimet_gis PG:"dbname=osm_routing" $table.shp
+  ogr2ogr -f GeoJSON -t_srs EPSG:4326 \
+    ../$table.geojson $table.shp -lco WRITE_BBOX=YES
   cd ..
 done
