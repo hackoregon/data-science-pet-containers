@@ -62,10 +62,9 @@ RUN apt-get update \
   && apt-get clean \
   && apt-file update \
   && update-command-not-found \
-  && mkdir -p /home/postgres \
-  && usermod --shell /bin/bash --home /home/postgres --move-home postgres \
-  && mkdir -p /home/postgres/Backups/ \
-  && mkdir -p /home/postgres/Projects/ \
+  && useradd --shell /bin/bash --user-group --create-home dbsuper \
+  && mkdir -p /home/dbsuper/Backups/ \
+  && mkdir -p /home/dbsuper/Projects/ \
   && mkdir -p /docker-entrypoint-initdb.d/ \
   && mkdir -p /usr/local/src/
 
@@ -74,9 +73,9 @@ COPY osm2pgrouting-from-source.bash /usr/local/src/
 RUN bash /usr/local/src/osm2pgrouting-from-source.bash
 
 # set up automatic restores
-COPY Backups/* /home/postgres/Backups/
-COPY Backups/restore-all.sh /docker-entrypoint-initdb.d/
-COPY clone-me.bash configure-git.bash /home/postgres/
-RUN chown -R postgres:postgres /home/postgres \
-  && chmod +x /home/postgres/*.bash \
-  && chmod +x /docker-entrypoint-initdb.d/restore-all.sh
+COPY Backups/* /home/dbsuper/Backups/
+COPY make-dbsuper.sh Backups/restore-all.sh /docker-entrypoint-initdb.d/
+COPY clone-me.bash configure-git.bash /home/dbsuper/
+RUN chown -R dbsuper:dbsuper /home/dbsuper \
+  && chmod +x /home/dbsuper/*.bash \
+  && chmod +x /docker-entrypoint-initdb.d/*.sh
