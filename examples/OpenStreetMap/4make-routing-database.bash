@@ -1,15 +1,9 @@
 #! /bin/bash
 
-echo "Creating database osm_routing"
-dropdb osm_routing || true # don't quit if database doesn't exist
-createdb osm_routing
-echo "Creating extensions"
-psql -d osm_routing -c "CREATE EXTENSION postgis;"
-psql -d osm_routing -c "CREATE EXTENSION pgrouting;"
-psql -d osm_routing -c "CREATE EXTENSION hstore;"
-
 for mode in cars bicycles pedestrian
 do
+  echo "Dropping old schema $mode"
+  psql -d osm_routing -c "DROP SCHEMA IF EXISTS $mode CASCADE;"
   echo "Creating schema $mode"
   psql -d osm_routing -c "CREATE SCHEMA $mode;"
   echo "Loading data for $mode"
