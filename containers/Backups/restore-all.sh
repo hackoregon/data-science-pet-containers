@@ -10,7 +10,7 @@ then
     filename="${filename%.*}"
     dropdb ${filename} || true
     createdb ${filename}
-    pg_restore --verbose --dbname=${filename} $file
+    pg_restore --verbose --no-owner --dbname=${filename} $file
     echo "Restore completed"
   done
 fi
