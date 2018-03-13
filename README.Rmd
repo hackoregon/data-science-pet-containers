@@ -18,6 +18,37 @@ knitr::opts_chunk$set(echo = TRUE)
 # Data Science Pet Containers
 M. Edward (Ed) Borasky <znmeb@znmeb.net>, `r Sys.Date()`
 
+## Quick start
+1. Clone this repository.
+2. `cd data-science-pet-containers/containers`.
+3. Copy `sample.env` to `.env`. Edit `.env` and change the `POSTGRES_PASSWORD`.
+4. Copy any PostgreSQL database backups you want restored to `data-science-pet-containers/containers/Backups`.
+5. `docker-compose -f postgis.yml up -d --build`. The first time you run this, it will take some time. Once the image is built and the databases restored, it will be faster. 
+
+    When it's done you'll see
+
+    ```
+    Successfully tagged postgis:latest
+    Creating containers_postgis_1 ... done
+    ```
+6. Type `docker logs -f containers_postgis_1` to verify that the restores worked and the service is listening.
+
+    ```
+    PostgreSQL init process complete; ready for start up.
+
+    2018-03-13 08:11:43.060 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+    2018-03-13 08:11:43.060 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+    2018-03-13 08:11:43.177 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+    2018-03-13 08:11:43.412 UTC [76] LOG:  database system was shut down at 2018-03-13 08:11:41 UTC
+    2018-03-13 08:11:43.473 UTC [1] LOG:  database system is ready to accept connections
+    ```
+    
+    Type `CTL-C` to stop following the container log.
+
+7. Connect to the container from the host: user name is `postgres`, host is `localhost`, port is the value of `HOST_POSTGRES_PORT`, usually 5439, and password is the value of `POSTGRES_PASSWORD`.
+
+To stop the service, type `docker-compose -f postgis.yml stop`. To start it back up again, `docker-compose -f postgis,yml start`.
+
 ## Setting up
 1. Clone this repository and `cd data-science-pet-containers/containers`.
 2. Define the environment variables:
