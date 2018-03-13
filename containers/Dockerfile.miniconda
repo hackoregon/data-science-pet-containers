@@ -44,9 +44,11 @@ USER jupyter
 RUN conda create --yes --quiet --name jupyter python=3 \
   geopandas \
   jupyter \
+  matplotlib \
   pandas \
   psycopg2 \
   requests \
+  seaborn \
   statsmodels
 EXPOSE 8888
 CMD /home/jupyter/start-jupyter-notebook.bash
