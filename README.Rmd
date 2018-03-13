@@ -1,12 +1,12 @@
 ---
 output:
-  html_document:
+  md_document:
     toc: yes
     toc_depth: 4
   pdf_document:
     toc: yes
     toc_depth: '4'
-  md_document:
+  html_document:
     toc: yes
     toc_depth: 4
 ---
@@ -58,10 +58,14 @@ I've tried to provide a comprehensive command line experience. `Git`, `curl`, `w
 
 I've also included `python3-csvkit` for Excel, CSV and other text files, `unixodbc` for ODBC connections and `mdbtools` for Microsoft Access files. If you want to extend this image further, it is based on Debian `stretch`.
 
-There are two Linux accounts available, `root`, the Linux superuser, and `postgres`, the database superuser. Type `docker exec -it -u <account> containers_postgis_1 /bin/bash` and you'll be logged in.
+You can log in as the Linux superuser `root` with `docker exec -it -u root containers_postgis_1 /bin/bash`.
+
+I've added a database superuser called `dbsuper`. This should be your preferred login, rather than using the system database superuser `postgres`. Log in with `docker exec -it -u dbsuper containers_postgis_1 /bin/bash`.
 
 ### Virtualenvwrapper
-You can use the Python `virtualenvwrapper` utility. Just enter `source /usr/share/virtualenvwrapper/virtualenvwrapper.sh`. See <https://virtualenvwrapper.readthedocs.io/en/latest/#> for the documentation.
+You can use the Python `virtualenvwrapper` utility. See <https://virtualenvwrapper.readthedocs.io/en/latest/#> for the documentation.
+
+To activate, enter `source /usr/share/virtualenvwrapper/virtualenvwrapper.sh`. 
 
 ### Setting up `git`
 1. Log in with `docker exec` as `postgres` as described above.
@@ -88,7 +92,7 @@ You will find the repository in `$HOME/Projects/data-science-pet-containers`
 * From the command line, when you are logged in as the database superuser `postgres`, you do not need a password to connect.
 
 ### Connecting with pgAdmin on the host
-If you've installed the EnterpriseDB PostgreSQL distribution, you probably already have pgAdmin, although it may not be the latest version. Here are the links if you want to install it without PostgreSQL:
+If you've installed the EnterpriseDB PostgreSQL distribution, you probably already have pgAdmin, although it may not be the latest version. If you want to install pgAdmin without PostgreSQL:
 
 * macOS installer: https://www.pgadmin.org/download/pgadmin-4-macos/
 * Windows installer: https://www.pgadmin.org/download/pgadmin-4-windows/
@@ -108,14 +112,20 @@ To use this feature:
 2. Copy the database backup files to `data-science-pet-containers/containers/Backups`. Note that `.gitignore` is set for `*.backup`, so these backup files won't be version-controlled.
 3. Type `docker-compose -f postgis.yml build`.
 
-Docker will copy the backup files into `/home/postgres/Backups` on the `postgis` image, and place a script `restore-all.sh` in `/docker-entrypoint-initdb.d/`. The first time the image runs, `restore-all.sh` will restore all the `.backup` files it finds in `/home/postgres/Backups`. 
+Docker will copy the backup files into `/home/dbsuper/Backups` on the `postgis` image, and place a script `restore-all.sh` in `/docker-entrypoint-initdb.d/`. The first time the image runs, `restore-all.sh` will restore all the `.backup` files it finds in `/home/dbsuper/Backups`. 
 
-`restore-all.sh` creates a new database with the same name as the file. For example, `passenger_census.backup` will be restored to a freshly-created database called `passenger_census`. The new databases will have the owner `postgres`.
+`restore-all.sh` creates a new database with the same name as the file. For example, `passenger_census.backup` will be restored to a freshly-created database called `passenger_census`. Ownership information in the backups will be ignored; the new databases will have the owner `postgres`.
 
 ## Miniconda
 This service is based on the Anaconda, Inc. (formerly Continuum) `miniconda3` image: <https://hub.docker.com/r/continuumio/miniconda3/>. I've added a non-root user `jupyter` to avoid the security issues associated with running Jupyter notebooks as "root". 
 
-The `jupyter` user has a Conda environment, also called `jupyter`. To keep the image size manageable, only the `jupyter` package is installed.
+The `jupyter` user has a Conda environment, also called `jupyter`. In addition to `jupyter`, the environment has
+
+* pandas,
+* geopandas,
+* statsmodels,
+* requests, and
+* psycopg2.
 
 By default the Jupyter notebook server starts when Docker brings up the service. Type `docker logs containers_miniconda_1`. You'll see something like this:
 
@@ -153,7 +163,7 @@ Cloning this repository:
 You will find the repository in `$HOME/Projects/data-science-pet-containers`
 
 ### Installing packages
-As noted above, to keep the image size down, I've only provided a Jupyter notebook server. To install packages:
+To install packages:
 
 1. Open a new terminal using the `New -> Terminal` dropdown at the upper right of the `Home` tab.
 2. Enter `bash`. The terminal comes up initially in the `sh` shell, which is missing many command-line conveniences.
