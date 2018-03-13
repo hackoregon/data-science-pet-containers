@@ -20,7 +20,8 @@ the TriMet service area, requires a bit over 4 GB of RAM to run.
 As a result, the fourth phase won’t run on my 8 GB Windows 10 Pro laptop
 in Docker, which only allocates 2 GB of RAM to ***all*** the containers.
 It should run with any Docker host big enough to allocate 5 GB of RAM to
-the `postgis` container. It only requires the `postgis` container.
+the `postgis` container; it does run in Docker on my 32 GB Linux
+workstation. It only requires the `postgis` container.
 
 ## Running the scripts
 
