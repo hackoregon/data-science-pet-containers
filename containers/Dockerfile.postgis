@@ -1,4 +1,4 @@
-FROM postgres:10
+FROM postgres:9.6
 LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
 
 # Up-to-date R
@@ -13,13 +13,13 @@ RUN apt-get update \
     osmium-tool \
     osmosis \
     postgis \
-    postgresql-10-postgis-2.4 \
-    postgresql-10-postgis-2.4-scripts \
-    postgresql-10-postgis-scripts \
-    postgresql-10-pgrouting \
-    postgresql-10-mysql-fdw \
-    postgresql-10-ogr-fdw \
-    postgresql-10-python3-multicorn \
+    postgresql-9.6-postgis-2.4 \
+    postgresql-9.6-postgis-2.4-scripts \
+    postgresql-9.6-postgis-scripts \
+    postgresql-9.6-pgrouting \
+    postgresql-9.6-mysql-fdw \
+    postgresql-9.6-ogr-fdw \
+    postgresql-9.6-python3-multicorn \
     awscli \
     bash-completion \
     build-essential \
