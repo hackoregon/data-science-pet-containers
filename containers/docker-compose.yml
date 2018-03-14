@@ -1,0 +1,25 @@
+version: '3.4'
+services:
+  miniconda:
+    build:
+      context: .
+      dockerfile: Dockerfile.miniconda
+    image: miniconda
+    ports:
+      - 8888:8888
+  postgis:
+    build:
+      context: .
+      dockerfile: Dockerfile.postgis
+    image: postgis
+    ports:
+      - $HOST_POSTGRES_PORT:5432
+    environment:
+      - POSTGRES_PASSWORD
+  rstudio:
+    build:
+      context: .
+      dockerfile: Dockerfile.rstudio
+    image: rstudio
+    ports:
+      - 8787:8787
