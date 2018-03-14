@@ -1,2 +1,2 @@
-deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main
+deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main 10
 deb http://ftp.debian.org/debian jessie-backports main
