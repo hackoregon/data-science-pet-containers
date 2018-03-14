@@ -24,6 +24,7 @@ RUN apt-get update \
     cmake \
     command-not-found \
     curl \
+    ess \
     expat \
     gdal-bin \
     geotiff-bin \
