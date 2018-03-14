@@ -1,0 +1,20 @@
+FROM amazonlinux:2-with-sources
+LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
+
+RUN yum update -y \
+  && amazon-linux-extras install \
+    postgresql9.6 \
+    nano \
+    vim \
+  && yum install -y \
+    awscli \
+    groff \
+    postgresql \
+    postgresql-contrib \
+    postgresql-devel \
+    postgresql-docs \
+    postgresql-server \
+    wget \
+  && yum clean all \
+  && rm -rf /var/cache/yum
+CMD /usr/bin/sleep 1001d
