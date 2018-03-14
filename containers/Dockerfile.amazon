@@ -1,8 +1,7 @@
 FROM amazonlinux:2-with-sources
 LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
 
-RUN yum update -y \
-  && amazon-linux-extras install \
+RUN amazon-linux-extras install \
     postgresql9.6 \
     nano \
     vim \
@@ -21,4 +20,7 @@ RUN yum update -y \
     wget \
   && yum clean all \
   && rm -rf /var/cache/yum
-CMD /usr/bin/sleep 1001d
+USER postgres
+RUN initdb -D /var/lib/pgsql/data/main
+#CMD [ "pg_ctl", "-D", "/var/lib/pgsql/data/main", "start", "&&", "/usr/bin/sleep", "1001d" ]
+CMD pg_ctl -D /var/lib/pgsql/data/main start; /usr/bin/sleep 1001d
