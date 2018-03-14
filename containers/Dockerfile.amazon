@@ -8,12 +8,16 @@ RUN yum update -y \
     vim \
   && yum install -y \
     awscli \
+    curl \
+    git \
     groff \
+    lynx \
     postgresql \
     postgresql-contrib \
     postgresql-devel \
     postgresql-docs \
     postgresql-server \
+    procps-ng \
     wget \
   && yum clean all \
   && rm -rf /var/cache/yum
