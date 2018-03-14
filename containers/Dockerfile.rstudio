@@ -19,6 +19,7 @@ RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-k
     build-essential \
     command-not-found \
     curl \
+    emacs-nox \
     git \
     libgdal-dev \
     libpq-dev \
@@ -35,6 +36,14 @@ RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-k
   && apt-file update \
   && update-command-not-found \
   && mkdir -p /home/rstudio/Projects/
+ENV ESS_VERSION 17.11
+RUN mkdir -p /usr/local/src \
+  && cd /usr/local/src \
+  && wget http://ess.r-project.org/downloads/ess/ess-$ESS_VERSION.tgz \
+  && tar xf ess-$ESS_VERSION.tgz \
+  && cd ess-$ESS_VERSION \
+  && make \
+  && make install
 COPY clone-me.bash configure-git.bash /home/rstudio/
 RUN chmod +x /home/rstudio/*.bash \
   && chown -R rstudio:rstudio /home/rstudio/
