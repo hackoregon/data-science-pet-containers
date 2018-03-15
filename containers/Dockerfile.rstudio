@@ -10,6 +10,7 @@ RUN apt-get update \
 # Official PostgreSQL repository
 RUN mkdir -p /etc/apt/sources.list.d/
 COPY pgdg.list.stretch /etc/apt/sources.list.d/pgdg.list
+COPY backports.list.stretch /etc/apt/sources.list.d/backports.list
 
 RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
   && apt-get update \
@@ -23,12 +24,14 @@ RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-k
     git \
     libgdal-dev \
     libpq-dev \
+    libpqxx-dev \
     libssh2-1-dev \
     libudunits2-dev \
     lynx \
     nano \
     mdbtools-dev \
     openssh-client \
+    postgresql-client-9.6 \
     unixodbc-dev \
     vim \
     wget \

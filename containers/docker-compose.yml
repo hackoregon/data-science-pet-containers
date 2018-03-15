@@ -23,3 +23,8 @@ services:
     image: rstudio
     ports:
       - 8787:8787
+  amazon:
+    build:
+      context: .
+      dockerfile: Dockerfile.amazon
+    image: amazon
