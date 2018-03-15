@@ -1,9 +1,12 @@
-FROM postgres:10
+FROM postgres:9.6
 LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
 
 # Up-to-date R
-COPY cran.list.stretch /etc/apt/sources.list.d/cran.list
+COPY cran.list.jessie /etc/apt/sources.list.d/cran.list
 RUN apt-key adv --keyserver keys.gnupg.net --recv-key 'E19F5F87128899B192B1A2C2AD5F960A256A04AF'
+
+# Backports
+COPY backports.list.jessie /etc/apt/sources.list.d/backports.list
 
 # Install the MDB / ODBC tools, PostGIS, pgRouting and foreign data wrappers
 RUN apt-get update \
@@ -13,13 +16,13 @@ RUN apt-get update \
     osmium-tool \
     osmosis \
     postgis \
-    postgresql-10-postgis-2.4 \
-    postgresql-10-postgis-2.4-scripts \
-    postgresql-10-postgis-scripts \
-    postgresql-10-pgrouting \
-    postgresql-10-mysql-fdw \
-    postgresql-10-ogr-fdw \
-    postgresql-10-python3-multicorn \
+    postgresql-9.6-postgis-2.4 \
+    postgresql-9.6-postgis-2.4-scripts \
+    postgresql-9.6-postgis-scripts \
+    postgresql-9.6-pgrouting \
+    postgresql-9.6-mysql-fdw \
+    postgresql-9.6-ogr-fdw \
+    postgresql-9.6-python3-multicorn \
     awscli \
     bash-completion \
     build-essential \
@@ -42,7 +45,7 @@ RUN apt-get update \
     libgeotiff-dev \
     libpq-dev \
     libpqxx-dev \
-    librasterlite2-dev \
+    librasterlite-dev \
     libspatialite-dev \
     libudunits2-dev \
     lynx \
@@ -50,13 +53,13 @@ RUN apt-get update \
     nano \
     openssh-client \
     p7zip \
-    postgresql-client-10 \
+    postgresql-client-9.6 \
     proj-bin \
     python-dev \
     python3-dev \
     python3-csvkit \
+    rasterlite-bin \
     r-base-dev \
-    rasterlite2-bin \
     spatialite-bin \
     tar \
     udunits-bin \
