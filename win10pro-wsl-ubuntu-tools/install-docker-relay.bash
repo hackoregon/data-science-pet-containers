@@ -34,6 +34,6 @@ echo "Adding $USER to the docker group"
 sudo adduser $USER docker
 
 echo "Adding 'docker-compose' alias to '$HOME/.bashrc'"
-echo "alias docker-compose=docker-compose.exe" >> $HOME/.bashrc
+echo "alias docker-compose=/usr/local/bin/docker-compose" >> $HOME/.bashrc
 
 echo "Close this session and open another to activate 'docker' group membership."
