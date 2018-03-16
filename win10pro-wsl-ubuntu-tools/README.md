@@ -12,8 +12,8 @@ Installation
 ------------
 
 1.  Open an Ubuntu terminal.
-2.  Clone this repository via `https` in your Ubuntu home. You're just going to read, not commit. ***Please don't push to the repository; `git` on Ubuntu messes with line endings!***
-3.  `cd data-science-pet-containers/win10pro-wsl-ubuntu-tools`. Run the script `install-docker-relay.bash`. This implements the manual steps in the blog post.
+2.  Clone this repository. Both `https` and `ssh` now work, and the line endings issues from previous versions have been fixed.
+3.  `cd data-science-pet-containers/win10pro-wsl-ubuntu-tools`. Run the script `install-docker-relay.bash`. This implements the manual steps in the blog post. It also installs the correct version of `docker-compose`; see <https://github.com/hackoregon/data-science-pet-containers/issues/38> for the issue.
 4.  Close the terminal when the install finishes.
 
 Running
@@ -23,7 +23,7 @@ Running
 2.  `cd data-science-pet-containers/win10pro-wsl-ubuntu-tools`.
 3.  `sudo ~/docker-relay`. Enter your password if necessary. The relay process is now running.
 4.  Open another Ubuntu terminal.
-5.  `cd data-science-pet-containers/containers`. The standard Docker commands should now work. One caution: make sure you are using `docker-compose.exe`, not the bare `docker-compose`.
+5.  `cd data-science-pet-containers/containers`. The standard Docker commands should now work. One caution: make sure you are using `/usr/local/bin/docker-compose`, not the Windows executable `docker-compose.exe`.
 
 References
 ----------
