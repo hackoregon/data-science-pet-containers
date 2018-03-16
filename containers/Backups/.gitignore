@@ -1,1 +1,3 @@
 *.backup
+*.sql
+*.sql.gz
