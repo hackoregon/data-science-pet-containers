@@ -33,7 +33,7 @@ chmod +x ~/docker-relay
 echo "Adding $USER to the docker group"
 sudo adduser $USER docker
 
-echo "Adding 'docker-compose' alias to '$HOME/.bashrc'"
-echo "alias docker-compose=/usr/local/bin/docker-compose" >> $HOME/.bashrc
+echo "Removing 'docker-compose' aliases in '$HOME/.bashrc'"
+sed -i -s '/alias docker-compose/d' $HOME/.bashrc
 
 echo "Close this session and open another to activate 'docker' group membership."
