@@ -62,6 +62,7 @@ RUN apt-get update \
     libspatialite-dev \
     libudunits2-dev \
     lynx \
+    mdbtools \
     mdbtools-dev \
     nano \
     openssh-client \
