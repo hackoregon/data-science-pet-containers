@@ -1,6 +1,7 @@
 -- create the user if not already there
 \connect postgres
 DROP DATABASE IF EXISTS passenger_census;
+DROP DATABASE IF EXISTS "transportation-systems";
 DROP USER IF EXISTS "transportation-systems";
 CREATE USER "transportation-systems" WITH
   NOCREATEDB
