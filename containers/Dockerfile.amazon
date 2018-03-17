@@ -29,15 +29,16 @@ COPY clone-me.bash configure-git.bash /home/dbsuper/
 RUN chmod +x /home/dbsuper/*.bash
 
 USER postgres
-RUN initdb -D /var/lib/pgsql/data/main \
-  && pg_ctl -D /var/lib/pgsql/data/main start \
+RUN initdb --locale=en_US.utf8 --encoding=UTF8 -D /var/lib/pgsql/data/main \
+  && pg_ctl start -w -D /var/lib/pgsql/data/main \
   && createuser --superuser dbsuper \
   && createdb --owner=dbsuper dbsuper \
-  && pg_ctl stop
-USER root
+  && pg_ctl stop -w -D /var/lib/pgsql/data/main
 
 # do backups at the end so rest of image doesn't need a rebuild
+USER root
 COPY Backups/* /home/dbsuper/Backups/
 RUN chown -R dbsuper:dbsuper /home/dbsuper
 
+USER postgres
 CMD pg_ctl -D /var/lib/pgsql/data/main start; /usr/bin/sleep 1001d
