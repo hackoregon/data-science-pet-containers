@@ -1,10 +1,10 @@
 version: '3.4'
 services:
-  miniconda:
+  jupyter:
     build:
       context: .
-      dockerfile: Dockerfile.miniconda
-    image: miniconda
+      dockerfile: Dockerfile.jupyter
+    image: jupyter
     ports:
       - 8888:8888
   postgis:
@@ -18,11 +18,11 @@ services:
       - POSTGRES_PASSWORD
       - DB_USERS_TO_CREATE
     command: [ "postgres", "-c", "max_wal_size=2GB" ]
-  rstudio:
+  rstats:
     build:
       context: .
-      dockerfile: Dockerfile.rstudio
-    image: rstudio
+      dockerfile: Dockerfile.rstats
+    image: rstats
     ports:
       - 8787:8787
   amazon:

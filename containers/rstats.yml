@@ -1,10 +1,10 @@
 version: '3.4'
 services:
-  rstudio:
+  rstats:
     build:
       context: .
-      dockerfile: Dockerfile.rstudio
-    image: rstudio
+      dockerfile: Dockerfile.rstats
+    image: rstats
     ports:
       - 8787:8787
   postgis:
