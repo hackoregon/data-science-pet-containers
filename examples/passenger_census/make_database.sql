@@ -1,16 +1,7 @@
--- create the user if not already there
 \connect postgres
-DROP DATABASE IF EXISTS passenger_census;
-DROP DATABASE IF EXISTS "transportation-systems";
-DROP USER IF EXISTS "transportation-systems";
-CREATE USER "transportation-systems" WITH
-  NOCREATEDB
-  NOCREATEROLE
-  NOSUPERUSER
-  NOREPLICATION
-;
 
--- create a fresh database owned by the user
+-- create a fresh database
+DROP DATABASE IF EXISTS passenger_census;
 CREATE DATABASE passenger_census WITH OWNER = "transportation-systems";
 \connect passenger_census
 
