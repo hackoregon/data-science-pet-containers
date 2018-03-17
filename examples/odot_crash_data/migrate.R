@@ -74,19 +74,19 @@ DBI::dbClearResult(dummy)
 # change ownership!
 dummy <- DBI::dbSendStatement(
   pgcon,
-  "CREATE USER IF NOT EXISTS "transportation-systems";"
+  'CREATE USER IF NOT EXISTS "transportation-systems";'
 )
 DBI::dbClearResult(dummy)
 
 dummy <- DBI::dbSendStatement(
   pgcon,
-  "ALTER DATABASE odot_crash_data OWNER TO "transportation-systems";"
+  'ALTER DATABASE odot_crash_data OWNER TO "transportation-systems";'
 )
 DBI::dbClearResult(dummy)
 
 dummy <- DBI::dbSendStatement(
   pgcon,
-  "REASSIGN OWNED BY CURRENT USER TO "transportation-systems";"
+  'REASSIGN OWNED BY CURRENT USER TO "transportation-systems";'
 )
 DBI::dbClearResult(dummy)
 
