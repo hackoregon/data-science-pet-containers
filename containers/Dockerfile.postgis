@@ -4,6 +4,7 @@ LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
 # Do all the directory making / copying up front
 RUN useradd --shell /bin/bash --user-group --create-home dbsuper \
   && mkdir -p /home/dbsuper/Backups/ \
+  && mkdir -p /home/dbsuper/Raw/ \
   && mkdir -p /home/dbsuper/Projects/ \
   && mkdir -p /docker-entrypoint-initdb.d/ \
   && mkdir -p /usr/local/src/
@@ -89,4 +90,5 @@ RUN apt-get update \
 # set up automatic restores
 # do backups at the end so rest of image doesn't need a rebuild
 COPY Backups/* /home/dbsuper/Backups/
+COPY Raw/* /home/dbsuper/Raw/
 RUN chown -R dbsuper:dbsuper /home/dbsuper

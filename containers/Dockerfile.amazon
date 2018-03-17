@@ -24,6 +24,7 @@ RUN amazon-linux-extras install \
 
 RUN useradd --shell /bin/bash --user-group --create-home dbsuper \
   && mkdir -p /home/dbsuper/Backups/ \
+  && mkdir -p /home/dbsuper/Raw/ \
   && mkdir -p /home/dbsuper/Projects/
 COPY clone-me.bash configure-git.bash /home/dbsuper/
 RUN chmod +x /home/dbsuper/*.bash
@@ -38,6 +39,7 @@ RUN initdb --locale=en_US.utf8 --encoding=UTF8 -D /var/lib/pgsql/data/main \
 # do backups at the end so rest of image doesn't need a rebuild
 USER root
 COPY Backups/* /home/dbsuper/Backups/
+COPY Raw/* /home/dbsuper/Raw/
 RUN chown -R dbsuper:dbsuper /home/dbsuper
 
 USER postgres
