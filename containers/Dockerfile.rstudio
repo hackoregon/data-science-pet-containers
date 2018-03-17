@@ -1,18 +1,25 @@
 FROM rocker/rstudio:latest
 LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
 
-# add gnupg for PostgreSQL repo
-RUN apt-get update \
-  && apt-get install -qqy --no-install-recommends \
-  gnupg \
-  && apt-get clean
+# Do most of the directory creation up front
+RUN mkdir -p /etc/apt/sources.list.d/ \
+  && mkdir -p /usr/local/src/ \
+  && mkdir -p /home/rstudio/Projects/
+COPY help-the-terminal-is-broken.md clone-me.bash configure-git.bash /home/rstudio/
 
 # Official PostgreSQL repository
-RUN mkdir -p /etc/apt/sources.list.d/
 COPY pgdg.list.stretch /etc/apt/sources.list.d/pgdg.list
+
+# Backports
 COPY backports.list.stretch /etc/apt/sources.list.d/backports.list
 
-RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
+# Run as much of the stuff that needs "root" as we can now
+RUN chmod +x /home/rstudio/*.bash \
+  && chown -R rstudio:rstudio /home/rstudio/ \
+  && apt-get update \
+  && apt-get install -qqy --no-install-recommends \
+  gnupg \
+  && wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
   && apt-get update \
   && apt-get install -qqy --no-install-recommends \
     awscli \
@@ -37,16 +44,12 @@ RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-k
     wget \
   && apt-get clean \
   && apt-file update \
-  && update-command-not-found \
-  && mkdir -p /home/rstudio/Projects/
+  && update-command-not-found
+
 ENV ESS_VERSION 17.11
-RUN mkdir -p /usr/local/src \
-  && cd /usr/local/src \
+RUN cd /usr/local/src \
   && wget http://ess.r-project.org/downloads/ess/ess-$ESS_VERSION.tgz \
   && tar xf ess-$ESS_VERSION.tgz \
   && cd ess-$ESS_VERSION \
   && make \
   && make install
-COPY clone-me.bash configure-git.bash /home/rstudio/
-RUN chmod +x /home/rstudio/*.bash \
-  && chown -R rstudio:rstudio /home/rstudio/
