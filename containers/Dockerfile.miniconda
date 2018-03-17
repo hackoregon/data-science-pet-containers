@@ -23,7 +23,7 @@ RUN chmod +x /home/jupyter/*.bash \
   && chown -R jupyter:jupyter /home/jupyter/ \
   && apt-get update \
   && apt-get install -qqy --no-install-recommends \
-  gnupg \
+    gnupg \
   && wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
   && apt-get update \
   && apt-get install -qqy --no-install-recommends \

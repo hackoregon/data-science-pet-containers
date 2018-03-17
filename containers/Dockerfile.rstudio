@@ -40,7 +40,7 @@ RUN chmod +x /home/rstudio/*.bash \
     openssh-client \
     postgresql-client-9.6 \
     unixodbc-dev \
-    vim \
+    vim-nox \
     wget \
   && apt-get clean \
   && apt-file update \
