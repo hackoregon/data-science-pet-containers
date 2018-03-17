@@ -1,18 +1,30 @@
 FROM continuumio/miniconda3
 LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
 
-# add gnupg for PostgreSQL repo
-RUN apt-get update \
-  && apt-get install -qqy --no-install-recommends \
-  gnupg \
-  && apt-get clean
+# run most directory creation up front
+RUN useradd -s /bin/bash -U -m jupyter \
+  && mkdir -p /home/jupyter/Projects \
+  && mkdir -p /etc/apt/sources.list.d/
+COPY clone-me.bash \
+   configure-git.bash \
+   make-cookiecutter-project.bash \
+   jupyter-terminal-note.md \
+   start-jupyter-notebook.bash \
+   /home/jupyter/
 
 # Official PostgreSQL repository
-RUN mkdir -p /etc/apt/sources.list.d/
 COPY pgdg.list.jessie /etc/apt/sources.list.d/pgdg.list
+
+# Backports
 COPY backports.list.jessie /etc/apt/sources.list.d/backports.list
 
-RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
+# Run everything that needs "root" we can
+RUN chmod +x /home/jupyter/*.bash \
+  && chown -R jupyter:jupyter /home/jupyter/ \
+  && apt-get update \
+  && apt-get install -qqy --no-install-recommends \
+  gnupg \
+  && wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
   && apt-get update \
   && apt-get install -qqy --no-install-recommends \
     awscli \
@@ -27,22 +39,15 @@ RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-k
     nano \
     openssh-client \
     postgresql-client-9.6 \
-    vim \
+    vim-nox \
     wget \
   && apt-get clean \
   && apt-file update \
   && update-command-not-found \
   && conda update conda --yes --quiet \
-  && conda update --all --yes --quiet \
-  && useradd -s /bin/bash -U -m jupyter \
-  && mkdir -p /home/jupyter/Projects
+  && conda update --all --yes --quiet
 
-COPY clone-me.bash \
-   configure-git.bash \
-   make-cookiecutter-project.bash \
-   start-jupyter-notebook.bash /home/jupyter/
-RUN chmod +x /home/jupyter/*.bash \
-  && chown -R jupyter:jupyter /home/jupyter/
+# create the "jupyter" environment
 WORKDIR /home/jupyter
 USER jupyter
 RUN conda create --yes --quiet --name jupyter python=3 \
@@ -53,7 +58,7 @@ RUN conda create --yes --quiet --name jupyter python=3 \
   psycopg2 \
   requests \
   seaborn \
-  statsmodels
-RUN echo "source activate jupyter; conda install --yes -c conda-forge cookiecutter osmnx" | /bin/bash
+  statsmodels \
+  && echo "source activate jupyter; conda install --yes -c conda-forge cookiecutter osmnx" | /bin/bash
 EXPOSE 8888
 CMD /home/jupyter/start-jupyter-notebook.bash
