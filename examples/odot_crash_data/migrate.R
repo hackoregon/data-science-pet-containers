@@ -1,6 +1,3 @@
-# set some environment variables
-source("Rprofile.site")
-
 # install the packages we need
 if (!dir.exists(Sys.getenv('R_LIBS_USER'))) {
   dir.create(Sys.getenv('R_LIBS_USER'), recursive = TRUE, mode = '0755')
