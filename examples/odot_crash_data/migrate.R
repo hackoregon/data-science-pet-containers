@@ -14,7 +14,7 @@ raw_data <- "/home/dbsuper/Raw/Portland_Fatal___Injury_Crashes_2004-2014_Decode.
 Sys.setenv(
   PGHOST = "/var/run/postgresql",
   PGPORT = 5432,
-  PGUSER = "dbsuper",
+  PGUSER = "dbsuper"
 )
 
 # define functions
@@ -77,19 +77,13 @@ DBI::dbClearResult(dummy)
 # change ownership!
 dummy <- DBI::dbSendStatement(
   pgcon,
-  'CREATE USER IF NOT EXISTS "transportation-systems";'
-)
-DBI::dbClearResult(dummy)
-
-dummy <- DBI::dbSendStatement(
-  pgcon,
   'ALTER DATABASE odot_crash_data OWNER TO "transportation-systems";'
 )
 DBI::dbClearResult(dummy)
 
 dummy <- DBI::dbSendStatement(
   pgcon,
-  'REASSIGN OWNED BY CURRENT USER TO "transportation-systems";'
+  'REASSIGN OWNED BY CURRENT_USER TO "transportation-systems";'
 )
 DBI::dbClearResult(dummy)
 
