@@ -1,25 +1,43 @@
 FROM amazonlinux:2-with-sources
 LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
 
-RUN amazon-linux-extras install \
-    postgresql9.6 \
-    nano \
-    vim \
+# Do all the directory making / copying up front
+RUN useradd --shell /bin/bash --user-group --create-home dbsuper \
+  && mkdir -p /home/dbsuper/Backups/ \
+  && mkdir -p /home/dbsuper/Projects/
+COPY clone-me.bash configure-git.bash /home/dbsuper/
+
+RUN chmod +x /home/dbsuper/*.bash \
+  && amazon-linux-extras install \
+     postgresql9.6 \
+     nano \
+     vim \
   && yum install -y \
-    awscli \
-    curl \
-    git \
-    groff \
-    lynx \
-    postgresql \
-    postgresql-contrib \
-    postgresql-devel \
-    postgresql-docs \
-    postgresql-server \
-    procps-ng \
-    wget \
+     awscli \
+     curl \
+     git \
+     groff \
+     lynx \
+     postgresql \
+     postgresql-contrib \
+     postgresql-devel \
+     postgresql-docs \
+     postgresql-server \
+     procps-ng \
+     wget \
   && yum clean all \
   && rm -rf /var/cache/yum
+
 USER postgres
-RUN initdb -D /var/lib/pgsql/data/main
+RUN initdb -D /var/lib/pgsql/data/main \
+  && pg_ctl -D /var/lib/pgsql/data/main start \
+  && createuser --superuser dbsuper \
+  && createdb --owner=dbsuper dbsuper \
+  && pg_ctl stop
+USER root
+
+# do backups at the end so rest of image doesn't need a rebuild
+COPY Backups/* /home/dbsuper/Backups/
+RUN chown -R dbsuper:dbsuper /home/dbsuper
+
 CMD pg_ctl -D /var/lib/pgsql/data/main start; /usr/bin/sleep 1001d
