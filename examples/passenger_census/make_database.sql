@@ -29,7 +29,7 @@ CREATE TABLE passenger_census (
 );
 ALTER TABLE passenger_census OWNER TO "transportation-systems";
 
-\copy passenger_census from '../../data/raw/passenger_census.csv' with csv header
+\copy passenger_census from '/home/dbsuper/Raw/passenger_census.csv' with csv header
 
 -- we don't have PostGIS so we just add a column with the SRID so consumers know what they have!
 -- see ../../docs/ridership_data_dictionary.md
