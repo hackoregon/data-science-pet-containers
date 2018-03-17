@@ -1,7 +1,19 @@
 FROM postgres:9.6
 LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
 
-# Up-to-date R
+# Do all the directory making / copying up front
+RUN useradd --shell /bin/bash --user-group --create-home dbsuper \
+  && mkdir -p /home/dbsuper/Backups/ \
+  && mkdir -p /home/dbsuper/Projects/ \
+  && mkdir -p /docker-entrypoint-initdb.d/ \
+  && mkdir -p /usr/local/src/
+COPY osm2pgrouting-from-source.bash /usr/local/src/
+COPY make-dbsuper.sh Backups/restore-all.sh /docker-entrypoint-initdb.d/
+COPY clone-me.bash configure-git.bash /home/dbsuper/
+RUN chmod +x /home/dbsuper/*.bash \
+  && chmod +x /docker-entrypoint-initdb.d/*.sh
+
+# Repo for up-to-date R
 COPY cran.list.jessie /etc/apt/sources.list.d/cran.list
 RUN apt-key adv --keyserver keys.gnupg.net --recv-key 'E19F5F87128899B192B1A2C2AD5F960A256A04AF'
 
@@ -72,20 +84,9 @@ RUN apt-get update \
   && apt-get clean \
   && apt-file update \
   && update-command-not-found \
-  && useradd --shell /bin/bash --user-group --create-home dbsuper \
-  && mkdir -p /home/dbsuper/Backups/ \
-  && mkdir -p /home/dbsuper/Projects/ \
-  && mkdir -p /docker-entrypoint-initdb.d/ \
-  && mkdir -p /usr/local/src/
-
-# Install osm2pgrouting from source
-COPY osm2pgrouting-from-source.bash /usr/local/src/
-RUN bash /usr/local/src/osm2pgrouting-from-source.bash
+  && bash /usr/local/src/osm2pgrouting-from-source.bash
 
 # set up automatic restores
+# do backups at the end so rest of image doesn't need a rebuild
 COPY Backups/* /home/dbsuper/Backups/
-COPY make-dbsuper.sh Backups/restore-all.sh /docker-entrypoint-initdb.d/
-COPY clone-me.bash configure-git.bash /home/dbsuper/
-RUN chown -R dbsuper:dbsuper /home/dbsuper \
-  && chmod +x /home/dbsuper/*.bash \
-  && chmod +x /docker-entrypoint-initdb.d/*.sh
+RUN chown -R dbsuper:dbsuper /home/dbsuper
