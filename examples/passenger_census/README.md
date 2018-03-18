@@ -1,8 +1,8 @@
-ODOT Crash Data Conversion
+Passenger Census Conversion
 ================
 
-This example demonstrates how to convert a Microsoft Access database
-(“mdb”) file to a PostgreSQL backup using R and PostgreSQL.
+This example demonstrates how to convert a comma-separated value (“csv”)
+file to a PostgreSQL backup using PostgreSQL.
 
 ## Setup
 
@@ -19,10 +19,9 @@ This example demonstrates how to convert a Microsoft Access database
     /bin/bash`. You’ll be logged in to the `containers_postgis_1`
     container as the database superuser `dbsuper`.
 2.  `./clone-me.bash`. This clones the project inside the container.
-3.  `cd Projects/data-science-pet-containers/examples/odot_crash_data`.
-4.  `./migrate.bash`. This takes a bit of time to run, most of which is
-    installing the R packages that do the conversion. When the script
-    exits, type `exit` and you’ll be back on the host.
+3.  `cd Projects/data-science-pet-containers/examples/passenger_census`.
+4.  `./make_database_backups.bash`. When the script exits, type `exit`
+    and you’ll be back on the host.
 
 ## Retrieving the resulting backup
 
