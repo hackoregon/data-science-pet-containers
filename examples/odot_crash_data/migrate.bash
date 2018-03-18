@@ -11,4 +11,4 @@ done
 echo "You can ignore errors in the user creation above"
 sleep 5
 
-R --save < migrate.R
+R --no-save < migrate.R
