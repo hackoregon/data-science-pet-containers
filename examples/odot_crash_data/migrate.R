@@ -2,7 +2,8 @@
 if (!dir.exists(Sys.getenv('R_LIBS_USER'))) {
   dir.create(Sys.getenv('R_LIBS_USER'), recursive = TRUE, mode = '0755')
 }
-install.packages(c("Hmisc", "RPostgres"), quiet = TRUE, repos = "https://cran.rstudio.com/")
+install.packages(c("Hmisc", "RPostgres"), 
+  quiet = TRUE, lib = Sys.getenv('R_LIBS_USER'), repos = "https://cran.rstudio.com/")
 
 # point to the raw data file
 raw_data <- "/home/dbsuper/Raw/Portland_Fatal___Injury_Crashes_2004-2014_Decode.mdb"
