@@ -93,6 +93,3 @@ plain <- paste(
   "pg_dump --format=p --verbose --clean --create --if-exists --dbname=odot_crash_data",
   "gzip -c > /home/dbsuper/Backups/odot_crash_data.sql.gz", sep = " | ")
 system(plain)
-
-custom <- "pg_dump --format=c --verbose --dbname=odot_crash_data > /home/dbsuper/Backups/odot_crash_data.backup"
-system(custom)
