@@ -92,4 +92,5 @@ RUN apt-get update \
 # do backups at the end so rest of image doesn't need a rebuild
 COPY Backups/* /home/dbsuper/Backups/
 COPY Raw/* /home/dbsuper/Raw/
+COPY Rprofile.site /home/dbsuper/.Rprofile
 RUN chown -R dbsuper:dbsuper /home/dbsuper
