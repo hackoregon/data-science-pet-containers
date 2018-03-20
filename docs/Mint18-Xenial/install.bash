@@ -10,23 +10,23 @@ wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | \
 echo "Updating the cache"
 sudo apt-get update
 
-echo "Installing PostgreSQL 10, PostGIS 2.4, pgRouting 2.5 and pgAdmin 4"
+echo "Installing PostgreSQL 9.6, PostGIS 2.4, pgRouting 2.5 and pgAdmin 4"
 echo "This will take some time."
 sudo apt-get install -y \
   gdal-bin \
   osm2pgsql \
-  postgresql-10 \
-  postgresql-10-mysql-fdw \
-  postgresql-10-ogr-fdw \
-  postgresql-10-pgrouting \
-  postgresql-10-pgrouting-doc \
-  postgresql-10-pgrouting-scripts \
-  postgresql-10-postgis-2.4 \
-  postgresql-10-postgis-2.4-scripts \
-  postgresql-10-postgis-scripts \
-  postgresql-client-10 \
-  postgresql-doc-10 \
-  postgresql-server-dev-10 \
+  postgresql-9.6 \
+  postgresql-9.6-mysql-fdw \
+  postgresql-9.6-ogr-fdw \
+  postgresql-9.6-pgrouting \
+  postgresql-9.6-pgrouting-doc \
+  postgresql-9.6-pgrouting-scripts \
+  postgresql-9.6-postgis-2.4 \
+  postgresql-9.6-postgis-2.4-scripts \
+  postgresql-9.6-postgis-scripts \
+  postgresql-client-9.6 \
+  postgresql-doc-9.6 \
+  postgresql-server-dev-9.6 \
   pgadmin4 \
   pgadmin4-doc
 
