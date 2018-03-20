@@ -30,3 +30,5 @@ services:
       context: .
       dockerfile: Dockerfile.amazon
     image: amazon
+    environment:
+      - DB_USERS_TO_CREATE
