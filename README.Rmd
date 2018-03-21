@@ -159,22 +159,24 @@ When the `postgis` service first starts, it initializes the database. After that
 
 To use this feature:
 
-1. For each database you want restored, create a backup file. For documentation / repeatability, do this with `pg_dump` on the command line or in a script.
+1. Make sure all objects in the source databases have owners that will exist in the destination database. If the owner of an object doesn't exist in the destination, the restore will fail.
+2. For each database you want restored, create a backup file. For documentation / repeatability, do this with `pg_dump` on the command line or in a script:
 
     ```
-    pg_dump -Fp -v -C --if-exists -d <database> \
+    pg_dump -Fp -v -C -c --if-exists -d <database> \
     | gzip -c > <database>.sql.gz
     ```
     
-    `<database>` is the name of the database.
+    where `<database>` is the name of the database.
     
-    At restore time, a new database will be created (`-C`). This is done by dropping an existing one; the `--if-exists` keeps this drop from failing if the database doesn't exist.
-    The owner of the database in the source of the backup ***must*** exist in the destination server or the restore will not work!
+    At restore time, a new database will be created (`-C -c`). This is done by DROPping existing objects; the `--if-exists` keeps this drop from failing if the objects don't exist.
+3. Copy the database backup files to `data-science-pet-containers/containers/Backups`. Note that `.gitignore` is set for the common backup file extensions - `*.sql.gz`, `*.sql` and `*.backup` - so these backup files won't be version-controlled.
+4. Type `docker-compose -f postgis.yml build`.
 
-2. Copy the database backup files to `data-science-pet-containers/containers/Backups`. Note that `.gitignore` is set for `*.backup`, so these backup files won't be version-controlled.
-3. Type `docker-compose -f postgis.yml build`.
+Docker will copy the backup files into `/home/dbsuper/Backups` on the `postgis` image, and place a script `restore-all.sh` in `/docker-entrypoint-initdb.d/`. The first time the image runs, `restore-all.sh` will 
 
-Docker will copy the backup files into `/home/dbsuper/Backups` on the `postgis` image, and place a script `restore-all.sh` in `/docker-entrypoint-initdb.d/`. The first time the image runs, `restore-all.sh` will restore all the `.sql.gz` files it finds in `/home/dbsuper/Backups`. 
+* Create all the database users you defined in `DB_USERS_TO_CREATE`, and then
+* restore all the `.backup`, `.sql.gz` and `.sql` files it finds in `/home/dbsuper/Backups`. 
 
 ### The `Raw` directory
 If you want to load raw data onto the `postgis` image, copy the files to the `data-science-pet-containers/containers/Raw` directory. The next time the image is built they will be copied to `/home/dbsuper/Raw`. Like the backups, these files are not version-controlled.

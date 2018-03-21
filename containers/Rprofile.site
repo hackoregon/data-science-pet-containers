@@ -1,0 +1,26 @@
+# .Rprofile -- commands to execute at the beginning of each R session
+#
+# You can use this file to load packages, set options, etc.
+#
+# NOTE: changes in this file won't be reflected until after you quit
+# and start a new session
+
+Sys.setenv(R_PAPERSIZE = "letter")
+
+# make library directory if we're not 'root'
+if (as.list(Sys.info())$user != 'root') {
+  if (!dir.exists(Sys.getenv('R_LIBS_USER'))) {
+    dir.create(Sys.getenv('R_LIBS_USER'), recursive = TRUE, mode = '0755')
+  }
+}
+
+# secure package download
+options(download.file.method = "curl")
+local({
+   r <- getOption("repos");
+   r["CRAN"] <- "https://cran.rstudio.com/"
+   options(repos=r)
+})
+
+# devtools issue
+options(unzip = "unzip")
