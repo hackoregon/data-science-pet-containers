@@ -1,4 +1,9 @@
-# Installing on Linux Mint 18 or Ubuntu 16.04 LTS "Xenial Xerus"
+# Installing on Linux Mint
+
+## Which version of Linux Mint do you have?
+There are two versions of Linux Mint based on Ubuntu. The newer version, 18.x, is based on Ubuntu 16.04 LTS aka "Xenial Xerus". The older version, 17.x, is based on Ubuntu 14.04 LTS, "Trusty Tahr".
+
+In the following, `<version>` refers to the Linux Mint version number, 18 or 17. If you have Ubuntu 16.04 LTS, the scripts for Linux Mint 18 should work, and the scripts for Linux Mint 17 should work on Ubuntu 14.04 LTS.
 
 ## PostgreSQL 9.6
 
@@ -6,8 +11,8 @@
 2. Open a command prompt and enter
 
     ```
-    chmod +x install-postgresql.bash
-    ./install-postgresql.bash
+    chmod +x install-postgresql-<version>.bash
+    ./install-postgresql-<version>.bash
     ```
 
     The script will
@@ -34,4 +39,4 @@
 
 ## Docker Community Edtion / Docker Compose
 
-`chmod +x install-docker.bash; ./install-docker.bash` - this will install both Docker Community Edition and Docker Compose.
+`chmod +x install-docker-<version>.bash; ./install-docker-<version>.bash` - this will install both Docker Community Edition and Docker Compose.

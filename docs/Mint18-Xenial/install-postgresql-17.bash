@@ -3,7 +3,7 @@
 # source: https://www.postgresql.org/download/linux/ubuntu/
 
 echo "Adding the PGDG repository"
-sudo cp pgdg.list /etc/apt/sources.list.d/pgdg.list
+sudo cp pgdg.list.trusty /etc/apt/sources.list.d/pgdg.list
 wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | \
   sudo apt-key add -
 

@@ -16,8 +16,4 @@ sudo chmod +x /usr/local/bin/docker-compose
 echo "Adding $USER to the docker group"
 sudo adduser $USER docker
 
-echo "Enabling and starting the Docker service"
-sudo systemctl enable docker.service
-sudo systemctl start docker.service
-
 echo "Close this session and open another to activate 'docker' group membership."
