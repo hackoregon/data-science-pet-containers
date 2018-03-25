@@ -11,6 +11,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.postgis
+      args:
+        - DB_USERS_TO_CREATE
     image: postgis
     ports:
       - $HOST_POSTGRES_PORT:5432

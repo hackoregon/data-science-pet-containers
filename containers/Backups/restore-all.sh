@@ -1,13 +1,5 @@
 #! /bin/bash
 
-# create the users we'll be restoring to!
-for user in $DB_USERS_TO_CREATE
-do
-  echo "Creating database superuser $user with home database $user"
-  createuser --superuser $user || true
-  createdb --owner=$user $user || true
-done
-
 if [ `( ls -1 /home/dbsuper/Backups/*.backup 2>/dev/null || true ) | wc -l` -gt "0" ]
 then
   for file in /home/dbsuper/Backups/*.backup

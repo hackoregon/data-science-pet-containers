@@ -8,11 +8,13 @@ RUN useradd --shell /bin/bash --user-group --create-home dbsuper \
   && mkdir -p /home/dbsuper/Projects/ \
   && mkdir -p /docker-entrypoint-initdb.d/ \
   && mkdir -p /usr/local/src/
-COPY osm2pgrouting-from-source.bash /usr/local/src/
-COPY make-dbsuper.sh Backups/restore-all.sh /docker-entrypoint-initdb.d/
+COPY osm2pgrouting-from-source.bash make-dbusers-linux.bash /usr/local/src/
+COPY 1make-dbsuper.sh Backups/restore-all.sh /docker-entrypoint-initdb.d/
 COPY clone-me.bash configure-git.bash /home/dbsuper/
+ARG DB_USERS_TO_CREATE
 RUN chmod +x /home/dbsuper/*.bash \
-  && chmod +x /docker-entrypoint-initdb.d/*.sh
+  && chmod +x /docker-entrypoint-initdb.d/*.sh \
+  && bash /usr/local/src/make-dbusers-linux.bash
 
 # Repo for up-to-date R
 COPY cran.list.jessie /etc/apt/sources.list.d/cran.list
