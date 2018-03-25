@@ -25,7 +25,9 @@ RUN amazon-linux-extras install \
 RUN useradd --shell /bin/bash --user-group --create-home dbsuper \
   && mkdir -p /home/dbsuper/Backups/ \
   && mkdir -p /home/dbsuper/Raw/ \
-  && mkdir -p /home/dbsuper/Projects/
+  && mkdir -p /home/dbsuper/Projects/ \
+  && echo "alias l='ls -ACF --color=auto'" >> /etc/bashrc \
+  && echo "alias ll='ls -ltrAF --color=auto'" >> /etc/bashrc
 COPY clone-me.bash configure-git.bash /home/dbsuper/
 RUN chmod +x /home/dbsuper/*.bash
 
