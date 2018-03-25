@@ -28,15 +28,18 @@ RUN useradd --shell /bin/bash --user-group --create-home dbsuper \
   && mkdir -p /home/dbsuper/Projects/ \
   && echo "alias l='ls -ACF --color=auto'" >> /etc/bashrc \
   && echo "alias ll='ls -ltrAF --color=auto'" >> /etc/bashrc
-COPY 1make-dbusers.bash clone-me.bash configure-git.bash /home/dbsuper/
-RUN chmod +x /home/dbsuper/*.bash
+COPY clone-me.bash configure-git.bash /home/dbsuper/
+COPY 1make-dbusers.bash /var/lib/pgsql/
+RUN chmod +x /home/dbsuper/*.bash /var/lib/pgsql/1make-dbusers.bash
+RUN chown postgres:postgres /var/lib/pgsql/1make-dbusers.bash
 
 USER postgres
+ARG DB_USERS_TO_CREATE
 RUN initdb --locale=en_US.utf8 --encoding=UTF8 -D /var/lib/pgsql/data/main \
   && pg_ctl start -w -D /var/lib/pgsql/data/main \
   && createuser --superuser dbsuper \
   && createdb --owner=dbsuper dbsuper \
-  && bash /home/dbsuper/1make-dbusers.bash \
+  && bash /var/lib/pgsql/1make-dbusers.bash \
   && pg_ctl stop -w -D /var/lib/pgsql/data/main
 
 # do backups at the end so rest of image doesn't need a rebuild
