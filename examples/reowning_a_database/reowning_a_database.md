@@ -3,88 +3,74 @@ Re-owning a Database
 
 ## Situation
 
-The `disaster-resilience` team has given you a backup of a database in
-`pg_dump` custom format. All the objects in it have `postgres` as an
-owner. You want to change the ownership to `disaster-resilience` and
-make a compressed SQL backup.
+A team has given you a backup of a database in `pg_dump` custom format.
+All the objects in it have `postgres` as the owner. You want to change
+the ownership to the team’s account and make a compressed SQL backup.
 
 ## Steps
 
-1.  Download the backup file to
-    `data-science-pet-containers/containers/Raw`. Although it’s a backup
-    file, you don’t want it automatically restored, so you place it in
-    the directory for raw data.
+1.  Start up the PostGIS container: `cd
+    data-science-pet-containers/containers; docker-compose -f
+    postgis.yml up -d --build`.
+2.  Download the backup file to
+    `data-science-pet-containers/examples/reowning_a_database`.
+3.  `cd data-science-pet-containers/examples/reowning_a_database`.
+4.  Edit the file `linux-wrapper.bash`. The example I used to test was a
+    file named `disaster.backup` from the `disaster-resilience` team.
+    Change the definitions of `DB_SUPERUSER` and `DB_NAME` to match what
+    you have.
+5.  Enter `./linux-wrapper.bash`. The script will
+      - Copy the original backup file and the `reown-demo.bash` script
+        to the container with `docker cp`.
+      - Execute the script in the container with `docker exec`.
+      - Copy the new backup file from the container with `docker cp`.
 
-2.  `cd data-science-pet-containers/containers`. Bring up the
-    `containers_postgis_1` container with the `--build` option:
-    `docker-compose -f postgis.yml up -d --build`. This will copy all
-    the files in `Raw` to the `/home/dbsuper/Raw` on the image and
-    they’ll be there in the container.
+## The scripts
 
-3.  Log in as the target new owner for the database -
-    `disaster-resilience`. This is a database superuser. `docker exec
-    -it -u disaster-resilience containers_postgis_1 /bin/bash`.
+### linux-wrapper.bash
 
-4.  Check to see that the backup file is there:
-    
-        disaster-resilience@0966fc6263f4:~$ ls -l /home/dbsuper/Raw/
-        total 305964
-        -rw-r--r-- 1 dbsuper dbsuper 145395162 Mar 25 18:53 disaster.backup
-        -rw-r--r-- 1 dbsuper dbsuper  71781939 Mar 20 06:09 passenger_census.csv
-        -rw-r--r-- 1 dbsuper dbsuper  96129024 Mar 20 06:09 Portland_Fatal___Injury_Crashes_2004-2014_Decode.mdb
+``` bash
+#! /bin/bash
 
-5.  Create and restore the database
-    
-        createdb --owner disaster-resilience disaster
-        pg_restore --dbname=disaster --no-owner /home/dbsuper/Raw/disaster.backup
+export DB_SUPERUSER=disaster-resilience
+echo "Will run as '$DB_SUPERUSER'; change 'DB_SUPERUSER' for a different user"
+export DB_NAME=disaster
+echo "Database name is '$DB_NAME'"
+echo ""
+echo ""
 
-6.  Check that it worked with `psql`:
-    
-        disaster-resilience@0966fc6263f4:~$ psql --dbname=disaster
-        psql (9.6.8)
-        Type "help" for help.
-        
-        disaster=# 
-    
-    At the `#` prompt enter `\d`:
-    
-    ``` 
-                                            List of relations
-     Schema |                          Name                          |   Type   |        Owner        
-    --------+--------------------------------------------------------+----------+---------------------
-     public | building_footprints                                    | table    | disaster-resilience
-     public | building_footprints_objectid_seq                       | sequence | disaster-resilience
-     public | electrical_transmission_structures                     | table    | disaster-resilience
-     public | electrical_transmission_structures_objectid_seq        | sequence | disaster-resilience
-    
-     [snip]
-    
-     :
-    ```
-    
-    Page through the listing with the space bar.
-    
-        (49 rows)
-        
-        (END)
-    
-    Press `q` to exit the pager. `\q` to exit `psql`.
+echo "Copying the demo script to the container"
+docker cp reown-demo.bash containers_postgis_1:/home/$DB_SUPERUSER
 
-7.  Make a compressed SQL backup:
-    
-        pg_dump -Fp -C -c --if-exists -d disaster \
-        | gzip -c > disaster.sql.gz
-        ls -l
-    
-    When it’s done you’ll see
-    
-        total 143540
-        -rw-r--r-- 1 disaster-resilience disaster-resilience 146984849 Mar 26 02:56 disaster.sql.gz
-    
-    Exit the container with `exit`.
+echo "Copying the database backup to the container"
+docker cp $DB_NAME.backup containers_postgis_1:/home/$DB_SUPERUSER
 
-8.  Copy the backup file from the container to the
-        host:
-    
-        docker cp containers_postgis_1:/home/disaster-resilience/disaster.sql.gz .
-        ls -l
+echo "Running the demo script in the container"
+echo ""
+echo ""
+docker exec -it -u $DB_SUPERUSER -w /home/$DB_SUPERUSER -e DB_NAME=$DB_NAME -e USER=$DB_SUPERUSER \
+  containers_postgis_1 /home/$DB_SUPERUSER/reown-demo.bash
+
+echo "Retriving the compressed SQL backup"
+docker cp containers_postgis_1:home/$DB_SUPERUSER/$DB_NAME.sql.gz .
+ls -ltr $DB_NAME.*
+```
+
+### reown-demo.bash
+
+``` bash
+#! /bin/bash
+
+echo "Dropping database; ignore the error if it doesn't exist"
+dropdb $DB_NAME || true
+
+echo "Creating a new database '$DB_NAME' owned by '$USER'"
+createdb --owner $USER $DB_NAME
+
+echo "Restoring the database as '$USER'"
+pg_restore --dbname=$DB_NAME --no-owner $DB_NAME.backup
+
+echo "Making a compressed SQL backup"
+pg_dump -Fp -C -c --if-exists -d $DB_NAME | gzip -c > $DB_NAME.sql.gz
+ls -ltr $DB_NAME.*
+```
