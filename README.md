@@ -2,9 +2,12 @@
     -   [Overview](#overview)
     -   [Quick start](#quick-start)
     -   [Setting up](#setting-up)
+        -   [About `DB_USERS_TO_CREATE`](#about-db_users_to_create)
     -   [Starting the services](#starting-the-services)
     -   [The PostGIS service](#the-postgis-service)
         -   [Using the command line](#using-the-command-line)
+        -   [Linux host convenience
+            scripts](#linux-host-convenience-scripts)
         -   [Virtualenvwrapper](#virtualenvwrapper)
         -   [Setting up `git`](#setting-up-git)
         -   [Connecting to the service](#connecting-to-the-service)
@@ -31,7 +34,7 @@
 Data Science Pet Containers
 ===========================
 
-M. Edward (Ed) Borasky <znmeb@znmeb.net>, 2018-03-21
+M. Edward (Ed) Borasky <znmeb@znmeb.net>, 2018-03-25
 
 Overview
 --------
@@ -141,6 +144,31 @@ Here’s `sample.env`:
     POSTGRES_PASSWORD=some.string.you.can.remember.that.nobody.else.can.guess
     DB_USERS_TO_CREATE=disaster-resilience housing-affordability local-elections transportation-systems urban-development
 
+### About `DB_USERS_TO_CREATE`
+
+I’ve provided these to facilitate database ownership wrangling and
+backup-restore testing. As given in `sample.env`, these are the accounts
+Hack Oregon’s PostgreSQL server will have. Some notes:
+
+-   In the `postgis` image, they are also Linux users. For example, you
+    can
+    `docker-exec -it -u disaster-resilience containers_postgis_1 /bin/bash`
+    and you’ll be at a command prompt as `disaster-resilience`.
+
+    In the `postgis` image, they are database superusers. For example,
+    you can do `createuser` to create a database user and `createdb` to
+    create a database. The “home database” for each of these users - a
+    database with the same name as the Linux and database user - is
+    created the first time the container comes up.
+-   In the `amazon` image, they are *not* Linux users, nor are they
+    database superusers. They are created with the same permissions they
+    have on the Hack Oregon PostgreSQL server:
+    `--no-createdb --no-createrole --no-superuser --no-replication`.
+-   Because these names have hyphens in them, PostgreSQL in both images
+    requires they be enclosed in double-quotes in SQL statements.
+    -   WRONG: `ALTER DATABASE disaster OWNER TO disaster-resilience;`
+    -   RIGHT: `ALTER DATABASE disaster OWNER TO "disaster-resilience";`
+
 Starting the services
 ---------------------
 
@@ -203,6 +231,31 @@ I’ve added a database superuser called `dbsuper`. This should be your
 preferred login, rather than using the system database superuser
 `postgres`. Log in with
 `docker exec -it -u dbsuper -w /home/dbsuper containers_postgis_1 /bin/bash`.
+
+### Linux host convenience scripts
+
+For Linux hosts, including Windows 10 Pro Windows Subsystem for Linux
+Ubuntu
+(<https://github.com/hackoregon/data-science-pet-containers/blob/master/win10pro-wsl-ubuntu-tools/README.md>),
+I’ve created some convenience scripts:
+
+-   `login2postgis.bash`: Type `./login2postgis.bash` and you’ll be
+    logged into the `containers_postgis_1` container as `dbsuper`. You
+    can also log in as one of the users in `DB_USERS_TO_CREATE`, for
+    example, `./login2postgis.bash local-elections`.
+-   `login2amazon.bash`: Log in to `containers_amazon_1` as `dbsuper`.
+-   `pull-postgis-backups.bash`: This script does
+    `docker cp containers_postgis_1:/home/dbsuper/Backups`. That is, it
+    copies all the files from `/home/dbsuper/Backups` into `Backups` in
+    your current directory, creating `Backups` if it doesn’t exist.
+
+    I use this for transferring backup files for testing; I’ll create a
+    database in the PostGIS container, create a backup in
+    `/home/dbsuper/Backups` and copy it out to the host with this
+    script.
+-   `push-amazon-backups.bash`: This is the next step - it copies
+    `Backups` to `/home/dbsuper/Backups` in `containers_amazon_1` for
+    restore testing.
 
 ### Virtualenvwrapper
 
