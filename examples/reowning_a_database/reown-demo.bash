@@ -1,14 +1,14 @@
 #! /bin/bash
 
-echo "Drop database; ignore error if it doesn't exist"
-dropdb disaster || true
+echo "Dropping database; ignore the error if it doesn't exist"
+dropdb $DB_NAME || true
 
-echo "Create a new database"
-createdb --owner disaster-resilience disaster
+echo "Creating a new database '$DB_NAME' owned by '$USER'"
+createdb --owner $USER $DB_NAME
 
-echo "Restore it as the new owner"
-pg_restore --dbname=disaster --no-owner /home/dbsuper/Raw/disaster.backup
+echo "Restoring the database as '$USER'"
+pg_restore --dbname=$DB_NAME --no-owner $DB_NAME.backup
 
-echo "Make a compressed SQL backup"
-pg_dump -Fp -C -c --if-exists -d disaster | gzip -c > disaster.sql.gz
-ls -ltr
+echo "Making a compressed SQL backup"
+pg_dump -Fp -C -c --if-exists -d $DB_NAME | gzip -c > $DB_NAME.sql.gz
+ls -ltr $DB_NAME.*
