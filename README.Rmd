@@ -30,8 +30,11 @@ As the name implies, the software is distributed via Docker. The user simply clo
 Why do it this way? 
 
 * Provide a standardized common working environment for data scientists and DevOps engineers at Hack Oregon. We want to build using the same tools we'll use for deployment as much as possible.
-* Deliver advanced open source technologies to Windows and MacOS desktops and laptops. While there are "native" installers for most of these tools, some are readily available and only heavily tested on Linux.
+* Deliver advanced open source technologies to Windows and MacOS desktops and laptops. While there are "native" installers for most of these tools, some are readily available for and only heavily tested on Linux.
 * Isolation: for the most part, software running in containers is contained. It interacts with the desktop / laptop user through well-defined mechanisms, often as a web server.
+
+### About the examples
+I've coded up some examples of how I've used this toolset for Hack Oregon. They're in `data-science-pet-containers/examples`. Those that require host-side operations mostly use Bash for scripting, and they work on a Linux host, including Windows 10 Pro Windows Subsystem for Linux (WSL) Ubuntu. 
 
 ## Quick start
 1. Clone this repository and `cd data-science-pet-containers/containers`.
@@ -64,7 +67,7 @@ To stop the service, type `docker-compose -f postgis.yml stop`. To start it back
 
 The container and its filesystem will persist across host reboots. To destroy them, type `docker-compose -f postgis.yml down`.
 
-## Setting up
+## Detailed setup
 1. Clone this repository and `cd data-science-pet-containers/containers`.
 2. Define the environment variables:
     * Copy the file `sample.env` to `.env`. For security reasons, `.env` is listed in `.gitignore`, so it ***won't*** be checked into version control. 
@@ -92,6 +95,8 @@ I've provided these to facilitate database ownership wrangling and backup-restor
 * Because these names have hyphens in them, PostgreSQL in both images requires they be enclosed in double-quotes in SQL statements.
     * WRONG: `ALTER DATABASE disaster OWNER TO disaster-resilience;`
     * RIGHT: `ALTER DATABASE disaster OWNER TO "disaster-resilience";`
+
+See the demo in `exanples/reowning_a_database` for an example of how these users can be exploited in database wrangling.
     
 ## Starting the services
 1. Choose your version:
@@ -190,7 +195,7 @@ To use this feature:
     
     where `<database>` is the name of the database.
     
-    At restore time, a new database will be created (`-C -c`). This is done by DROPping existing objects; the `--if-exists` keeps this drop from failing if the objects don't exist.
+    At restore time, a new database will be created (`-C -c`). This is done by DROPping existing objects; the `--if-exists` keeps the DROPs from failing if the objects don't exist.
 3. Copy the database backup files to `data-science-pet-containers/containers/Backups`. Note that `.gitignore` is set for the common backup file extensions - `*.sql.gz`, `*.sql` and `*.backup` - so these backup files won't be version-controlled.
 4. Type `docker-compose -f postgis.yml build`.
 

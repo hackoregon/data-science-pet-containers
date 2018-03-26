@@ -1,7 +1,8 @@
 -   [Data Science Pet Containers](#data-science-pet-containers)
     -   [Overview](#overview)
+        -   [About the examples](#about-the-examples)
     -   [Quick start](#quick-start)
-    -   [Setting up](#setting-up)
+    -   [Detailed setup](#detailed-setup)
         -   [About `DB_USERS_TO_CREATE`](#about-db_users_to_create)
     -   [Starting the services](#starting-the-services)
     -   [The PostGIS service](#the-postgis-service)
@@ -34,7 +35,7 @@
 Data Science Pet Containers
 ===========================
 
-M. Edward (Ed) Borasky <znmeb@znmeb.net>, 2018-03-25
+M. Edward (Ed) Borasky <znmeb@znmeb.net>, 2018-03-26
 
 Overview
 --------
@@ -61,11 +62,19 @@ Why do it this way?
     using the same tools we’ll use for deployment as much as possible.
 -   Deliver advanced open source technologies to Windows and MacOS
     desktops and laptops. While there are “native” installers for most
-    of these tools, some are readily available and only heavily tested
-    on Linux.
+    of these tools, some are readily available for and only heavily
+    tested on Linux.
 -   Isolation: for the most part, software running in containers is
     contained. It interacts with the desktop / laptop user through
     well-defined mechanisms, often as a web server.
+
+### About the examples
+
+I’ve coded up some examples of how I’ve used this toolset for Hack
+Oregon. They’re in `data-science-pet-containers/examples`. Those that
+require host-side operations mostly use Bash for scripting, and they
+work on a Linux host, including Windows 10 Pro Windows Subsystem for
+Linux (WSL) Ubuntu.
 
 Quick start
 -----------
@@ -111,8 +120,8 @@ it back up again, `docker-compose -f postgis.yml start`.
 The container and its filesystem will persist across host reboots. To
 destroy them, type `docker-compose -f postgis.yml down`.
 
-Setting up
-----------
+Detailed setup
+--------------
 
 1.  Clone this repository and
     `cd data-science-pet-containers/containers`.
@@ -168,6 +177,9 @@ Hack Oregon’s PostgreSQL server will have. Some notes:
     requires they be enclosed in double-quotes in SQL statements.
     -   WRONG: `ALTER DATABASE disaster OWNER TO disaster-resilience;`
     -   RIGHT: `ALTER DATABASE disaster OWNER TO "disaster-resilience";`
+
+See the demo in `exanples/reowning_a_database` for an example of how
+these users can be exploited in database wrangling.
 
 Starting the services
 ---------------------
@@ -345,7 +357,7 @@ To use this feature:
     where `<database>` is the name of the database.
 
     At restore time, a new database will be created (`-C -c`). This is
-    done by DROPping existing objects; the `--if-exists` keeps this drop
+    done by DROPping existing objects; the `--if-exists` keeps the DROPs
     from failing if the objects don’t exist.
 3.  Copy the database backup files to
     `data-science-pet-containers/containers/Backups`. Note that
