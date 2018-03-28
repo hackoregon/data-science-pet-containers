@@ -1,11 +1,23 @@
 Using Docker from Windows 10 Pro / Windows Subsystem for Linux / Ubuntu
 ================
 
-Getting started
+Overview
+--------
+
+The stack that you will use to build and run the Docker images on Windows 10 Pro is comprised of the following:
+
+- Hyper-V Virtualization
+- Docker for Windows
+- Windows Subsystem for Linux
+- Ubuntu image for WSL
+
+After you have installed these components you will be able to build and run the Docker images inside of a Ubuntu virtual machine running on top of Hyper-V and Windows Subsystem for Linux. On a standard Windows 10 Pro machine, you must ensure that the Hyper-V and Windows Subsystem for Linux features are installed and enabled first. See the *Getting Started* section below for details on how to install and configure each of the components of this stack.
+
+Getting Started
 ---------------
 
 1.  You'll need Windows 10 Pro and Docker for Windows installed. See [Install Docker for Windows](https://docs.docker.com/docker-for-windows/install/).
-2.  Enable Hyper-V Windows Virtualization. See [Install Hyper-V on Windows 10](https://docs.microsoft.com/en-us/virtualization/hyper-v-on-windows/quick-start/enable-hyper-v). *Note: This disables the ability to run Oracle VirtualBox machines.*
+2.  Enable Hyper-V Windows Virtualization. See [Install Hyper-V on Windows 10](https://docs.microsoft.com/en-us/virtualization/hyper-v-on-windows/quick-start/enable-hyper-v). *Note: This disables the ability to run Oracle VirtualBox virtual machine images.*
 2.  Install Ubuntu for Windows Subsystem for Linux (WSL) from the Microsoft Store. (see [Install the Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/install-win10#install-the-windows-subsystem-for-linux))
 3.  Read the blog post that explains what you're going to do - <https://blogs.msdn.microsoft.com/commandline/2017/12/08/cross-post-wsl-interoperability-with-docker/>.
 

@@ -55,16 +55,6 @@ As the name implies, the software is distributed via Docker. The user
 simply clones a Git repository and uses the command `docker-compose up`
 to bring up the services.
 
-The stack that you will use to build and run the Docker images is comprised of the following:
-
-- Windows 10 Pro
-- Hyper-V Virtualization
-- Docker for Windows
-- Windows Subsystem for Linux
-- Ubuntu image for WSL
-
-After you have installed these components you will be able to build and run the Docker images inside of your Ubuntu virtual machine that runs on Hyper-V and Windows Subsystem for Linux. On a standard Windows 10 Pro machine, you must ensure that the Hyper-V and Windows Subsystem for Linux features are enabled first. See the [win10pro-wsl-ubuntu-tools instructions](win10pro-wsl-ubuntu-tools/README.md) for details on how to install and configure this stack.
-
 Why do it this way?
 
 -   Provide a standardized common working environment for data
