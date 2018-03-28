@@ -63,7 +63,7 @@ The stack that you will use to build and run the Docker images is comprised of t
 - Windows Subsystem for Linux
 - Ubuntu image for WSL
 
-After you have installed these you should be able build and run the Docker images inside of your Ubuntu virtual machine that runs on Hyper-V and Windows Subsystem for Linux. On a standard Windows 10 Pro machine, you must ensure that the Hyper-V and Windows Subsystem for Linux features are enabled first. See the [win10pro-wsl-ubuntu-tools instructions](win10pro-wsl-ubuntu-tools/README.md) for details on how to install and configure this stack.
+After you have installed these components you will be able to build and run the Docker images inside of your Ubuntu virtual machine that runs on Hyper-V and Windows Subsystem for Linux. On a standard Windows 10 Pro machine, you must ensure that the Hyper-V and Windows Subsystem for Linux features are enabled first. See the [win10pro-wsl-ubuntu-tools instructions](win10pro-wsl-ubuntu-tools/README.md) for details on how to install and configure this stack.
 
 Why do it this way?
 
