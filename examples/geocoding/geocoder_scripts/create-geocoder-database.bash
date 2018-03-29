@@ -1,13 +1,7 @@
 #! /bin/bash
 
-echo "Testing for existing geocoder database"
-export GEOCODER=`psql -lqt | cut -d \| -f 1 | grep -cw geocoder`
-echo "GEOCODER = $GEOCODER"
-if [ $GEOCODER -gt "0" ]
-then
-  echo "geocoder database exists - dropping"
-  dropdb geocoder
-fi
+echo "Dropping geocoder database; ignore error if it does not exist"
+dropdb geocoder || true
 
 echo "Creating a geocoder database"
 createdb -O postgres geocoder

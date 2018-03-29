@@ -10,6 +10,8 @@ VACUUM ANALYZE VERBOSE tiger.state;
 VACUUM ANALYZE VERBOSE tiger.zip_lookup_base;
 VACUUM ANALYZE VERBOSE tiger.zip_state;
 VACUUM ANALYZE VERBOSE tiger.zip_state_loc;
+
+-- test the geocoder
 SELECT
   g.rating As r,
   ST_X(geomout) As lon,
