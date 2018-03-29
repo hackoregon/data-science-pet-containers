@@ -17,6 +17,7 @@ do
   pushd /gisdata
   sed -i -e '/PGHOST/d' $i.bash
   sed -i -s 's/wget/wget -q/g' $i.bash
+  sed -i -s 's;/usr/lib/postgresql/10/bin;/usr/bin;' $i.bash
   chmod +x $i.bash
   ./$i.bash
   popd
