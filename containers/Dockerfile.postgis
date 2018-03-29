@@ -8,7 +8,7 @@ RUN useradd --shell /bin/bash --user-group --create-home dbsuper \
   && mkdir -p /home/dbsuper/Projects/ \
   && mkdir -p /docker-entrypoint-initdb.d/ \
   && mkdir -p /usr/local/src/ \
-  && mkdir -p /gisdata/
+  && mkdir -p /gisdata/ \
   && echo "alias l='ls -ACF --color=auto'" >> /etc/bash.bashrc \
   && echo "alias ll='ls -ltrAF --color=auto'" >> /etc/bash.bashrc
 COPY osm2pgrouting-from-source.bash make-dbusers-linux.bash /usr/local/src/
