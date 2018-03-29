@@ -14,7 +14,11 @@ docker cp "$env:DB_NAME.backup" "containers_postgis_1:/home/$DB_SUPERUSER"
 Write-Host "Running the demo script in the container"
 Write-Host ""
 Write-Host ""
-docker exec -it -u "$env:DB_SUPERUSER" -w "/home/$env:DB_SUPERUSER" -e DB_NAME="$env:DB_NAME" -e USER="$env:DB_SUPERUSER" containers_postgis_1 "/home/$env:DB_SUPERUSER/reown-demo.bash"
+$user="$env:DB_SUPERUSER"
+$workdir="/home/$env:DB_SUPERUSER"
+$dbname="$env:DB_NAME"
+$command="/home/$env:DB_SUPERUSER/reown-demo.bash"
+docker exec -it -u $user -w $workdir -e DB_NAME=$dbname -e USER=$user containers_postgis_1 $command
 
 Write-Host "Retriving the compressed SQL backup"
 docker cp "containers_postgis_1:home/$env:DB_SUPERUSER/$env:DB_NAME.sql.gz" .
