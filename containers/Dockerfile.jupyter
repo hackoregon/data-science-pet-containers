@@ -59,6 +59,8 @@ RUN conda create --yes --quiet --name jupyter python=3 \
   requests \
   seaborn \
   statsmodels \
-  && echo "source activate jupyter; conda install --yes -c conda-forge cookiecutter osmnx" | /bin/bash
+  && echo \
+    "source activate jupyter; conda install --yes pysal; conda install --yes -c conda-forge cookiecutter osmnx" \
+    | /bin/bash
 EXPOSE 8888
 CMD /home/jupyter/start-jupyter-notebook.bash
