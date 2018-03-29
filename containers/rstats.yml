@@ -1,5 +1,12 @@
 version: '3.4'
 services:
+  rstats:
+    build:
+      context: .
+      dockerfile: Dockerfile.rstats
+    image: rstats
+    ports:
+      - 8787:8787
   postgis:
     build:
       context: .
@@ -13,10 +20,3 @@ services:
       - POSTGRES_PASSWORD
       - DB_USERS_TO_CREATE
     command: [ "postgres", "-c", "max_wal_size=2GB" ]
-  rstats:
-    build:
-      context: .
-      dockerfile: Dockerfile.rstats
-    image: rstats
-    ports:
-      - 8787:8787
