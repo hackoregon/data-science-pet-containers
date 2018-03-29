@@ -8,3 +8,4 @@ GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA tiger TO PUBLIC;
 ALTER DEFAULT PRIVILEGES IN SCHEMA tiger_data GRANT SELECT, REFERENCES ON TABLES TO PUBLIC;
 SELECT na.address, na.streetname, na.streettypeabbrev, na.zip
   FROM normalize_address('1 Devonshire Place, Boston, MA 02109') AS na;
+UPDATE tiger.loader_lookuptables SET load = true WHERE table_name = 'zcta510';
