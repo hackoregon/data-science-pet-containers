@@ -7,8 +7,9 @@ RUN useradd -s /bin/bash -U -m jupyter \
   && mkdir -p /etc/apt/sources.list.d/
 COPY clone-me.bash \
    configure-git.bash \
-   make-cookiecutter-project.bash \
    jupyter-terminal-note.md \
+   kitchen-sink.bash \
+   make-cookiecutter-project.bash \
    start-jupyter-notebook.bash \
    /home/jupyter/
 
@@ -50,17 +51,6 @@ RUN chmod +x /home/jupyter/*.bash \
 # create the "jupyter" environment
 WORKDIR /home/jupyter
 USER jupyter
-RUN conda create --yes --quiet --name jupyter python=3 \
-  geopandas \
-  jupyter \
-  matplotlib \
-  pandas \
-  psycopg2 \
-  requests \
-  seaborn \
-  statsmodels \
-  && echo "source activate jupyter; conda install --yes pysal; conda install --yes -c conda-forge cookiecutter osmnx" \
-    | /bin/bash \
-  && echo "source activate jupyter; pip install --upgrade pip; pip install --upgrade gwr" | /bin/bash
+RUN conda create --yes --quiet --name jupyter python=3 jupyter
 EXPOSE 8888
 CMD /home/jupyter/start-jupyter-notebook.bash

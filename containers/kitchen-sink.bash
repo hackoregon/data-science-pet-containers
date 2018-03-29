@@ -3,7 +3,6 @@
 source activate jupyter
 conda install --yes --quiet \
   geopandas \
-  jupyter \
   matplotlib \
   pandas \
   psycopg2 \
