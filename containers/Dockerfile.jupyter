@@ -13,10 +13,10 @@ COPY clone-me.bash \
    /home/jupyter/
 
 # Official PostgreSQL repository
-COPY pgdg.list.jessie /etc/apt/sources.list.d/pgdg.list
+COPY pgdg.list.stretch /etc/apt/sources.list.d/pgdg.list
 
 # Backports
-COPY backports.list.jessie /etc/apt/sources.list.d/backports.list
+COPY backports.list.stretch /etc/apt/sources.list.d/backports.list
 
 # Run everything that needs "root" we can
 RUN chmod +x /home/jupyter/*.bash \
