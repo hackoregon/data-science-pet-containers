@@ -1,9 +1,9 @@
 \connect postgres
 
 -- create a fresh database
-DROP DATABASE IF EXISTS passenger_census;
-CREATE DATABASE passenger_census WITH OWNER = "transportation-systems";
-\connect passenger_census
+DROP DATABASE IF EXISTS "transportation-systems-passenger-census";
+CREATE DATABASE "transportation-systems-passenger-census" WITH OWNER = "transportation-systems";
+\connect "transportation-systems-passenger-census"
 
 CREATE TABLE passenger_census (
   summary_begin_date date,
