@@ -1,18 +1,12 @@
 #! /bin/bash
 
-echo "Starting database service."
-pg_ctl start -D=$PGDATA
-
-echo "Changing to 'postgres' home directory."
-cd /home/postgres
-
 echo "Testing for existing geocoder database"
 export GEOCODER=`psql -lqt | cut -d \| -f 1 | grep -cw geocoder`
 echo "GEOCODER = $GEOCODER"
 if [ $GEOCODER -gt "0" ]
 then
-  echo "geocoder database exists = exiting!"
-  exit
+  echo "geocoder database exists - dropping"
+  dropdb geocoder
 fi
 
 echo "Creating a geocoder database"
@@ -21,7 +15,6 @@ psql -d geocoder -f extensions.sql
 
 echo "Creating the /gisdata workspace"
 mkdir -p /gisdata/temp
-chown -R ${USER}:${USER} /gisdata
 
 echo "Populating the database - this will take some time."
 for i in nation oregon
@@ -35,9 +28,7 @@ do
   popd
 done
 
-echo "Installing any missing indexes"
-psql -d geocoder -c "SELECT install_missing_indexes();"
+echo "Post-processing and test"
+psql -d geocoder -f post-processing.sql
 echo "Creating a dump of the geocoder database"
 pg_dump -Fc geocoder > /gisdata/geocoder.backup
-
-./test-geocoder.bash
