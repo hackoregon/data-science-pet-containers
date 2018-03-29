@@ -28,3 +28,6 @@ echo "Creating a dump of the geocoder database"
 pg_dump -Fc geocoder > /gisdata/geocoder.backup
 echo "Creating a zipfile of the TIGER data"
 zip -0r /gisdata/tiger.zip /gisdata/www2.census.gov
+ls -ltr /gisdata
+echo ""
+echo ""
