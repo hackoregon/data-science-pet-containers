@@ -1,3 +1,4 @@
-geocoder.backup
+*.backup
+*.zip
 *.html
 .env
