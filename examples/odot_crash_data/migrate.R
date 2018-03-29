@@ -37,14 +37,14 @@ get_postgresql_connection <- function(dbname) {
 
 # connect to destination PostgreSQL server and create a database
 pgcon <- get_postgresql_connection("postgres")
-dummy <- DBI::dbSendStatement(pgcon, "DROP DATABASE IF EXISTS odot_crash_data;")
+dummy <- DBI::dbSendStatement(pgcon, 'DROP DATABASE IF EXISTS "transportation-systems-odot-crash-data";')
 DBI::dbClearResult(dummy)
-dummy <- DBI::dbSendStatement(pgcon, "CREATE DATABASE odot_crash_data;")
+dummy <- DBI::dbSendStatement(pgcon, 'CREATE DATABASE "transportation-systems-odot-crash-data";')
 DBI::dbClearResult(dummy)
 DBI::dbDisconnect(pgcon)
 
 # reconnect to the new database
-pgcon <- get_postgresql_connection("odot_crash_data")
+pgcon <- get_postgresql_connection("transportation-systems-odot-crash-data")
 
 # get list of tables from MDB file
 tables <- get_mdb_tables(raw_data)
@@ -76,7 +76,7 @@ DBI::dbClearResult(dummy)
 # change ownership!
 dummy <- DBI::dbSendStatement(
   pgcon,
-  'ALTER DATABASE odot_crash_data OWNER TO "transportation-systems";'
+  'ALTER DATABASE "transportation-systems-odot-crash-data" OWNER TO "transportation-systems";'
 )
 DBI::dbClearResult(dummy)
 
@@ -91,6 +91,6 @@ DBI::dbDisconnect(pgcon)
 
 # create backups
 plain <- paste(
-  "pg_dump --format=p --verbose --clean --create --if-exists --dbname=odot_crash_data",
-  "gzip -c > /home/dbsuper/Backups/odot_crash_data.sql.gz", sep = " | ")
+  "pg_dump --format=p --verbose --clean --create --if-exists --dbname=transportation-systems-odot-crash-data",
+  "gzip -c > /home/dbsuper/Backups/transportation-systems-odot-crash-data.sql.gz", sep = " | ")
 system(plain)
