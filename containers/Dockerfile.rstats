@@ -47,6 +47,6 @@ RUN chmod +x /home/rstudio/*.bash \
   && update-command-not-found
 
 # copy the root-level options to /usr/local/src
-RUN mkdir -p /usr/local/srsourcec
-COPY root-level-options/*.bash  /usr/local/src/
+RUN mkdir -p /usr/local/src
+COPY rstats-options/*.bash  /usr/local/src/
 RUN chmod +x  /usr/local/src/*.bash
