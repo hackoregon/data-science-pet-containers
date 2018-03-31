@@ -69,32 +69,27 @@ RUN apt-get update \
   && apt-file update \
   && update-command-not-found
 
-# copy the root-level options to /usr/local/src
+# copy the root scripts to /usr/local/src
 RUN mkdir -p /usr/local/src
-COPY postgis-options/*.bash  /usr/local/src/
-RUN chmod +x  /usr/local/src/*.bash
+COPY postgis-root-scripts  /usr/local/src/
+RUN chmod +x /usr/local/src/*.bash
 
 # database superusers
+RUN useradd --shell /bin/bash --user-group --create-home dbsuper \
+  && mkdir -p /home/dbsuper/Projects
+COPY home-scripts /home/dbsuper/
 ARG DB_USERS_TO_CREATE
-COPY make-dbusers-linux.bash /usr/local/src/
 RUN bash /usr/local/src/make-dbusers-linux.bash \
-  && useradd --shell /bin/bash --user-group --create-home dbsuper \
-  && mkdir -p /home/dbsuper/Backups/ \
-  && mkdir -p /home/dbsuper/Raw/ \
-  && mkdir -p /home/dbsuper/Projects/ \
-  && mkdir -p /gisdata/ \
+  && mkdir -p /gisdata \
   && echo "alias l='ls -ACF --color=auto'" >> /etc/bash.bashrc \
   && echo "alias ll='ls -ltrAF --color=auto'" >> /etc/bash.bashrc
-COPY clone-me.bash configure-git.bash /home/dbsuper/
 
 # set up automatic restores and dbsuper home
-# do backups at the end so rest of image doesn't need a rebuild
-RUN mkdir -p /docker-entrypoint-initdb.d/
-COPY 1make-dbsuper.sh Backups/restore-all.sh /docker-entrypoint-initdb.d/
+COPY postgis-scripts/1make-dbsuper.sh Backups/restore-all.sh /docker-entrypoint-initdb.d/
 RUN chmod +x /home/dbsuper/*.bash \
   && chmod +x /docker-entrypoint-initdb.d/*.sh \
-  && chown -R postgres:postgres /gisdata/
-COPY Rprofile.site /home/dbsuper/.Rprofile
-COPY Backups/* /home/dbsuper/Backups/
-COPY Raw/* /home/dbsuper/Raw/
+  && chown -R postgres:postgres /gisdata
+COPY postgis-scripts/Rprofile.site /home/dbsuper/.Rprofile
+COPY Backups /home/dbsuper/
+COPY Raw /home/dbsuper/
 RUN chown -R dbsuper:dbsuper /home/dbsuper
