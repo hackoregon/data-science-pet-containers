@@ -46,10 +46,7 @@ RUN chmod +x /home/rstudio/*.bash \
   && apt-file update \
   && update-command-not-found
 
-ENV ESS_VERSION 17.11
-RUN cd /usr/local/src \
-  && wget -q http://ess.r-project.org/downloads/ess/ess-$ESS_VERSION.tgz \
-  && tar xf ess-$ESS_VERSION.tgz \
-  && cd ess-$ESS_VERSION \
-  && make > /usr/local/src/ess.log 2>&1 \
-  && make install >> /usr/local/src/ess.log 2>&1
+# copy the root-level options to /usr/local/src
+RUN mkdir -p /usr/local/srsourcec
+COPY root-level-options/*.bash  /usr/local/src/
+RUN chmod +x  /usr/local/src/*.bash
