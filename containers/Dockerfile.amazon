@@ -23,13 +23,11 @@ RUN amazon-linux-extras install \
   && rm -rf /var/cache/yum
 
 RUN useradd --shell /bin/bash --user-group --create-home dbsuper \
-  && mkdir -p /home/dbsuper/Backups/ \
-  && mkdir -p /home/dbsuper/Raw/ \
   && mkdir -p /home/dbsuper/Projects/ \
   && echo "alias l='ls -ACF --color=auto'" >> /etc/bashrc \
   && echo "alias ll='ls -ltrAF --color=auto'" >> /etc/bashrc
-COPY clone-me.bash configure-git.bash /home/dbsuper/
-COPY 1make-dbusers.bash /var/lib/pgsql/
+COPY home-scripts /home/dbsuper/
+COPY amazon-scripts/1make-dbusers.bash /var/lib/pgsql/
 RUN chmod +x /home/dbsuper/*.bash /var/lib/pgsql/1make-dbusers.bash
 RUN chown postgres:postgres /var/lib/pgsql/1make-dbusers.bash
 
@@ -44,8 +42,8 @@ RUN initdb --locale=en_US.utf8 --encoding=UTF8 -D /var/lib/pgsql/data/main \
 
 # do backups at the end so rest of image doesn't need a rebuild
 USER root
-COPY Backups/* /home/dbsuper/Backups/
-COPY Raw/* /home/dbsuper/Raw/
+COPY Backups /home/dbsuper/Backups
+COPY Raw /home/dbsuper/Raw
 RUN chown -R dbsuper:dbsuper /home/dbsuper
 
 USER postgres
