@@ -11,10 +11,6 @@ COPY backports.list.jessie /etc/apt/sources.list.d/backports.list
 # Install apt packages
 RUN apt-get update \
   && apt-get install -qqy --no-install-recommends \
-    osm2pgsql \
-    osmctools \
-    osmium-tool \
-    osmosis \
     postgis \
     postgresql-9.6-postgis-2.4 \
     postgresql-9.6-postgis-2.4-scripts \
@@ -59,7 +55,6 @@ RUN apt-get update \
     python3-dev \
     python3-csvkit \
     rasterlite-bin \
-    r-base-dev \
     spatialite-bin \
     tar \
     udunits-bin \
@@ -73,18 +68,10 @@ RUN apt-get update \
   && apt-file update \
   && update-command-not-found
 
-# osm2pgrouting and ESS from source
-RUN mkdir -p /usr/local/src
-COPY osm2pgrouting-from-source.bash /usr/local/src/
-RUN bash /usr/local/src/osm2pgrouting-from-source.bash
-
-ENV ESS_VERSION 17.11
-#RUN cd /usr/local/src \
-  #&& wget http://ess.r-project.org/downloads/ess/ess-$ESS_VERSION.tgz \
-  #&& tar xf ess-$ESS_VERSION.tgz \
-  #&& cd ess-$ESS_VERSION \
-  #&& make > /usr/local/src/ess.log 2>&1 \
-  #&& make install >> /usr/local/src/ess.log 2>&1
+# copy the root-level options to /usr/local/src
+RUN mkdir -p /usr/local/srsourcec
+COPY root-level-options/*.bash  /usr/local/src/
+RUN chmod +x  /usr/local/src/*.bash
 
 # database superusers
 ARG DB_USERS_TO_CREATE
