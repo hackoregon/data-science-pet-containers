@@ -1,25 +1,6 @@
 FROM postgres:9.6
 LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
 
-# Do all the directory making / copying up front
-RUN useradd --shell /bin/bash --user-group --create-home dbsuper \
-  && mkdir -p /home/dbsuper/Backups/ \
-  && mkdir -p /home/dbsuper/Raw/ \
-  && mkdir -p /home/dbsuper/Projects/ \
-  && mkdir -p /docker-entrypoint-initdb.d/ \
-  && mkdir -p /usr/local/src/ \
-  && mkdir -p /gisdata/ \
-  && echo "alias l='ls -ACF --color=auto'" >> /etc/bash.bashrc \
-  && echo "alias ll='ls -ltrAF --color=auto'" >> /etc/bash.bashrc
-COPY osm2pgrouting-from-source.bash make-dbusers-linux.bash /usr/local/src/
-COPY 1make-dbsuper.sh Backups/restore-all.sh /docker-entrypoint-initdb.d/
-COPY clone-me.bash configure-git.bash /home/dbsuper/
-ARG DB_USERS_TO_CREATE
-RUN chmod +x /home/dbsuper/*.bash \
-  && chmod +x /docker-entrypoint-initdb.d/*.sh \
-  && bash /usr/local/src/make-dbusers-linux.bash \
-  && chown -R postgres:postgres /gisdata/
-
 # Repo for up-to-date R
 COPY cran.list.jessie /etc/apt/sources.list.d/cran.list
 RUN apt-key adv --keyserver keys.gnupg.net --recv-key 'E19F5F87128899B192B1A2C2AD5F960A256A04AF'
@@ -27,8 +8,7 @@ RUN apt-key adv --keyserver keys.gnupg.net --recv-key 'E19F5F87128899B192B1A2C2A
 # Backports
 COPY backports.list.jessie /etc/apt/sources.list.d/backports.list
 
-# Install the MDB / ODBC tools, PostGIS, pgRouting and foreign data wrappers
-ENV ESS_VERSION 17.11
+# Install apt packages
 RUN apt-get update \
   && apt-get install -qqy --no-install-recommends \
     osm2pgsql \
@@ -92,17 +72,41 @@ RUN apt-get update \
   && apt-get clean \
   && apt-file update \
   && update-command-not-found
-RUN bash /usr/local/src/osm2pgrouting-from-source.bash \
-  && cd /usr/local/src \
-  && wget -q http://ess.r-project.org/downloads/ess/ess-$ESS_VERSION.tgz \
-  && tar xf ess-$ESS_VERSION.tgz \
-  && cd ess-$ESS_VERSION \
-  && make > /usr/local/src/ess.log 2>&1 \
-  && make install >> /usr/local/src/ess.log 2>&1
 
-# set up automatic restores
+# osm2pgrouting and ESS from source
+RUN mkdir -p /usr/local/src
+COPY osm2pgrouting-from-source.bash /usr/local/src/
+RUN bash /usr/local/src/osm2pgrouting-from-source.bash
+
+ENV ESS_VERSION 17.11
+#RUN cd /usr/local/src \
+  #&& wget http://ess.r-project.org/downloads/ess/ess-$ESS_VERSION.tgz \
+  #&& tar xf ess-$ESS_VERSION.tgz \
+  #&& cd ess-$ESS_VERSION \
+  #&& make > /usr/local/src/ess.log 2>&1 \
+  #&& make install >> /usr/local/src/ess.log 2>&1
+
+# database superusers
+ARG DB_USERS_TO_CREATE
+COPY make-dbusers-linux.bash /usr/local/src/
+RUN bash /usr/local/src/make-dbusers-linux.bash \
+  && useradd --shell /bin/bash --user-group --create-home dbsuper \
+  && mkdir -p /home/dbsuper/Backups/ \
+  && mkdir -p /home/dbsuper/Raw/ \
+  && mkdir -p /home/dbsuper/Projects/ \
+  && mkdir -p /gisdata/ \
+  && echo "alias l='ls -ACF --color=auto'" >> /etc/bash.bashrc \
+  && echo "alias ll='ls -ltrAF --color=auto'" >> /etc/bash.bashrc
+COPY clone-me.bash configure-git.bash /home/dbsuper/
+
+# set up automatic restores and dbsuper home
 # do backups at the end so rest of image doesn't need a rebuild
+RUN mkdir -p /docker-entrypoint-initdb.d/
+COPY 1make-dbsuper.sh Backups/restore-all.sh /docker-entrypoint-initdb.d/
+RUN chmod +x /home/dbsuper/*.bash \
+  && chmod +x /docker-entrypoint-initdb.d/*.sh \
+  && chown -R postgres:postgres /gisdata/
+COPY Rprofile.site /home/dbsuper/.Rprofile
 COPY Backups/* /home/dbsuper/Backups/
 COPY Raw/* /home/dbsuper/Raw/
-COPY Rprofile.site /home/dbsuper/.Rprofile
 RUN chown -R dbsuper:dbsuper /home/dbsuper
