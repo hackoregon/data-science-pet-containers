@@ -20,7 +20,7 @@ sudo add-apt-repository \
 sudo apt-get update && sudo apt-get install socat docker-ce
 
 echo "Installing Docker Compose"
-export COMPOSE_VERSION=1.19.0
+export COMPOSE_VERSION=1.20.1
 sudo curl -L \
   https://github.com/docker/compose/releases/download/$COMPOSE_VERSION/docker-compose-`uname -s`-`uname -m` \
   -o /usr/local/bin/docker-compose
