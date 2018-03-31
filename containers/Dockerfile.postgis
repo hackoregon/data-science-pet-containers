@@ -90,6 +90,6 @@ RUN chmod +x /home/dbsuper/*.bash \
   && chmod +x /docker-entrypoint-initdb.d/*.sh \
   && chown -R postgres:postgres /gisdata
 COPY postgis-scripts/Rprofile.site /home/dbsuper/.Rprofile
-COPY Backups /home/dbsuper/
-COPY Raw /home/dbsuper/
+COPY Backups /home/dbsuper/Backups
+COPY Raw /home/dbsuper/Raw
 RUN chown -R dbsuper:dbsuper /home/dbsuper
