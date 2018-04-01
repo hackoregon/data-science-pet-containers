@@ -13,7 +13,7 @@ then
   update-command-not-found
 fi
 
-if [ ! -e /usr/local/bin/osm2pgrouting ]
+if [ ! -e /usr/bin/osm2pgrouting ]
 then
   cd /usr/local/src
   rm -fr osm2pgrouting-*
