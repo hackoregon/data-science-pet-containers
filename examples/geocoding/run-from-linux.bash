@@ -12,6 +12,9 @@ echo ""
 docker exec -u postgres -w /usr/local/src/geocoder_scripts containers_postgis_1 \
   /usr/local/src/geocoder_scripts/create-geocoder-database.bash
 echo "Retriving database backup"
-docker cp containers_postgis_1:/gisdata/geocoder.backup .
+docker cp containers_postgis_1:/gisdata/geocoder.backup ../../containers/Raw
 echo "Retriving shapefile archive"
-docker cp containers_postgis_1:/gisdata/tiger.zip .
+docker cp containers_postgis_1:/gisdata/tiger.zip ../../containers/Raw
+echo "Retriving database population scripts"
+docker cp containers_postgis_1:/gisdata/nation.bash ../../containers/Raw
+docker cp containers_postgis_1:/gisdata/oregon.bash ../../containers/Raw
