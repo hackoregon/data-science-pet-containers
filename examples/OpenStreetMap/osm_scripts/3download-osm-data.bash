@@ -1,7 +1,7 @@
 #! /bin/bash
 
 echo "Extracting TriMet service area bounding box"
-bboxraw=`grep -e '"bbox":' tm_boundary.geojson | head -n 1 | sed 's/"bbox": \[ //' | sed 's/ \].*$//' | sed 's/ //g'`
+bboxraw=`grep -e '"bbox":' tm_boundary.geojson | head -n 1 | sed 's/^.*"bbox": \[ //' | sed 's/ \].*$//' | sed 's/ //g'`
 echo "Bounding box = $bboxraw"
 
 echo "Downloading Oregon OpenStreetMap data"

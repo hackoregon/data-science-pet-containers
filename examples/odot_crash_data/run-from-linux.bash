@@ -10,12 +10,12 @@ echo "Copying raw data to the container"
 docker cp ../../containers/Raw containers_postgis_1:/home/dbsuper
 
 echo "Copying the scripts to the container"
-docker cp container_scripts containers_postgis_1:/home/dbsuper
+docker cp odot_crash_data_scripts containers_postgis_1:/home/dbsuper
 
 echo "Running the script in the container"
 echo ""
 echo ""
-docker exec -it -u dbsuper -w /home/dbsuper/container_scripts containers_postgis_1 ./migrate.bash
+docker exec -it -u dbsuper -w /home/dbsuper/odot_crash_data_scripts containers_postgis_1 ./migrate.bash
 
 echo "Retriving the backups"
 docker cp containers_postgis_1:home/dbsuper/Backups ../../containers

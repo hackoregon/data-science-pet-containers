@@ -12,4 +12,5 @@ do
 done
 
 echo "Backing up osm_routing"
-time pg_dump --format=p --verbose --clean --create --if-exists --dbname=osm_routing | gzip -c > osm_routing.sql.gz
+time pg_dump --format=p --verbose --clean --create --if-exists --dbname=osm_routing \
+  | gzip -c > /home/dbsuper/Backups/osm_routing.sql.gz
