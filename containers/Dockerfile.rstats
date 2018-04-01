@@ -40,7 +40,9 @@ RUN apt-get update \
 
 # copy the root-level options to /usr/local/src
 COPY rstats-root-scripts  /usr/local/src/
-RUN chmod +x  /usr/local/src/*.bash
+RUN chmod +x  /usr/local/src/*.bash \
+  && echo "alias l='ls -ACF --color=auto'" >> /etc/bash.bashrc \
+  && echo "alias ll='ls -ltrAF --color=auto'" >> /etc/bash.bashrc
 
 # rstudio home
 COPY home-scripts rstats-scripts /home/rstudio/
