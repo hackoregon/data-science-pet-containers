@@ -16,4 +16,4 @@ psql -d $DATABASE -c 'REASSIGN OWNED BY dbsuper TO "disaster-resilience";'
 
 echo "Making a compressed SQL backup"
 pg_dump -Fp -C -c --if-exists -d $DATABASE \
-  | gzip -c > /home/dbsuper/Backups/$DATABASE.sql.gz
+  | gzip -c > /home/dbsuper/Raw/$DATABASE.sql.gz
