@@ -19,5 +19,5 @@ docker exec -it -u dbsuper -w /home/dbsuper/osm_scripts containers_postgis_1 \
   ./4make-routing-database.bash
 
 echo "Retriving the backups"
-docker cp containers_postgis_1:home/dbsuper/Backups ../../containers
-ls -ltr ../../containers/Backups
+docker cp containers_postgis_1:home/dbsuper/Raw ../../containers
+ls -ltr ../../containers/Raw
