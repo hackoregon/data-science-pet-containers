@@ -92,5 +92,5 @@ DBI::dbDisconnect(pgcon)
 # create backups
 plain <- paste(
   "pg_dump --format=p --verbose --clean --create --if-exists --dbname=transportation-systems-odot-crash-data",
-  "gzip -c > /home/dbsuper/Backups/transportation-systems-odot-crash-data.sql.gz", sep = " | ")
+  "gzip -c > /home/dbsuper/Raw/transportation-systems-odot-crash-data.sql.gz", sep = " | ")
 system(plain)

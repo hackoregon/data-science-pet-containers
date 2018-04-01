@@ -18,5 +18,5 @@ echo ""
 docker exec -it -u dbsuper -w /home/dbsuper/odot_crash_data_scripts containers_postgis_1 ./migrate.bash
 
 echo "Retriving the backups"
-docker cp containers_postgis_1:home/dbsuper/Backups ../../containers
-ls -ltr ../../containers/Backups
+docker cp containers_postgis_1:home/dbsuper/Raw ../../containers
+ls -ltr ../../containers/Raw
