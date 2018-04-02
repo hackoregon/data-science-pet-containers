@@ -17,7 +17,6 @@ sudo apt-get install -y \
   osm2pgsql \
   postgresql-9.6 \
   postgresql-9.6-mysql-fdw \
-  postgresql-9.6-ogr-fdw \
   postgresql-9.6-pgrouting \
   postgresql-9.6-pgrouting-doc \
   postgresql-9.6-pgrouting-scripts \
@@ -27,8 +26,7 @@ sudo apt-get install -y \
   postgresql-client-9.6 \
   postgresql-doc-9.6 \
   postgresql-server-dev-9.6 \
-  pgadmin4 \
-  pgadmin4-doc
+  pgadmin3
 
 echo "Adding '${USER}' to the database superusers"
 sudo su - postgres -c "createuser -s $USER"

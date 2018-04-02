@@ -4,7 +4,7 @@ echo "Installing Docker CE"
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 sudo add-apt-repository \
   "deb [arch=amd64] https://download.docker.com/linux/ubuntu trusty stable"
-sudo apt-get update && sudo apt-get install docker-ce
+sudo apt-get update && sudo apt-get install -y docker-ce curl
 
 echo "Installing Docker Compose"
 export COMPOSE_VERSION=1.19.0
