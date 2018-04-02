@@ -10,12 +10,20 @@ The Hack Oregon PostGIS Geocoder
 
 ## Generating the database
 
-Type `./create-geocoder-backup.bash`. This will
+Type `./run-from-linux.bash`. This will
 
 1.  Copy the geocoder population scripts to `containers_postgis_1`.
-2.  Run the geocoder population script. This takes some time.
+2.  Run the geocoder population scripts. This takes some time.
 3.  Copy the finished database backup and archive of the TIGER
-    shapefiles back to this directory.
+    shapefiles back to `data-science-pet-containers/containers/Raw`.
+
+## Blacklisting warning
+
+If you run this process often enough, the Census Bureau will blacklist
+you and you’ll get `403 Forbidden` errors trying to download the
+shapefiles. So the first time you run this, assuming success, make sure
+you keep backups of the result file `geocoder.backup` and the downloaded
+shapefiles `tiger.zip`.
 
 ## Using the geocoder
 
@@ -71,7 +79,10 @@ echo ""
 docker exec -u postgres -w /usr/local/src/geocoder_scripts containers_postgis_1 \
   /usr/local/src/geocoder_scripts/create-geocoder-database.bash
 echo "Retriving database backup"
-docker cp containers_postgis_1:/gisdata/geocoder.backup .
+docker cp containers_postgis_1:/gisdata/geocoder.backup ../../containers/Raw
 echo "Retriving shapefile archive"
-docker cp containers_postgis_1:/gisdata/tiger.zip .
+docker cp containers_postgis_1:/gisdata/tiger.zip ../../containers/Raw
+echo "Retriving database population scripts"
+docker cp containers_postgis_1:/gisdata/nation.bash ../../containers/Raw
+docker cp containers_postgis_1:/gisdata/oregon.bash ../../containers/Raw
 ```
