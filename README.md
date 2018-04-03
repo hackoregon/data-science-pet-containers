@@ -35,7 +35,7 @@
 Data Science Pet Containers
 ===========================
 
-M. Edward (Ed) Borasky <znmeb@znmeb.net>, 2018-03-26
+M. Edward (Ed) Borasky <znmeb@znmeb.net>, 2018-04-02
 
 Overview
 --------
@@ -62,7 +62,7 @@ Why do it this way?
     using the same tools we’ll use for deployment as much as possible.
 -   Deliver advanced open source technologies to Windows and MacOS
     desktops and laptops. While there are “native” installers for most
-    of these tools, some are readily available for and only heavily
+    of these tools, some are readily available for and only extensively
     tested on Linux.
 -   Isolation: for the most part, software running in containers is
     contained. It interacts with the desktop / laptop user through
@@ -112,7 +112,8 @@ Quick start
     host is `localhost`, port is the value of `HOST_POSTGRES_PORT`,
     usually 5439, and password is the value of `POSTGRES_PASSWORD`. You
     can connect with any client that uses the PostgreSQL protocol
-    including pgAdmin and QGIS.
+    including pgAdmin and QGIS. You can also connect with Jupyter
+    notebooks and RStudio Desktop.
 
 To stop the service, type `docker-compose -f postgis.yml stop`. To start
 it back up again, `docker-compose -f postgis.yml start`.
@@ -227,9 +228,10 @@ repositories: <https://www.postgresql.org/download/linux/debian/>.
 ### Using the command line
 
 I’ve tried to provide a comprehensive command line experience. `Git`,
-`curl`, `wget`, `lynx`, `nano` and `vim` are there, as is most of the
-command-line GIS stack (`gdal`, `proj`, `spatialite`, `rasterlite`,
-`geotiff`, `osm2pgsql` and `osm2pgrouting`), and of course `psql`.
+`curl`, `wget`, `lynx`, `nano`, `emacs` and `vim` are there, as is most
+of the command-line GIS stack (`gdal`, `proj`, `spatialite`,
+`rasterlite`, `geotiff`, `osm2pgsql` and `osm2pgrouting`), and of course
+`psql`.
 
 I’ve also included `python3-csvkit` for Excel, CSV and other text files,
 `unixodbc` for ODBC connections and `mdbtools` for Microsoft Access
@@ -256,18 +258,18 @@ I’ve created some convenience scripts:
     can also log in as one of the users in `DB_USERS_TO_CREATE`, for
     example, `./login2postgis.bash local-elections`.
 -   `login2amazon.bash`: Log in to `containers_amazon_1` as `dbsuper`.
--   `pull-postgis-backups.bash`: This script does
-    `docker cp containers_postgis_1:/home/dbsuper/Backups`. That is, it
-    copies all the files from `/home/dbsuper/Backups` into `Backups` in
-    your current directory, creating `Backups` if it doesn’t exist.
+-   `pull-postgis-raw.bash`: This script does
+    `docker cp containers_postgis_1:/home/dbsuper/Raw`. That is, it
+    copies all the files from `/home/dbsuper/Raw` into `Raw` in your
+    current directory, creating `Raw` if it doesn’t exist.
 
     I use this for transferring backup files for testing; I’ll create a
     database in the PostGIS container, create a backup in
-    `/home/dbsuper/Backups` and copy it out to the host with this
-    script.
--   `push-amazon-backups.bash`: This is the next step - it copies
-    `Backups` to `/home/dbsuper/Backups` in `containers_amazon_1` for
-    restore testing.
+    `/home/dbsuper/Raw` and copy it out to the host with this script. I
+    create the backups in `Raw` instead of `Backups` so they don’t get
+    automatically restored.
+-   `push-amazon-raw.bash`: This is the next step - it copies `Raw` to
+    `/home/dbsuper/Raw` in `containers_amazon_1` for restore testing.
 
 ### Virtualenvwrapper
 
@@ -391,19 +393,25 @@ This service is based on the Anaconda, Inc. (formerly Continuum)
 I’ve added a non-root user `jupyter` to avoid the security issues
 associated with running Jupyter notebooks as “root”.
 
-The `jupyter` user has a Conda environment, also called `jupyter`. In
-addition to `jupyter`, the environment has
+The `jupyter` user has a Conda environment, also called `jupyter`. To
+keep the image size manageable, I have ***not*** installed any data
+science tools up front.
 
+To install a (large) data science stack, run the script
+`/home/jupyter/kitchen-sink.bash` as the `jupyter` user. This will
+install
+
+-   cookiecutter,
 -   geopandas,
--   jupyter,
+-   gwr,
 -   matplotlib,
+-   osmnx,
 -   pandas,
 -   psycopg2,
+-   pysal,
 -   requests,
--   seaborn,
--   statsmodels,
--   cookiecutter, and
--   osmnx.
+-   seaborn, and
+-   statsmodels.
 
 By default the Jupyter notebook server starts when Docker brings up the
 service. Type `docker logs conatiners_jupyter_1`. You’ll see something
