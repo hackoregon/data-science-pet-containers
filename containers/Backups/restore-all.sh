@@ -5,7 +5,10 @@ then
   for file in /home/dbsuper/Backups/*.backup
   do
     echo "Restoring $file"
-    pg_restore --verbose --exit-on-error --create --clean --if-exists $file
+    export DBNAME=`pg_restore --list $file | grep dbname | sed 's;^.*dbname: ;;'`
+    echo "Creating '$DBNAME' with owner 'postgres'"
+    createdb --owner=postgres $DBNAME
+    pg_restore --exit-on-error --dbname=$DBNAME $file
     echo "Restore completed"
   done
 fi
