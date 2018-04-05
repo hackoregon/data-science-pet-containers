@@ -14,5 +14,8 @@ rm -f trimet-latest*
 osmconvert oregon-latest.osm.pbf \
   --verbose --drop-author --drop-version -b=$bboxraw --complex-ways \
   --out-osm -o=trimet-latest.osm
+osmconvert oregon-latest.osm.pbf \
+  --verbose -b=$bboxraw --complex-ways \
+  --out-osm -o=trimet-latest-big.osm
 du -sm * | sort -k 1 -n
 cp *.pbf *.osm /home/dbsuper/Raw/
