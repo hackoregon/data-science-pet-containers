@@ -181,11 +181,11 @@ To connect to the `postgis` service on `localhost:HOST_POSTGRES_PORT` with pgAdm
 3. Check the `Save password` box and press the `Save` button. `pgAdmin` will add the tree for the `postgis` service.
 
 ### Using automatic database restores
-When the `postgis` service first starts, it initializes the database. After that, it looks in a directory called `/docker-entrypoint-initdb.d/` and restores any `.sql` or `sql.gz` files it finds. Then it looks for `.sh` scripts and runs them. We use this to restore databases automatically at startup. 
+When the `postgis` service first starts, it initializes the database cluster. After that, it looks in a directory called `/docker-entrypoint-initdb.d/` and restores any `.sql` or `sql.gz` files it finds. Then it looks for `.sh` scripts and runs them. We use this to restore databases automatically at startup. 
 
 To use this feature:
 
-1. Make sure all objects in the source databases have owners that will exist in the destination database. If the owner of an object doesn't exist in the destination, the restore will fail.
+1. Make sure all objects in the source databases have owners that will exist in the destination database. If the owner of an object doesn't exist in the destination, the restore will fail. Note that the `postgres` user will always exist, as will `dbsuper` and all users listed in `DB_USERS_TO_CREATE`.
 2. For each database you want restored, create a backup file. For documentation / repeatability, do this with `pg_dump` on the command line or in a script:
 
     ```
@@ -202,10 +202,12 @@ To use this feature:
 Docker will copy the backup files into `/home/dbsuper/Backups` on the `postgis` image, and place a script `restore-all.sh` in `/docker-entrypoint-initdb.d/`. The first time the image runs, `restore-all.sh` will 
 
 * Create all the database users you defined in `DB_USERS_TO_CREATE`, and then
-* restore all the `.backup`, `.sql.gz` and `.sql` files it finds in `/home/dbsuper/Backups`. 
+* restore all the `.backup`, `.sql.gz` and `.sql` files it finds in `/home/dbsuper/Backups`. Note that `.backup` files will be restored to a freshly-created database owned by `postgres`.
 
 ### The `Raw` directory
-If you want to load raw data onto the `postgis` image, copy the files to the `data-science-pet-containers/containers/Raw` directory. The next time the image is built they will be copied to `/home/dbsuper/Raw`. Like the backups, these files are not version-controlled.
+If you want to load raw data onto the `postgis` image, copy the files to the `data-science-pet-containers/containers/Raw` directory. The next time the image is built they will be copied to `/home/dbsuper/Raw`. 
+
+You can put backup files in `Raw` but they will not be restored automatically. See `data-science-pet-containers/examples/reowning_a_database` for an example. Like the backups, these files are not version-controlled.
 
 ## Jupyter
 This service is based on the Anaconda, Inc. (formerly Continuum) `miniconda3` image: <https://hub.docker.com/r/continuumio/miniconda3/>. I've added a non-root user `jupyter` to avoid the security issues associated with running Jupyter notebooks as "root". 
