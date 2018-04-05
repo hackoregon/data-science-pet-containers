@@ -35,7 +35,7 @@
 Data Science Pet Containers
 ===========================
 
-M. Edward (Ed) Borasky <znmeb@znmeb.net>, 2018-04-02
+M. Edward (Ed) Borasky <znmeb@znmeb.net>, 2018-04-04
 
 Overview
 --------
@@ -59,9 +59,9 @@ Why do it this way?
 
 -   Provide a standardized common working environment for data
     scientists and DevOps engineers at Hack Oregon. We want to build
-    using the same tools we’ll use for deployment as much as possible.
+    using the same tools we'll use for deployment as much as possible.
 -   Deliver advanced open source technologies to Windows and MacOS
-    desktops and laptops. While there are “native” installers for most
+    desktops and laptops. While there are "native" installers for most
     of these tools, some are readily available for and only extensively
     tested on Linux.
 -   Isolation: for the most part, software running in containers is
@@ -70,8 +70,8 @@ Why do it this way?
 
 ### About the examples
 
-I’ve coded up some examples of how I’ve used this toolset for Hack
-Oregon. They’re in `data-science-pet-containers/examples`. Those that
+I've coded up some examples of how I've used this toolset for Hack
+Oregon. They're in `data-science-pet-containers/examples`. Those that
 require host-side operations mostly use Bash for scripting, and they
 work on a Linux host, including Windows 10 Pro Windows Subsystem for
 Linux (WSL) Ubuntu.
@@ -82,7 +82,7 @@ Quick start
 1.  Clone this repository and
     `cd data-science-pet-containers/containers`.
 2.  Copy `sample.env` to `.env`. Edit `.env` and change the
-    `POSTGRES_PASSWORD`. You don’t need to change the other values.
+    `POSTGRES_PASSWORD`. You don't need to change the other values.
 3.  Copy any PostgreSQL database backups you want restored to
     `data-science-pet-containers/containers/Backups`. Copy any raw data
     files you want on the image to
@@ -91,7 +91,7 @@ Quick start
     run this, it will take some time. Once the image is built and the
     databases restored, it will be faster.
 
-    When it’s done you’ll see
+    When it's done you'll see
 
         Successfully tagged postgis:latest
         Creating containers_postgis_1 ... done
@@ -128,13 +128,13 @@ Detailed setup
     `cd data-science-pet-containers/containers`.
 2.  Define the environment variables:
     -   Copy the file `sample.env` to `.env`. For security reasons,
-        `.env` is listed in `.gitignore`, so it ***won’t*** be checked
+        `.env` is listed in `.gitignore`, so it ***won't*** be checked
         into version control.
     -   Edit `.env`. The variables you need to define are
         -   `HOST_POSTGRES_PORT`: If you have PostgreSQL installed on
-            your host, it’s probably listening on port 5432. The
+            your host, it's probably listening on port 5432. The
             `postgis` service listens on port 5432 inside the Docker
-            network, so you’ll need to map its port 5432 to another
+            network, so you'll need to map its port 5432 to another
             port. Set `HOST_POSTGRES_PORT` to the value you want; 5439
             is what I use.
         -   `POSTGRES_PASSWORD`: To connect to the `postgis` service,
@@ -144,10 +144,10 @@ Detailed setup
             service to the value of `POSTGRES_PASSWORD`.
         -   `DB_USERS_TO_CREATE`: When the `postgis` service first comes
             up, the users in this list are created in the database. If
-            you’re working on the 2018 Hack Oregon projects, there’s no
+            you're working on the 2018 Hack Oregon projects, there's no
             reason to change this.
 
-Here’s `sample.env`:
+Here's `sample.env`:
 
     # postgis container
     HOST_POSTGRES_PORT=5439
@@ -156,18 +156,18 @@ Here’s `sample.env`:
 
 ### About `DB_USERS_TO_CREATE`
 
-I’ve provided these to facilitate database ownership wrangling and
+I've provided these to facilitate database ownership wrangling and
 backup-restore testing. As given in `sample.env`, these are the accounts
-Hack Oregon’s PostgreSQL server will have. Some notes:
+Hack Oregon's PostgreSQL server will have. Some notes:
 
 -   In the `postgis` image, they are also Linux users. For example, you
     can
     `docker-exec -it -u disaster-resilience containers_postgis_1 /bin/bash`
-    and you’ll be at a command prompt as `disaster-resilience`.
+    and you'll be at a command prompt as `disaster-resilience`.
 
     In the `postgis` image, they are database superusers. For example,
     you can do `createuser` to create a database user and `createdb` to
-    create a database. The “home database” for each of these users - a
+    create a database. The "home database" for each of these users - a
     database with the same name as the Linux and database user - is
     created the first time the container comes up.
 -   In the `amazon` image, they are *not* Linux users, nor are they
@@ -187,9 +187,9 @@ Starting the services
 
 1.  Choose your version:
 
-    -   `postgis.yml`: PostGIS only. If you’re doing all the analysis on
+    -   `postgis.yml`: PostGIS only. If you're doing all the analysis on
         the host and just want the PostGIS service, choose this. If
-        you’re an experienced Linux command-line user, this image has a
+        you're an experienced Linux command-line user, this image has a
         comprehensive collection of extract-transform-load (ETL) and GIS
         tools.
     -   `jupyter.yml`: PostGIS and Jupyter Choose this if you want to
@@ -198,7 +198,7 @@ Starting the services
         want an RStudio Server inside the Docker network.
     -   `amazon.yml`: PostGIS and an Amazon Linux 2 server running
         PostgreSQL. This is a specialized configuration for testing
-        database backups for AWS server readiness. Most users won’t need
+        database backups for AWS server readiness. Most users won't need
         to use this.
 
 2.  Type `docker-compose -f <version> up -d --build`. Docker will
@@ -227,13 +227,13 @@ repositories: <https://www.postgresql.org/download/linux/debian/>.
 
 ### Using the command line
 
-I’ve tried to provide a comprehensive command line experience. `Git`,
+I've tried to provide a comprehensive command line experience. `Git`,
 `curl`, `wget`, `lynx`, `nano`, `emacs` and `vim` are there, as is most
 of the command-line GIS stack (`gdal`, `proj`, `spatialite`,
 `rasterlite`, `geotiff`, `osm2pgsql` and `osm2pgrouting`), and of course
 `psql`.
 
-I’ve also included `python3-csvkit` for Excel, CSV and other text files,
+I've also included `python3-csvkit` for Excel, CSV and other text files,
 `unixodbc` for ODBC connections and `mdbtools` for Microsoft Access
 files. If you want to extend this image further, it is based on Debian
 `jessie`.
@@ -241,7 +241,7 @@ files. If you want to extend this image further, it is based on Debian
 You can log in as the Linux superuser `root` with
 `docker exec -it -u root containers_postgis_1 /bin/bash`.
 
-I’ve added a database superuser called `dbsuper`. This should be your
+I've added a database superuser called `dbsuper`. This should be your
 preferred login, rather than using the system database superuser
 `postgres`. Log in with
 `docker exec -it -u dbsuper -w /home/dbsuper containers_postgis_1 /bin/bash`.
@@ -251,9 +251,9 @@ preferred login, rather than using the system database superuser
 For Linux hosts, including Windows 10 Pro Windows Subsystem for Linux
 Ubuntu
 (<https://github.com/hackoregon/data-science-pet-containers/blob/master/win10pro-wsl-ubuntu-tools/README.md>),
-I’ve created some convenience scripts:
+I've created some convenience scripts:
 
--   `login2postgis.bash`: Type `./login2postgis.bash` and you’ll be
+-   `login2postgis.bash`: Type `./login2postgis.bash` and you'll be
     logged into the `containers_postgis_1` container as `dbsuper`. You
     can also log in as one of the users in `DB_USERS_TO_CREATE`, for
     example, `./login2postgis.bash local-elections`.
@@ -261,12 +261,12 @@ I’ve created some convenience scripts:
 -   `pull-postgis-raw.bash`: This script does
     `docker cp containers_postgis_1:/home/dbsuper/Raw`. That is, it
     copies all the files from `/home/dbsuper/Raw` into `Raw` in your
-    current directory, creating `Raw` if it doesn’t exist.
+    current directory, creating `Raw` if it doesn't exist.
 
-    I use this for transferring backup files for testing; I’ll create a
+    I use this for transferring backup files for testing; I'll create a
     database in the PostGIS container, create a backup in
     `/home/dbsuper/Raw` and copy it out to the host with this script. I
-    create the backups in `Raw` instead of `Backups` so they don’t get
+    create the backups in `Raw` instead of `Backups` so they don't get
     automatically restored.
 -   `push-amazon-raw.bash`: This is the next step - it copies `Raw` to
     `/home/dbsuper/Raw` in `containers_amazon_1` for restore testing.
@@ -284,15 +284,15 @@ To activate, enter
 
 1.  Log in with `docker exec` as `dbsuper` as described above.
 2.  `cd /home/dbsuper`.
-3.  Edit `configure-git.bash`. You’ll need to supply your email address
+3.  Edit `configure-git.bash`. You'll need to supply your email address
     and name.
 4.  Enter `./configure-git.bash`.
 
 To clone a repository, use its `https` URL. For a private repository,
-you’ll need to authenticate when you clone. For a public one, you’ll
+you'll need to authenticate when you clone. For a public one, you'll
 only have to authenticate if you want to push.
 
-In either case, once you’ve authenticated, `git` will cache your
+In either case, once you've authenticated, `git` will cache your
 credentials for an hour. As you probably noticed, this timeout is
 adjustable in `configure-git.bash`.
 
@@ -316,7 +316,7 @@ You will find the repository in
 
 ### Connecting with pgAdmin on the host
 
-If you’ve installed the EnterpriseDB PostgreSQL distribution, you
+If you've installed the EnterpriseDB PostgreSQL distribution, you
 probably already have pgAdmin, although it may not be the latest
 version. If you want to install pgAdmin without PostgreSQL:
 
@@ -338,8 +338,8 @@ with pgAdmin:
 
 ### Using automatic database restores
 
-When the `postgis` service first starts, it initializes the database.
-After that, it looks in a directory called
+When the `postgis` service first starts, it initializes the database
+cluster. After that, it looks in a directory called
 `/docker-entrypoint-initdb.d/` and restores any `.sql` or `sql.gz` files
 it finds. Then it looks for `.sh` scripts and runs them. We use this to
 restore databases automatically at startup.
@@ -347,8 +347,10 @@ restore databases automatically at startup.
 To use this feature:
 
 1.  Make sure all objects in the source databases have owners that will
-    exist in the destination database. If the owner of an object doesn’t
-    exist in the destination, the restore will fail.
+    exist in the destination database. If the owner of an object doesn't
+    exist in the destination, the restore will fail. Note that the
+    `postgres` user will always exist, as will `dbsuper` and all users
+    listed in `DB_USERS_TO_CREATE`.
 2.  For each database you want restored, create a backup file. For
     documentation / repeatability, do this with `pg_dump` on the command
     line or in a script:
@@ -360,11 +362,11 @@ To use this feature:
 
     At restore time, a new database will be created (`-C -c`). This is
     done by DROPping existing objects; the `--if-exists` keeps the DROPs
-    from failing if the objects don’t exist.
+    from failing if the objects don't exist.
 3.  Copy the database backup files to
     `data-science-pet-containers/containers/Backups`. Note that
     `.gitignore` is set for the common backup file extensions -
-    `*.sql.gz`, `*.sql` and `*.backup` - so these backup files won’t be
+    `*.sql.gz`, `*.sql` and `*.backup` - so these backup files won't be
     version-controlled.
 4.  Type `docker-compose -f postgis.yml build`.
 
@@ -376,22 +378,27 @@ Docker will copy the backup files into `/home/dbsuper/Backups` on the
 -   Create all the database users you defined in `DB_USERS_TO_CREATE`,
     and then
 -   restore all the `.backup`, `.sql.gz` and `.sql` files it finds in
-    `/home/dbsuper/Backups`.
+    `/home/dbsuper/Backups`. Note that `.backup` files will be restored
+    to a freshly-created database owned by `postgres`.
 
 ### The `Raw` directory
 
 If you want to load raw data onto the `postgis` image, copy the files to
 the `data-science-pet-containers/containers/Raw` directory. The next
-time the image is built they will be copied to `/home/dbsuper/Raw`. Like
-the backups, these files are not version-controlled.
+time the image is built they will be copied to `/home/dbsuper/Raw`.
+
+You can put backup files in `Raw` but they will not be restored
+automatically. See
+`data-science-pet-containers/examples/reowning_a_database` for an
+example. Like the backups, these files are not version-controlled.
 
 Jupyter
 -------
 
 This service is based on the Anaconda, Inc. (formerly Continuum)
 `miniconda3` image: <https://hub.docker.com/r/continuumio/miniconda3/>.
-I’ve added a non-root user `jupyter` to avoid the security issues
-associated with running Jupyter notebooks as “root”.
+I've added a non-root user `jupyter` to avoid the security issues
+associated with running Jupyter notebooks as "root".
 
 The `jupyter` user has a Conda environment, also called `jupyter`. To
 keep the image size manageable, I have ***not*** installed any data
@@ -414,7 +421,7 @@ install
 -   statsmodels.
 
 By default the Jupyter notebook server starts when Docker brings up the
-service. Type `docker logs conatiners_jupyter_1`. You’ll see something
+service. Type `docker logs conatiners_jupyter_1`. You'll see something
 like this:
 
     $ docker logs conatiners_jupyter_1 
@@ -436,16 +443,16 @@ for it.
 ### Setting up `git`
 
 1.  Edit `configure-git.bash` with the Jupyter notebook file editor.
-    You’ll need to supply your email address and name.
+    You'll need to supply your email address and name.
 2.  Open a new terminal using the `New -> Terminal` dropdown at the
     upper right of the `Home` tab.
 3.  Enter `./configure-git.bash`.
 
 To clone a repository, use its `https` URL. For a private repository,
-you’ll need to authenticate when you clone. For a public one, you’ll
+you'll need to authenticate when you clone. For a public one, you'll
 only have to authenticate if you want to push.
 
-In either case, once you’ve authenticated, `git` will cache your
+In either case, once you've authenticated, `git` will cache your
 credentials for an hour. As you probably noticed, this timeout is
 adjustable in `configure-git.bash`.
 
@@ -469,7 +476,7 @@ To install packages:
 3.  Enter `source activate jupyter`.
 4.  Use `conda search` to find packages in the Conda ecosystem, then
     install them with `conda install`. You can also install packages
-    with `pip` if they’re not in the Conda repositories.
+    with `pip` if they're not in the Conda repositories.
 
 ### Connecting to the `postgis` service
 
@@ -495,13 +502,13 @@ Rstats
 ------
 
 This service is based on the `rocker/rstudio` image from Docker Hub:
-<https://hub.docker.com/r/rocker/rstudio/>. I’ve added header files so
+<https://hub.docker.com/r/rocker/rstudio/>. I've added header files so
 that the R packages `RPostgres`, `odbc`, `sf` and `devtools` will
 install from source, but there are no R packages on the image besides
 those that ship with `rocker/rstudio`.
 
 Browse to `localhost:8787`. The user name and password are both
-`rstudio`. ***Note that if you’re using Firefox, you may have to adjust
+`rstudio`. ***Note that if you're using Firefox, you may have to adjust
 a setting to use the terminal feature.***
 
 -   Go to `Tools -> Global Options -> Terminal`.
@@ -509,15 +516,15 @@ a setting to use the terminal feature.***
 
 ### Setting up `git`
 
-1.  Edit `configure-git.bash`. You’ll need to supply your email address
+1.  Edit `configure-git.bash`. You'll need to supply your email address
     and name.
 2.  Open a new terminal and enter `./configure-git.bash`.
 
 To clone a repository, use its `https` URL. For a private repository,
-you’ll need to authenticate when you clone. For a public one, you’ll
+you'll need to authenticate when you clone. For a public one, you'll
 only have to authenticate if you want to push.
 
-In either case, once you’ve authenticated, `git` will cache your
+In either case, once you've authenticated, `git` will cache your
 credentials for an hour. As you probably noticed, this timeout is
 adjustable in `configure-git.bash`.
 
@@ -530,16 +537,16 @@ You will find the repository in
 
 ### Installing R packages
 
-As noted above, to keep the image size down, I’ve only installed header
+As noted above, to keep the image size down, I've only installed header
 files so that the R packages `RPostgres`, `odbc`, `sf` and `devtools`
 will install. That covers the majority of use cases.
 
-However, if you find an R package that won’t install because of missing
+However, if you find an R package that won't install because of missing
 header or other Linux dependency, open an issue at
 <https://github.com/hackoregon/data-science-pet-containers/issues/new>.
 
 Most packages that have missing dependencies will list the name of the
-Debian packages you need to install. If that’s the case, open a `root`
+Debian packages you need to install. If that's the case, open a `root`
 console with `docker exec -it -u root containers_rstudio_1 /bin/bash`.
 Then type `apt install <package-name>`. After the Debian package is
 installed, you should be able to install the R package.
@@ -553,8 +560,8 @@ the password is the value of `POSTGRES_PASSWORD`.
 Amazon
 ------
 
-This image is based on the Amazon Linux 2 “2-with-sources” Docker image
-at <https://hub.docker.com/_/amazonlinux/>. The main reason it’s in this
+This image is based on the Amazon Linux 2 "2-with-sources" Docker image
+at <https://hub.docker.com/_/amazonlinux/>. The main reason it's in this
 collection is to provide a means of restore-testing backup files before
 handing them off to the DevOps engineers for deployment on AWS.
 
@@ -568,12 +575,12 @@ handing them off to the DevOps engineers for deployment on AWS.
     `amazon` images.
 4.  When the services are up, type
     `docker logs -f containers_postgis_1`. The backup files should be
-    automatically restored. If there are errors, you’ll need to fix your
+    automatically restored. If there are errors, you'll need to fix your
     backup files. When the restores are done, type `CTL-C` to stop
     following the log.
 5.  Log in to the `amazon` container -
     `docker exec -it -u dbsuper -w /home/dbsuper containers_amazon_1 /bin/bash`.
-6.  `cd Backups; ls`. You’ll see the backup files. For example:
+6.  `cd Backups; ls`. You'll see the backup files. For example:
 
         $ cd Backups; ls
         odot_crash_data.sql.gz  passenger_census.sql.gz  restore-all.sh
@@ -589,11 +596,11 @@ handing them off to the DevOps engineers for deployment on AWS.
 About the name
 --------------
 
-This all started with an infamous “cattle, not pets” blog post. For some
+This all started with an infamous "cattle, not pets" blog post. For some
 history, see
 <http://cloudscaling.com/blog/cloud-computing/the-history-of-pets-vs-cattle/>.
-In the Red Hat / Kubernetes / OpenShift universe, it’s common for people
-to have a workstation that’s essentially a Docker / Kubernetes host with
+In the Red Hat / Kubernetes / OpenShift universe, it's common for people
+to have a workstation that's essentially a Docker / Kubernetes host with
 all the actual work being done in containers. See
 <https://rhelblog.redhat.com/2016/06/08/in-defense-of-the-pet-container-part-1-prelude-the-only-constant-is-complexity/>
 and
