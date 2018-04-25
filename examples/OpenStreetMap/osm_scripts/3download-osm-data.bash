@@ -12,10 +12,10 @@ echo "Filtering down to TriMet bounding box"
 rm -f trimet-latest*
 # reference https://github.com/pgRouting/osm2pgrouting/issues/221#issuecomment-372061947
 osmconvert oregon-latest.osm.pbf \
-  --verbose --drop-author --drop-version -b=$bboxraw --complex-ways \
+  --verbose --drop-author --drop-version -b=$bboxraw \
   --out-osm -o=trimet-latest.osm
 osmconvert oregon-latest.osm.pbf \
-  --verbose -b=$bboxraw --complex-ways \
+  --verbose -b=$bboxraw \
   --out-osm -o=trimet-latest-big.osm
 du -sm * | sort -k 1 -n
 cp *.pbf *.osm /home/dbsuper/Raw/
