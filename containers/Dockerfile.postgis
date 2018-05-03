@@ -2,11 +2,11 @@ FROM postgres:9.6
 LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
 
 # Repo for up-to-date R
-COPY cran.list.jessie /etc/apt/sources.list.d/cran.list
+COPY cran.list.stretch /etc/apt/sources.list.d/cran.list
 RUN apt-key adv --keyserver keys.gnupg.net --recv-key 'E19F5F87128899B192B1A2C2AD5F960A256A04AF'
 
 # Backports
-COPY backports.list.jessie /etc/apt/sources.list.d/backports.list
+COPY backports.list.stretch /etc/apt/sources.list.d/backports.list
 
 # Install apt packages
 RUN apt-get update \
@@ -40,7 +40,6 @@ RUN apt-get update \
     libgeotiff-dev \
     libpq-dev \
     libpqxx-dev \
-    librasterlite-dev \
     libspatialite-dev \
     libudunits2-dev \
     lynx \
@@ -55,7 +54,6 @@ RUN apt-get update \
     python3-dev \
     python3-csvkit \
     r-base-dev \
-    rasterlite-bin \
     spatialite-bin \
     tar \
     udunits-bin \
@@ -68,6 +66,9 @@ RUN apt-get update \
   && apt-get clean \
   && apt-file update \
   && update-command-not-found
+
+    #librasterlite-dev \
+    #rasterlite-bin \
 
 # copy the root scripts to /usr/local/src
 RUN mkdir -p /usr/local/src
