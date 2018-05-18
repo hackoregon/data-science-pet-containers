@@ -1,13 +1,5 @@
 #! /usr/bin/env Rscript
 
-# install the packages we need
-if (!dir.exists(Sys.getenv('R_LIBS_USER'))) {
-  dir.create(Sys.getenv('R_LIBS_USER'), recursive = TRUE, mode = '0755')
-}
-install.packages(c("Hmisc", "RPostgres"), 
-  quiet = TRUE, lib = Sys.getenv('R_LIBS_USER'), repos = "https://cran.rstudio.com/")
-.libPaths(Sys.getenv('R_LIBS_USER'))
-
 # point to the raw data file
 raw_data <- "~/Raw/Portland_Fatal___Injury_Crashes_2004-2014_Decode.mdb"
 
@@ -37,10 +29,24 @@ get_postgresql_connection <- function(dbname, user) {
 # connect to the database
 pgcon <- get_postgresql_connection(PGDATABASE, DBOWNER)
 
+# create destination schema
+dummy <- DBI::dbSendStatement(
+  pgcon,
+  "CREATE SCHEMA odot_crash_data;"
+)
+DBI::dbClearResult(dummy)
+dummy <- DBI::dbSendStatement(
+  pgcon,
+  "SET search_path TO odot_crash_data;"
+)
+DBI::dbClearResult(dummy)
+
 # get list of tables from MDB file
 tables <- get_mdb_tables(raw_data)
+
+# import them
 for (table_name in tables) {
-  cat("\nMigrating table", table_name, "\n")
+  cat("\nImporting table", table_name, "\n")
   work <- get_mdb_table(raw_data, table_name)
   DBI::dbWriteTable(pgcon, tolower(table_name), work, overwrite = TRUE)
 }
@@ -48,19 +54,19 @@ for (table_name in tables) {
 # add primary keys
 dummy <- DBI::dbSendStatement(
   pgcon,
-  "ALTER TABLE public.crash ADD CONSTRAINT crash_pkey PRIMARY KEY (crash_id);"
+  "ALTER TABLE crash ADD CONSTRAINT crash_pkey PRIMARY KEY (crash_id);"
 )
 DBI::dbClearResult(dummy)
 
 dummy <- DBI::dbSendStatement(
   pgcon,
-  "ALTER TABLE public.partic ADD CONSTRAINT partic_pkey PRIMARY KEY (partic_id);"
+  "ALTER TABLE partic ADD CONSTRAINT partic_pkey PRIMARY KEY (partic_id);"
 )
 DBI::dbClearResult(dummy)
 
 dummy <- DBI::dbSendStatement(
   pgcon,
-  "ALTER TABLE public.vhcl ADD CONSTRAINT vhcl_pkey PRIMARY KEY (vhcl_id);"
+  "ALTER TABLE vhcl ADD CONSTRAINT vhcl_pkey PRIMARY KEY (vhcl_id);"
 )
 DBI::dbClearResult(dummy)
 
