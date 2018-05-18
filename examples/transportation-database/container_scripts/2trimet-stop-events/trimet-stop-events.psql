@@ -1,5 +1,8 @@
 \connect "transportation-systems-main"
 
+CREATE SCHEMA trimet_stop_events;
+SET search_path TO trimet_stop_events, public;
+
 DROP TABLE IF EXISTS trimet_stop_events;
 
 CREATE TABLE trimet_stop_events (
