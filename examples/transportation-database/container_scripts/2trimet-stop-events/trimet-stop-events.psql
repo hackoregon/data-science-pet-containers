@@ -1,0 +1,45 @@
+\connect "transportation-systems-main"
+
+DROP TABLE IF EXISTS trimet_stop_events;
+
+CREATE TABLE trimet_stop_events (
+  service_date date,
+  vehicle_number integer,
+  train integer,
+  route_number integer,
+  direction integer,
+  trip_number integer,
+  service_key text,
+  stop_time integer,
+  arrive_time integer,
+  seconds_late integer,
+  leave_time integer,
+  dwell integer,
+  location_id integer,
+  door integer,
+  lift integer,
+  ons integer,
+  offs integer,
+  estimated_load integer,
+  train_mileage double precision,
+  from_location integer,
+  mileage_there double precision,
+  left_there integer,
+  travel_miles double precision,
+  travel_seconds integer
+);
+
+ALTER TABLE trimet_stop_events OWNER TO "transportation-systems";
+
+\copy trimet_stop_events from '~/Raw/m2017_09_trimet_stop_events.csv' with csv header
+\copy trimet_stop_events from '~/Raw/m2017_10_trimet_stop_events.csv' with csv header
+\copy trimet_stop_events from '~/Raw/m2017_11_trimet_stop_events.csv' with csv header
+
+-- create a primary key - Django needs it
+ALTER TABLE trimet_stop_events
+  ADD COLUMN id serial;
+ALTER TABLE trimet_stop_events
+  ADD CONSTRAINT trimet_stop_events_pkey PRIMARY KEY (id);
+
+-- VACUUM ANALYZE
+VACUUM ANALYZE;

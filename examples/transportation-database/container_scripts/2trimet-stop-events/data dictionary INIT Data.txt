@@ -1,0 +1,163 @@
+﻿Data Dictionary
+TriMet raw data.
+Miles J. Crumley, MS - Operations Analyst: Bus Transportation/Maintenance
+
+You have been provided with many tables:
+	init_tripsh - Init Trip Data Historical
+	init_veh_stop - Init Stop data Historical
+	init_cyclic - INIT vehicle moving data
+	trimet_stop_event - TriMet Stop Event Data
+
+Date Range: Sep, Oct, Nov 2017
+All Bus data
+Stop Event Rail data.
+Route Numbers that are 921,922 are deadhead routes. You can exclude them from analysis but their points are still valuable for evaulating deadheads.
+Block Numbers that end in 99 and descending is fill service. You can exclude that from regular analysis but it is still important to us because it allows us 
+	to better understand service restoration
+Anything else that looks "weird" can likely be excluded.
+Questions - email crumleym@trimet.org
+
+Table: init_veh_stop - INIT Stop Level Data
+OPD_DATE- Service Date
+VEHICLE_ID - Vehicle ID, most likely coded as text
+BLOCK_CODE - Our Assigned block . Service Key 
+	Blocks that end in 99 are generally extra service blocks or unscheduled blocks for broken service.
+	Service Keys
+		W = Weekday
+		S = Saturday
+		U = Sunday
+		X = Holiday/Extra Service
+EVENT_NO_STOP - joins to Table: init_cyclic.EVENT_NO_STOP
+METERS - Distance travelled in meters
+ACT_ARR_TIME - Actual Arrival Time. Time is coded in seconds from midnight and can be greater than 86400
+ACT_DEP_TIME - Actual Departure Time
+NOM_ARR_TIME - Scheduled Arrival Time
+NOM_DEP_TIME - Scheduled Departure Time
+POINT_ID - TriMet Stop ID
+DOORS_OPENING - Whether Doors Opened or not
+	0 = Open
+	1 = Closed
+STOP_TYPE 
+	0,5 – Service Stop
+		'bay' - typically 15 meters before and 10 meters after a stop.
+	2 – Unplanned door open 
+		Door open in the 'encatchment' which is 4% of distance to next stop. 
+		Max Length is 60 meters after stop
+		This includes the stop 'bay'
+	3 – Disturbance stop 
+		Records when bus stopped for ~ 5s but not at an actual stop 'bay'
+	4,6 – Drive thru (passed by stop but did not serve it)
+	7 – Timepoint (not a stop) - These are hidden from customers
+GPS_LATITUDE - Recorded Latitude in  WGS1984 (4326)
+GPS_LONGITUDE - Recorded Longitude in WGS1984 (4326)
+DOOR_OPEN_TIME - How long the door was open. This is the true "dwell" and is normally less than the difference between act_dep_time and act_arr_time
+
+Table: init_cyclic - INIT Moving Data
+OPD_DATE - Service Date
+VEHICLE_ID - Vehicle Number, most likely coded as text
+BLOCK_CODE - Our Assigned block . Service Key 
+	Blocks that end in 99 are generally extra service blocks or unscheduled blocks for broken service.
+	Service Keys
+		W = Weekday
+		S = Saturday
+		U = Sunday
+		X = Holiday/Extra Service
+EVENT_NO_TRIP - Joins to Table: init_tripsh.EVENT_NO
+EVENT_NO_STOP - Joins to Table: init_veh_stop.EVENT_NO_STOP
+METERS - Distance travelled in meters
+ACT_TIME - Actual Time Point was recorded
+GPS_LATITUDE - Recorded Latitude in  WGS1984 (4326)
+GPS_LONGITUDE - Recorded Longitude in WGS1984 (4326)
+
+Table: init_tripsh  - Block Information, denotes start and run time of blocks
+TRIP_ID - INIT Trip ID
+BLOCK_ID - INIT Block ID
+LINE_ID - Route Number
+OPD_DATE- Service Date
+VEHICLE_ID - Vehicle Number, most likely coded as text
+EVENT_NO - Joins to Table: init_veh_stop.EVENT_NO_TRIP
+METERS - Distance travelled in meters
+ACT_DEP_TIME - Actual Route Start Time
+NOM_DEP_TIME - Scheduled Route Start Time
+NOM_END_TIME - Scheduled Route End Time
+ACT_END_TIME - Actual Route End Time
+TRIP_CODE - Joins to Table: trimet_stop_event.Trip_ID
+MASTER_ID - Badge in Stop Event
+EVENT_NO_COURSE - Ignore
+COURSE_ID - Ignore
+PATTERN_ID - Ignore
+PATTERN_DIRECTION - Ignore
+TRIP_TYPE - Ignore
+HIGHWAY_TYPE - Ignore
+PATTERN_QUALITY - Ignore
+TIME_GRP_ID - Ignore
+DRIVER_ID - Ignore
+DATA_SOURCE - Ignore
+IS_ADDITIONAL_TRIP - Ignore
+TRIP_ROLE - Ignore
+TRIP_SUBROLE - Ignore
+TRIP_PURPOSE - Ignore
+
+
+
+Table: trimet_stop_event - TriMet Stop Event Data
+SERVICE_DATE - Service Date
+VEHICLE_NUMBER - Vehicle Number
+TRAIN - Train or Block
+ROUTE_NUMBER - Route Number
+TRIP_NUMBER - TriMet Trip Number
+DIRECTION - Direction of Travel
+	0 = Outbound to Gresham TC
+	1 = Inbound to Portland
+SERVICE_KEY - Schedule
+		W = Weekday
+		S = Saturday
+		U = Sunday
+		X = Holiday/Extra Service
+STOP_TIME - Scheduled Stop Time
+LEAVE_TIME - Actual Time Left at Stop 
+ARRIVE_TIME - Actual Time Arrived at Stop
+DWELL - Time spent at the stop servicing the stop. This is most likely the time left - arrived and not the door open time. This was changed in Dec I think.
+LOCATION_ID - TriMet Stop ID
+PUBLIC_LOCATION_DESCRIPTION - Public Location Description
+DOOR - How many Doors Opened	
+	0 = None
+	1 = Front Door
+	2 = Front/Rear Door or Rear Only
+LIFT - Lift Deployed
+	1 = Lift Used
+ONS - How many customers departed
+OFFS - How many customers alighted/departed
+ESTIMATED_LOAD - Estimated load on the bus
+MAXIMUM_SPEED - Maximum speed between stop
+TRAIN_MILEAGE - How far the bus has travelled in miles
+PATTERN_DISTANCE - Distance travelled based on the particular trip pattern
+X_COORDINATE - X Coordinate based on State Plane NAD83 (2913)
+Y_COORDINATE - Y Coordinate based on State Plane NAD83 (2913)
+TRIP_ID - joins to Table: init_tripsh.Trip_Code
+
+--------------------------------------------------------------------------------
+Miscellaneous
+Data Dictionary
+Lat/Long -> WGS 1984 (4326)
+X/Y -> State Plane NAD83 (2913)
+
+Init Codes
+NOM_BLOCK.SHORT_NAME is our TRAIN (BLOCK)
+VEH_STOP.POINT_ID is our LOCATION_ID
+VEH_TRIP.LINE_ID is our ROUTE_NUMBER
+VEH_TRIP.TRIP_CODE is our TRIP_ID
+
+Init Table Mapping
+VEH_CYCLIC.EVENT_NO_STOP joins to VEH_STOP.EVENT_NO
+VEH_CYCLIC.EVENT_NO_TRIP joins to VEH_TRIP.EVENT_NO
+VEH_TRIP.BLOCK_ID joins to NOM_BLOCK.BLOCK_ID
+
+VEH_STOP.STOP_TYPE enumeration:
+0,5 – Stop
+2 – Unplanned door open
+3 – Disturbance stop (dwell)
+4,6 – Drive thru (passed by stop but did not serve it)
+7 – Timepoint (not a stop)
+
+Also, schedule data can be found here: http://gtfs.transitq.com/
