@@ -37,7 +37,7 @@ dummy <- DBI::dbSendStatement(
 DBI::dbClearResult(dummy)
 dummy <- DBI::dbSendStatement(
   pgcon,
-  "SET search_path TO odot_crash_data;"
+  "SET search_path TO odot_crash_data, public;"
 )
 DBI::dbClearResult(dummy)
 
