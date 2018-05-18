@@ -3,6 +3,10 @@
 # define parameters
 export DBOWNER=transportation-systems
 export PGDATABASE=transportation-systems-main
+export SCHEMA=trimet_gis
+
+echo "Creating schema '${SCHEMA}'"
+psql -U ${DBOWNER} -d ${PGDATABASE} -c "CREATE SCHEMA ${SCHEMA};"
 
 echo "Importing TriMet shapefiles"
 pushd ~/Raw
@@ -14,8 +18,8 @@ do
   rm -fr ${table}; mkdir $table; cd $table
   unzip -qq ../${table}.zip
   ogr2ogr -f PostgreSQL -lco PRECISION=NO -nlt PROMOTE_TO_MULTI \
-    PG:"dbname=${PGDATABASE}" ${table}.shp
-  psql -U ${DBOWNER} -d ${PGDATABASE} -c "ALTER TABLE ${table} OWNER TO \"${DBOWNER}\";"
+    -lco SCHEMA=${SCHEMA} PG:"dbname=${PGDATABASE}" ${table}.shp
+  psql -U ${DBOWNER} -d ${PGDATABASE} -c "ALTER TABLE ${SCHEMA}.${table} OWNER TO \"${DBOWNER}\";"
   cd ..
 done
 popd
