@@ -1,5 +1,8 @@
 \connect "transportation-systems-main"
 
+CREATE SCHEMA passenger_census;
+SET search_path TO passenger_census, public;
+
 DROP TABLE IF EXISTS passenger_census;
 
 CREATE TABLE passenger_census (
