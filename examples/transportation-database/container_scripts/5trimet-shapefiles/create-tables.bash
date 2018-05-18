@@ -15,7 +15,9 @@ do
   unzip -qq ../${table}.zip
   ogr2ogr -f PostgreSQL -lco PRECISION=NO -nlt PROMOTE_TO_MULTI \
     PG:"dbname=${PGDATABASE}" ${table}.shp
-  psql -d ${PGDATABASE} -c "ALTER TABLE ${table} OWNER TO \"${DBOWNER}\";"
+  psql -U ${DBOWNER} -d ${PGDATABASE} -c "ALTER TABLE ${table} OWNER TO \"${DBOWNER}\";"
   cd ..
 done
 popd
+
+psql -U ${DBOWNER} -d ${PGDATABASE} -c "VACUUM ANALYZE;"
