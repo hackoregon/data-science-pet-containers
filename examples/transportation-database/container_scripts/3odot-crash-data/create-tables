@@ -11,14 +11,8 @@ install.packages(c("Hmisc", "RPostgres"),
 # point to the raw data file
 raw_data <- "~/Raw/Portland_Fatal___Injury_Crashes_2004-2014_Decode.mdb"
 
-# Set environment variables
-Sys.setenv(
-  PGHOST = "/var/run/postgresql",
-  PGPORT = 5432,
-  PGUSER = "transportation-systems"
-  DBOWNER = "transportation-systems"
-  PGDATABASE = "transportation-systems-main"
-)
+DBOWNER <- "transportation-systems"
+PGDATABASE <- "transportation-systems-main"
 
 # define functions
 get_mdb_tables <- function(mdb_file) {
@@ -32,15 +26,16 @@ get_mdb_table <- function(mdb_file, table_name) {
   return(work)
 }
 
-get_postgresql_connection <- function(dbname) {
+get_postgresql_connection <- function(dbname, user) {
   return(DBI::dbConnect(
     drv = RPostgres::Postgres(),
-    dbname = dbname
+    dbname = dbname,
+    user = user
   ))
 }
 
-# reconnect to the new database
-pgcon <- get_postgresql_connection(PGDATABASE)
+# connect to the database
+pgcon <- get_postgresql_connection(PGDATABASE, DBOWNER)
 
 # get list of tables from MDB file
 tables <- get_mdb_tables(raw_data)
@@ -66,12 +61,6 @@ DBI::dbClearResult(dummy)
 dummy <- DBI::dbSendStatement(
   pgcon,
   "ALTER TABLE public.vhcl ADD CONSTRAINT vhcl_pkey PRIMARY KEY (vhcl_id);"
-)
-DBI::dbClearResult(dummy)
-
-dummy <- DBI::dbSendStatement(
-  pgcon,
-  'REASSIGN OWNED BY CURRENT_USER TO "transportation-systems";'
 )
 DBI::dbClearResult(dummy)
 
