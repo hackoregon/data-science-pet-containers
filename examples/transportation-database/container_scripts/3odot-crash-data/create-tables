@@ -9,13 +9,15 @@ install.packages(c("Hmisc", "RPostgres"),
 .libPaths(Sys.getenv('R_LIBS_USER'))
 
 # point to the raw data file
-raw_data <- "/home/dbsuper/Raw/Portland_Fatal___Injury_Crashes_2004-2014_Decode.mdb"
+raw_data <- "~/Raw/Portland_Fatal___Injury_Crashes_2004-2014_Decode.mdb"
 
 # Set environment variables
 Sys.setenv(
   PGHOST = "/var/run/postgresql",
   PGPORT = 5432,
-  PGUSER = "dbsuper"
+  PGUSER = "transportation-systems"
+  DBOWNER = "transportation-systems"
+  PGDATABASE = "transportation-systems-main"
 )
 
 # define functions
@@ -37,16 +39,8 @@ get_postgresql_connection <- function(dbname) {
   ))
 }
 
-# connect to destination PostgreSQL server and create a database
-pgcon <- get_postgresql_connection("postgres")
-dummy <- DBI::dbSendStatement(pgcon, 'DROP DATABASE IF EXISTS "transportation-systems-odot-crash-data";')
-DBI::dbClearResult(dummy)
-dummy <- DBI::dbSendStatement(pgcon, 'CREATE DATABASE "transportation-systems-odot-crash-data";')
-DBI::dbClearResult(dummy)
-DBI::dbDisconnect(pgcon)
-
 # reconnect to the new database
-pgcon <- get_postgresql_connection("transportation-systems-odot-crash-data")
+pgcon <- get_postgresql_connection(PGDATABASE)
 
 # get list of tables from MDB file
 tables <- get_mdb_tables(raw_data)
@@ -75,13 +69,6 @@ dummy <- DBI::dbSendStatement(
 )
 DBI::dbClearResult(dummy)
 
-# change ownership!
-dummy <- DBI::dbSendStatement(
-  pgcon,
-  'ALTER DATABASE "transportation-systems-odot-crash-data" OWNER TO "transportation-systems";'
-)
-DBI::dbClearResult(dummy)
-
 dummy <- DBI::dbSendStatement(
   pgcon,
   'REASSIGN OWNED BY CURRENT_USER TO "transportation-systems";'
@@ -90,9 +77,3 @@ DBI::dbClearResult(dummy)
 
 # disconnect
 DBI::dbDisconnect(pgcon)
-
-# create backups
-plain <- paste(
-  "pg_dump --format=p --verbose --clean --create --if-exists --dbname=transportation-systems-odot-crash-data",
-  "gzip -c > /home/dbsuper/Raw/transportation-systems-odot-crash-data.sql.gz", sep = " | ")
-system(plain)
