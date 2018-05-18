@@ -1,0 +1,14 @@
+#! /bin/bash
+
+# define parameters
+export DBOWNER=transportation-systems
+export PGDATABASE=transportation-systems-main
+
+echo "Downloading Biketown dataset"
+pushd ~/Raw
+wget -nc -q https://s3.amazonaws.com/biketown-tripdata-public/BiketownPublicTripData201804.zip
+unzip -o BiketownPublicTripData201804.zip
+popd
+
+echo "Importing Biketown data"
+psql -U ${DBOWNER} -d ${PGDATABASE} -f "biketown.psql"
