@@ -4,7 +4,6 @@
 options(warn = 2)
 
 ## load libraries
-if (!require(tidyverse)) install.packages("tidyverse", quiet = TRUE)
 library(tidyverse)
 source("function_definitions.R")
 
@@ -53,7 +52,6 @@ for (i in 1:nrow(month_table)) {
     ),
     sep = "/"
   ))
-  gc(full = TRUE, verbose = TRUE)
   rm(trimet_stop_events)
   gc(full = TRUE, verbose = TRUE)
 }
