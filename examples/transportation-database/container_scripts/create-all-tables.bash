@@ -4,9 +4,20 @@
 export DBOWNER=transportation-systems
 export PGDATABASE=transportation-systems-main
 
-for schema in 2trimet-stop-events 3odot-crash-data 4passenger-census 5trimet-shapefiles 6safety-hotline
+./01install-r-packages.R
+./02create-fresh-database.bash
+
+for dataset in \
+  20trimet-shapefiles \
+  21trimet-stop-events \
+  22odot-crash-data \
+  23passenger-census \
+  24safety-hotline \
+  25biketown
 do
   pushd ${schema}
   ./create-tables
   popd
 done
+
+./90create-database-backup.bash
