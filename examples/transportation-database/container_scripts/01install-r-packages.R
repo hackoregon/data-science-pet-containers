@@ -14,5 +14,7 @@ install.packages(
     "tidyverse",
     "RPostgres"
   ),
-  quiet = TRUE
+  quiet = TRUE,
+  lib = Sys.getenv('R_LIBS_USER'),
+  repos = "https://cran.rstudio.com/"
 )
