@@ -2,6 +2,7 @@
 
 install.packages(
   c(
+    "devtools",
     "Hmisc",
     "tidyverse",
     "RPostgres"
