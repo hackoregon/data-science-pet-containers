@@ -16,5 +16,5 @@ docker exec -it -u dbsuper -w /home/dbsuper/container_scripts containers_postgis
   ./create-all-tables.bash
 
 echo "Retriving the backups"
-docker cp containers_postgis_1:home/dbsuper/Raw ~
+docker cp containers_postgis_1:home/dbsuper/Raw/transportation-systems-main.sql.gz ~/Raw/
 ls -ltr ~/Raw
