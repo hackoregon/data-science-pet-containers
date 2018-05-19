@@ -58,6 +58,7 @@ RUN apt-get update \
     r-base-dev \
     spatialite-bin \
     tar \
+    time \
     udunits-bin \
     unixodbc-dev \
     unrar-free \
