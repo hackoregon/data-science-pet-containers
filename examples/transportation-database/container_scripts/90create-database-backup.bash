@@ -10,7 +10,7 @@ pg_dump --format=p --verbose --clean --create --if-exists --dbname=${PGDATABASE}
   | gzip -c > ${PGDATABASE}.sql.gz
 
 echo "Decompression check"
-gzip -dc ${PGDATABASE}.sql.gz > /dev/null
+gzip -dc ${PGDATABASE}.sql.gz | wc -c
 
 echo "Checksumming backup file"
 sha512sum ${PGDATABASE}.sql.gz > ${PGDATABASE}.sql.gz.sha512sum
