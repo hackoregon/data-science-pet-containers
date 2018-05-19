@@ -15,8 +15,8 @@ for dataset in \
   24safety-hotline \
   25biketown
 do
-  pushd ${schema}
-  ./create-tables
+  pushd ${dataset}
+  nice -10 ./create-tables
   popd
 done
 
