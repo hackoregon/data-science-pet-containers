@@ -17,4 +17,9 @@ docker exec -it -u dbsuper -w /home/dbsuper/container_scripts containers_postgis
 
 echo "Retriving the backups"
 docker cp containers_postgis_1:home/dbsuper/Raw/transportation-systems-main.sql.gz ~/Raw/
-ls -ltr ~/Raw
+docker cp containers_postgis_1:home/dbsuper/Raw/transportation-systems-main.sql.gz.sha512sum ~/Raw/
+pushd ~/Raw/
+echo "Validating backup sha512sum"
+sha512sum -c transportation-systems-main.sql.gz.sha512sum
+echo "Testing backup decompression"
+gzip -dc transportation-systems-main.sql.gz | wc -c
