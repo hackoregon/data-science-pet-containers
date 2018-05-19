@@ -6,6 +6,7 @@ export PGDATABASE=transportation-systems-main
 
 ./01install-r-packages.R
 ./02create-fresh-database.bash
+./03checksum-input-data.bash
 
 for dataset in \
   20trimet-shapefiles \
