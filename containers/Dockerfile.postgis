@@ -61,6 +61,7 @@ RUN apt-get update \
     time \
     udunits-bin \
     unixodbc-dev \
+    unar \
     unrar-free \
     unzip \
     vim-nox \
