@@ -41,6 +41,8 @@ RUN apt-get update \
     libpq-dev \
     libpqxx-dev \
     libspatialite-dev \
+    libssh2-1-dev \
+    libssl-dev \
     libudunits2-dev \
     lynx \
     mdbtools \
