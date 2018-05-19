@@ -4,8 +4,11 @@
 export DBOWNER=transportation-systems
 export PGDATABASE=transportation-systems-main
 
+echo "Installing R packages"
 ./01install-r-packages.R
+echo "Creating a fresh database"
 ./02create-fresh-database.bash
+echo "Checking input sha512 sums"
 ./03checksum-input-data.bash
 
 for dataset in \
@@ -21,4 +24,5 @@ do
   popd
 done
 
+echo "Creating database backup"
 ./90create-database-backup.bash
