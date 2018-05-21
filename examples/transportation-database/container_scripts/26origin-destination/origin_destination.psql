@@ -1,0 +1,92 @@
+\connect "transportation-systems-main"
+
+CREATE SCHEMA origin_destination;
+SET search_path TO origin_destination, public;
+
+DROP TABLE IF EXISTS origin_destination;
+
+CREATE TABLE origin_destination (
+  year integer,
+  w_geocode text,
+  h_geocode text,
+  s000 integer,
+  sa01 integer,
+  sa02 integer,
+  sa03 integer,
+  se01 integer,
+  se02 integer,
+  se03 integer,
+  si01 integer,
+  si02 integer,
+  si03 integer,
+  createdate date
+);
+ALTER TABLE origin_destination OWNER TO "transportation-systems";
+
+\copy origin_destination from '~/Raw/origin_destination.csv' with csv header
+
+-- create a primary key
+ALTER TABLE origin_destination
+  ADD COLUMN id serial;
+ALTER TABLE origin_destination
+  ADD CONSTRAINT origin_destination_pkey PRIMARY KEY (id);
+
+DROP TABLE IF EXISTS or_xwalk;
+
+CREATE TABLE or_xwalk (
+  tabblk2010 text,
+  st text,
+  stusps text,
+  stname text,
+  cty text,
+  ctyname text,
+  trct text,
+  trctname text,
+  bgrp text,
+  bgrpname text,
+  cbsa text,
+  cbsaname text,
+  zcta text,
+  zctaname text,
+  stplc text,
+  stplcname text,
+  ctycsub text,
+  ctycsubname text,
+  stcd115 text,
+  stcd115name text,
+  stsldl text,
+  stsldlname text,
+  stsldu text,
+  stslduname text,
+  stschool text,
+  stschoolname text,
+  stsecon text,
+  stseconname text,
+  trib text,
+  tribname text,
+  tsub text,
+  tsubname text,
+  stanrc text,
+  stanrcname text,
+  necta text,
+  nectaname text,
+  mil text,
+  milname text,
+  stwib text,
+  stwibname text,
+  blklatdd text,
+  blklondd text,
+  createdate date
+);
+
+ALTER TABLE or_xwalk OWNER TO "transportation-systems";
+
+\copy or_xwalk from '~/Raw/or_xwalk.csv' with csv header
+
+ALTER TABLE or_xwalk
+  ADD COLUMN id serial;
+ALTER TABLE or_xwalk
+  ADD CONSTRAINT or_xwalk_pkey PRIMARY KEY (id);
+
+-- VACUUM ANALYZE
+VACUUM ANALYZE;
