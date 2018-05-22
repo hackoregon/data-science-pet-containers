@@ -1,0 +1,74 @@
+#! /usr/bin/env Rscript
+
+# point to the raw data file
+raw_data <- "~/Raw/Portland_Fatal___Injury_Crashes_2004-2014_Decode.mdb"
+
+DBOWNER <- "transportation-systems"
+PGDATABASE <- "transportation-systems-main"
+
+# define functions
+get_mdb_tables <- function(mdb_file) {
+  tables <- Hmisc::mdb.get(mdb_file, tables = TRUE)
+  return(grep(pattern = "^tbl", x = tables, invert = TRUE, value = TRUE))
+}
+
+get_mdb_table <- function(mdb_file, table_name) {
+  work <- Hmisc::mdb.get(mdb_file, tables = table_name, allow = "_")
+  colnames(work) <- tolower(colnames(work))
+  return(work)
+}
+
+get_postgresql_connection <- function(dbname, user) {
+  return(DBI::dbConnect(
+    drv = RPostgres::Postgres(),
+    dbname = dbname,
+    user = user
+  ))
+}
+
+# connect to the database
+pgcon <- get_postgresql_connection(PGDATABASE, DBOWNER)
+
+# create destination schema
+dummy <- DBI::dbSendStatement(
+  pgcon,
+  "CREATE SCHEMA odot_crash_data;"
+)
+DBI::dbClearResult(dummy)
+dummy <- DBI::dbSendStatement(
+  pgcon,
+  "SET search_path TO odot_crash_data, public;"
+)
+DBI::dbClearResult(dummy)
+
+# get list of tables from MDB file
+tables <- get_mdb_tables(raw_data)
+
+# import them
+for (table_name in tables) {
+  cat("\nImporting table", table_name, "\n")
+  work <- get_mdb_table(raw_data, table_name)
+  DBI::dbWriteTable(pgcon, tolower(table_name), work, overwrite = TRUE)
+}
+
+# add primary keys
+dummy <- DBI::dbSendStatement(
+  pgcon,
+  "ALTER TABLE crash ADD CONSTRAINT crash_pkey PRIMARY KEY (crash_id);"
+)
+DBI::dbClearResult(dummy)
+
+dummy <- DBI::dbSendStatement(
+  pgcon,
+  "ALTER TABLE partic ADD CONSTRAINT partic_pkey PRIMARY KEY (partic_id);"
+)
+DBI::dbClearResult(dummy)
+
+dummy <- DBI::dbSendStatement(
+  pgcon,
+  "ALTER TABLE vhcl ADD CONSTRAINT vhcl_pkey PRIMARY KEY (vhcl_id);"
+)
+DBI::dbClearResult(dummy)
+
+# disconnect
+DBI::dbDisconnect(pgcon)

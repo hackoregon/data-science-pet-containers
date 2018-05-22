@@ -1,0 +1,11 @@
+#! /bin/bash
+
+# define parameters
+export DBOWNER=transportation-systems
+export PGDATABASE=transportation-systems-main
+
+./download-raw.bash
+./tidy-origin-destination.R
+
+echo "Importing origin_destination.csv"
+psql -U ${DBOWNER} -d ${PGDATABASE} -f "origin_destination.psql"

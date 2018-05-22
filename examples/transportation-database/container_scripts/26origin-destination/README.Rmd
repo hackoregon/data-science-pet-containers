@@ -1,0 +1,35 @@
+---
+title: "Origin-Destination Data"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Source
+This dataset comes from the US Census Bureau's Longitudinal Employer-Household Dynamics (LEHD) website - <https://lehd.ces.census.gov/>. The data we are using is the LEHD Origin-Destination Employment Statistics (LODES) subset - <https://lehd.ces.census.gov/data/#lodes>.
+
+## Structure of the tables
+There are two tables:
+
+* `or_xwalk` - the Oregon "crosswalk" table. This table lists the census blocks that are within Oregon, and in a few cases, partially in other neighboring states. This table gives basic facts about the Census block, such as which state legislative districts it is in.
+* `origin_destination` - the main data table. The source data includes all of Oregon; this table has been constructed with only the rows within the "Portland-Vancouver-Hillsboro, OR-WA" statistical area that are in Oregon.
+
+    The columns are:
+    * year integer: the data year. Years 2002 through 2015 are available.
+    * w_geocode text: the Census block FIPS code for the job location
+    * h_geocode text: the Census block FIPS code for the worker's home
+    * s000 integer: Total number of jobs
+    * sa01 integer: Number of jobs of workers age 29 or younger
+    * sa02 integer: Number of jobs for workers age 30 to 54
+    * sa03 integer: Number of jobs for workers age 55 or older
+    * se01 integer: Number of jobs with earnings $1250/month or less
+    * se02 integer: Number of jobs with earnings $1251/month to $3333/month
+    * se03 integer: Number of jobs with earnings greater than $3333/month
+    * si01 integer: Number of jobs in Goods Producing industry sectors
+    * si02 integer: Number of jobs in Trade, Transportation, and Utilities industry sectors
+    * si03 integer: Number of jobs in All Other Services industry sectors
+
+## TBD
+Add polygon geometry column to the `or_xwalk` table!

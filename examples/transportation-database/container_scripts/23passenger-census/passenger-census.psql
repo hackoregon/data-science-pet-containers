@@ -1,0 +1,36 @@
+\connect "transportation-systems-main"
+
+CREATE SCHEMA passenger_census;
+SET search_path TO passenger_census, public;
+
+DROP TABLE IF EXISTS passenger_census;
+
+CREATE TABLE passenger_census (
+  summary_begin_date date,
+  route_number integer,
+  direction integer,
+  service_key text,
+  stop_seq integer,
+  location_id integer,
+  public_location_description text,
+  ons integer,
+  offs integer,
+  x_coord double precision,
+  y_coord double precision
+);
+ALTER TABLE passenger_census OWNER TO "transportation-systems";
+
+\copy passenger_census from '~/Raw/passenger_census.csv' with csv header
+
+ALTER TABLE passenger_census ADD COLUMN geom_2913 geometry;
+UPDATE passenger_census
+  SET geom_2913 = ST_SetSRID(ST_MakePoint(x_coord, y_coord), 2913);
+
+-- create a primary key - Django needs it
+ALTER TABLE passenger_census
+  ADD COLUMN id serial;
+ALTER TABLE passenger_census
+  ADD CONSTRAINT passenger_census_pkey PRIMARY KEY (id);
+
+-- VACUUM ANALYZE
+VACUUM ANALYZE;

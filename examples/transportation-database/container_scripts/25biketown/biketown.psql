@@ -1,0 +1,51 @@
+\connect "transportation-systems-main"
+
+CREATE SCHEMA biketown;
+SET search_path TO biketown, public;
+
+DROP TABLE IF EXISTS biketown;
+
+CREATE TABLE biketown (
+  route_id integer,
+  payment_plan text,
+  start_hub text,
+  start_latitude double precision,
+  start_longitude double precision,
+  start_date date,
+  start_time time,
+  end_hub text,
+  end_latitude double precision,
+  end_longitude double precision,
+  end_date date,
+  end_time time,
+  trip_type text,
+  bike_id integer,
+  bike_name text,
+  distance_miles double precision,
+  duration_text text,
+  rental_access_path text,
+  multiple_rental text
+);
+
+ALTER TABLE biketown OWNER TO "transportation-systems";
+
+\copy biketown from '~/Raw/biketown.csv' with csv
+
+-- TBD convert duration_text to a number
+
+-- GIS processing
+ALTER TABLE biketown ADD COLUMN start_geom_4326 geometry;
+UPDATE biketown
+  SET start_geom_4326 = ST_SetSRID(ST_MakePoint(start_longitude, start_latitude), 4326);
+ALTER TABLE biketown ADD COLUMN end_geom_4326 geometry;
+UPDATE biketown
+  SET end_geom_4326 = ST_SetSRID(ST_MakePoint(end_longitude, end_latitude), 4326);
+
+-- create a primary key - Django needs it
+ALTER TABLE biketown
+  ADD COLUMN id serial;
+ALTER TABLE biketown
+  ADD CONSTRAINT biketown_pkey PRIMARY KEY (id);
+
+-- VACUUM ANALYZE
+VACUUM ANALYZE;
