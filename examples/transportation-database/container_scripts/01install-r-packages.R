@@ -11,7 +11,9 @@ install.packages(
   c(
     "devtools",
     "Hmisc",
+    "tidytext",
     "tidyverse",
+    "topicmodels",
     "RPostgres"
   ),
   quiet = TRUE,

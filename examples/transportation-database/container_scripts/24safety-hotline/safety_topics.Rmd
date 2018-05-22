@@ -6,8 +6,6 @@ bibliography: Text_Mining_with_R.bibtex
 
 ## Loading the libraries
 ```{r}
-if (!require("tidytext")) install.packages("tidytext")
-if (!require("topicmodels")) install.packages("topicmodels")
 library("readr")
 library("tidytext")
 library("dplyr")
@@ -18,6 +16,7 @@ library("ggplot2")
 
 ## Reading the data file
 The safety hotline tickets dataset is a single CSV file with the following columns:
+
 * Item_ID: A unique identifier for the entry
 * Date_Created: the date in "yyyy-mm-dd" format,
 * Description: the description of the issue. This is the text we will be mining; each of these will be a document
@@ -27,7 +26,7 @@ The safety hotline tickets dataset is a single CSV file with the following colum
 ```{r}
 Safety_Hotline_Tickets <- read_csv(
   "~/Raw/Safety_Hotline_Tickets.csv", col_types = cols(
-    Date_Created = col_date(format = "%Y-%m-%d"),
+    Date_Created = col_date(format = "%m/%d/%Y %H:%M"),
     Item_ID = col_character()))
 ```
 

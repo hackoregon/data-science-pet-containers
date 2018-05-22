@@ -4,18 +4,6 @@ PUDL Safety Hotlines Topic Model
 ## Loading the libraries
 
 ``` r
-if (!require("tidytext")) install.packages("tidytext")
-```
-
-    ## Loading required package: tidytext
-
-``` r
-if (!require("topicmodels")) install.packages("topicmodels")
-```
-
-    ## Loading required package: topicmodels
-
-``` r
 library("readr")
 library("tidytext")
 library("dplyr")
@@ -41,26 +29,23 @@ library("ggplot2")
 ## Reading the data file
 
 The safety hotline tickets dataset is a single CSV file with the
-following columns: \* Item\_ID: A unique identifier for the entry \*
-Date\_Created: the date in “yyyy-mm-dd” format, \* Description: the
-description of the issue. This is the text we will be mining; each of
-these will be a document \* Problem\_Location: a street address or
-intersection \* X, Y, Longitude, Latitude: GIS coordinates
+following columns:
+
+  - Item\_ID: A unique identifier for the entry
+  - Date\_Created: the date in “yyyy-mm-dd” format,
+  - Description: the description of the issue. This is the text we will
+    be mining; each of these will be a document
+  - Problem\_Location: a street address or intersection
+  - X, Y, Longitude, Latitude: GIS coordinates
+
+<!-- end list -->
 
 ``` r
 Safety_Hotline_Tickets <- read_csv(
   "~/Raw/Safety_Hotline_Tickets.csv", col_types = cols(
-    Date_Created = col_date(format = "%Y-%m-%d"),
+    Date_Created = col_date(format = "%m/%d/%Y %H:%M"),
     Item_ID = col_character()))
 ```
-
-    ## Warning in rbind(names(probs), probs_f): number of columns of result is not
-    ## a multiple of vector length (arg 1)
-
-    ## Warning: 6066 parsing failures.
-    ## row # A tibble: 5 x 5 col     row col          expected           actual         file                expected   <int> <chr>        <chr>              <chr>          <chr>               actual 1     1 Date_Created date like %Y-%m-%d 1/10/2008 0:00 '~/Raw/Safety_Hotl… file 2     2 Date_Created date like %Y-%m-%d 3/13/2008 0:00 '~/Raw/Safety_Hotl… row 3     3 Date_Created date like %Y-%m-%d 3/13/2008 0:00 '~/Raw/Safety_Hotl… col 4     4 Date_Created date like %Y-%m-%d 3/21/2008 0:00 '~/Raw/Safety_Hotl… expected 5     5 Date_Created date like %Y-%m-%d 3/21/2008 0:00 '~/Raw/Safety_Hotl…
-    ## ... ................. ... .......................................................................... ........ .......................................................................... ...... .......................................................................... .... .......................................................................... ... .......................................................................... ... .......................................................................... ........ ..........................................................................
-    ## See problems(...) for more details.
 
 ## Extracting the words from the documents (Silge and Robinson 2017, chap. 1)
 
