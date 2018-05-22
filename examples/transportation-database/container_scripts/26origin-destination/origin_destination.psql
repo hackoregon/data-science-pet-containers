@@ -18,12 +18,11 @@ CREATE TABLE origin_destination (
   se03 integer,
   si01 integer,
   si02 integer,
-  si03 integer,
-  createdate date
+  si03 integer
 );
 ALTER TABLE origin_destination OWNER TO "transportation-systems";
 
-\copy origin_destination from '~/Raw/origin_destination.csv' with csv header
+\copy origin_destination from '~/Raw/metro_origin_destination.csv' with csv header
 
 -- create a primary key
 ALTER TABLE origin_destination
@@ -84,9 +83,7 @@ ALTER TABLE or_xwalk OWNER TO "transportation-systems";
 \copy or_xwalk from '~/Raw/or_xwalk.csv' with csv header
 
 ALTER TABLE or_xwalk
-  ADD COLUMN id serial;
-ALTER TABLE or_xwalk
-  ADD CONSTRAINT or_xwalk_pkey PRIMARY KEY (id);
+  ADD CONSTRAINT or_xwalk_pkey PRIMARY KEY (tabblk2010);
 
 -- VACUUM ANALYZE
 VACUUM ANALYZE;
