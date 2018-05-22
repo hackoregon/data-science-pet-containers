@@ -1,0 +1,102 @@
+---
+title: "PUDL Safety Hotlines Topic Model"
+output: github_document
+bibliography: Text_Mining_with_R.bibtex
+---
+
+## Loading the libraries
+```{r}
+if (!require("tidytext")) install.packages("tidytext")
+if (!require("topicmodels")) install.packages("topicmodels")
+library("readr")
+library("tidytext")
+library("dplyr")
+library("magrittr")
+library("topicmodels")
+library("ggplot2")
+```
+
+## Reading the data file
+The safety hotline tickets dataset is a single CSV file with the following columns:
+* Item_ID: A unique identifier for the entry
+* Date_Created: the date in "yyyy-mm-dd" format,
+* Description: the description of the issue. This is the text we will be mining; each of these will be a document
+* Problem_Location: a street address or intersection
+* X, Y, Longitude, Latitude: GIS coordinates
+
+```{r}
+Safety_Hotline_Tickets <- read_csv(
+  "~/Raw/Safety_Hotline_Tickets.csv", col_types = cols(
+    Date_Created = col_date(format = "%Y-%m-%d"),
+    Item_ID = col_character()))
+```
+
+## Extracting the words from the documents [@silge2017text, chapter 1]
+The first step is to create a data frame, called "raw_words", that contains one row for each word that occurs in any description. Once we have that, we remove "stop words". Stop words are words that are considered noise. We use the default English stop words from the TidyText package, augmented with a dataset-specific set.
+
+In looking at the data, I found that Portland areas "NW", "NE", etc., occurred frequently. Since the dataset includes both a text definition of the location and GIS coordinates, these designators add no value and should be considered stop words.
+
+```{r}
+# Load the TidyText default stop words
+data("stop_words")
+
+# add our own stop words and save
+pdx_stop_words <- tribble(
+  ~word, ~lexicon,
+  "n", "pdx_stop_words",
+  "ne", "pdx_stop_words",
+  "se", "pdx_stop_words",
+  "sw", "pdx_stop_words",
+  "nw", "pdx_stop_words"
+) %>% 
+  bind_rows(stop_words) %>% 
+  write_csv(path = "~/Raw/pdx_stop_words.csv")
+
+raw_words <- Safety_Hotline_Tickets %>% 
+  select(Item_ID, Description) %>% 
+  unnest_tokens(word, Description) %>% 
+  anti_join(pdx_stop_words)
+```
+## Visualizing the most common words [@silge2017text, chapter 1]
+```{r}
+word_counts <- raw_words %>%
+  count(word, sort = TRUE) %>% 
+  mutate(word = reorder(word, n))
+word_counts %>% 
+  top_n(15) %>% 
+  ggplot(aes(word, n)) +
+    geom_col() +
+    xlab(NULL) +
+    coord_flip()
+```
+
+## Creating the document-term matrix [@silge2017text, chapter 3]
+The document-term matrix is the fundamental representation of a corpus of documents. In this case the documents are the issue descriptions as noted above. This step has no visualizations; it's only here to provide a document-term matrix `safety_dtm` for the topic model.
+
+```{r}
+line_words <- raw_words %>% 
+  count(Item_ID, word, sort = TRUE) %>% 
+  ungroup()
+total_words <- line_words %>% 
+  group_by(Item_ID) %>% 
+  summarize(total = sum(n))
+line_words %<>% left_join(total_words) %>% 
+  bind_tf_idf(word, Item_ID, n)
+safety_dtm <- line_words %>% 
+  cast_dtm(Item_ID, word, n)
+```
+
+## Latent Dirichlet analysis / topic model [@silge2017text, chapter 6]
+The final step is a latent Dirichlet analysis to determine the topics. This is a kind of unsupervised learning / clustering operation. We don't know going in how many topics there will be - we have to start with a small number and use our insights about the subject matter to tell us when to stop.
+```{r}
+safety_lda <- LDA(safety_dtm, k = 5, control = list(seed = 1234))
+safety_topics <- tidy(safety_lda, matrix = "beta")
+top_terms <- safety_topics %>%
+  group_by(topic) %>%
+  top_n(10, beta) %>%
+  ungroup() %>%
+  arrange(topic, -beta) %>% 
+  write_csv(path = "~/Raw/top_terms.csv")
+```
+
+## References
