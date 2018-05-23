@@ -11,6 +11,7 @@ install.packages(
   c(
     "devtools",
     "Hmisc",
+    "sf",
     "tidytext",
     "tidyverse",
     "topicmodels",
