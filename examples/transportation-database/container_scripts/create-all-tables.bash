@@ -18,8 +18,8 @@ for dataset in \
   23passenger-census \
   24safety-hotline \
   25biketown \
-  26origin-destination \
-  27census_blocks
+  27census_blocks \
+  26origin-destination
 do
   pushd ${dataset}
   nice -10 ./create-tables
