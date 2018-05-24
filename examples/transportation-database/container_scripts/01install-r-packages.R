@@ -12,6 +12,7 @@ install.packages(
     "devtools",
     "Hmisc",
     "sf",
+    "stplanr",
     "tidytext",
     "tidyverse",
     "topicmodels",
