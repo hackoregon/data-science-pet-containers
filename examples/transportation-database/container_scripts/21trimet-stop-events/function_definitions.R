@@ -93,26 +93,38 @@ compute_lagged_columns <- function(stop_events) {
     TRAVEL_MILES = TRAIN_MILEAGE - MILEAGE_THERE,
     TRAVEL_SECONDS = ARRIVE_TIME - LEFT_THERE
   )
-  temp <- temp %>% ungroup()
+  return(temp)
+}
 
-  # remove outliers
-  seconds_low_cutoff <- quantile(
-    temp$TRAVEL_SECONDS, names = FALSE, na.rm = TRUE, probs = 0.05)
-  miles_low_cutoff <- quantile(
-    temp$TRAVEL_MILES, names = FALSE, na.rm = TRUE, probs = 0.05)
-  seconds_high_cutoff <- quantile(
-    temp$TRAVEL_SECONDS, names = FALSE, na.rm = TRUE, probs = 0.95)
-  miles_high_cutoff <- quantile(
-    temp$TRAVEL_MILES, names = FALSE, na.rm = TRUE, probs = 0.95)
+compute_bad_trips <- function(stop_events) {
+  temp <- stop_events %>% summarize(
+    min_seconds = min(TRAVEL_SECONDS, na.rm = TRUE)
+  )
   temp <- temp %>% filter(
-    !is.na(TRAVEL_SECONDS),
-    TRAVEL_SECONDS > seconds_low_cutoff,
-    TRAVEL_MILES > miles_low_cutoff,
-    TRAVEL_SECONDS < seconds_high_cutoff,
-    TRAVEL_MILES < miles_high_cutoff
+    is.infinite(min_seconds) |
+    min_seconds < 0
   )
   return(temp)
 }
+
+# temp <- temp %>% ungroup()
+#
+#   # remove outliers
+#   seconds_low_cutoff <- quantile(
+#     temp$TRAVEL_SECONDS, names = FALSE, na.rm = TRUE, probs = 0.05)
+#   miles_low_cutoff <- quantile(
+#     temp$TRAVEL_MILES, names = FALSE, na.rm = TRUE, probs = 0.05)
+#   seconds_high_cutoff <- quantile(
+#     temp$TRAVEL_SECONDS, names = FALSE, na.rm = TRUE, probs = 0.95)
+#   miles_high_cutoff <- quantile(
+#     temp$TRAVEL_MILES, names = FALSE, na.rm = TRUE, probs = 0.95)
+#   temp <- temp %>% filter(
+#     !is.na(TRAVEL_SECONDS),
+#     TRAVEL_SECONDS > seconds_low_cutoff,
+#     TRAVEL_MILES > miles_low_cutoff,
+#     TRAVEL_SECONDS < seconds_high_cutoff,
+#     TRAVEL_MILES < miles_high_cutoff
+#   )
 
 #' select_output_columns
 #'
@@ -151,8 +163,11 @@ select_output_columns <- function(stop_events) {
 
 ## define the month table
 month_table <- tibble::tribble(
-  ~table_prefix, ~input_file,
-  "m2017_09", "trimet_stop_event 1-30SEP2017.csv",
-  "m2017_10", "trimet_stop_event 1-31OCT2017.csv",
-  "m2017_11", "trimet_stop_event 1-30NOV2017.csv"
+  ~output_file, ~input_file,
+  "~/Raw/m2017_09_trimet_stop_events.csv",
+  "~/Raw/trimet_stop_event 1-30SEP2017.csv",
+  "~/Raw/m2017_10_trimet_stop_events.csv",
+  "~/Raw/trimet_stop_event 1-31OCT2017.csv",
+  "~/Raw/m2017_11_trimet_stop_events.csv",
+  "~/Raw/trimet_stop_event 1-30NOV2017.csv"
 )
