@@ -43,15 +43,20 @@ for (i in 1:nrow(month_table)) {
     "\n"
   ))
   colnames(trimet_stop_events) <- tolower(colnames(trimet_stop_events))
-  trimet_stop_events %>% write_csv(path = paste(
-    "~/Raw",
-    paste(
-      month_table$table_prefix[i],
-      "trimet_stop_events.csv",
-      sep = "_"
+  trimet_stop_events %>% write_csv(
+    path = paste(
+      "~/Raw",
+      paste(
+        month_table$table_prefix[i],
+        "trimet_stop_events.csv",
+        sep = "_"
+      ),
+      sep = "/"
     ),
-    sep = "/"
-  ))
+    na = ""
+  )
+
   rm(trimet_stop_events)
   gc(full = TRUE, verbose = TRUE)
+
 }
