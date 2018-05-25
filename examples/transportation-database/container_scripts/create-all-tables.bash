@@ -24,9 +24,12 @@ do
   popd
 done
 
-# do this last so we can comment it out on RAM-challenged systems
-#pushd 29trimet-stop-events
-#nice -10 ./create-tables
-#popd
+# require a parameter to ignore the big one
+if [ "$#" -eq 0 ]; then
+  echo "Processing 'trimet_stop_events'"
+  pushd 29trimet-stop-events
+  nice -10 ./create-tables
+  popd
+fi
 echo "Creating database backup"
 ./90create-database-backup.bash
