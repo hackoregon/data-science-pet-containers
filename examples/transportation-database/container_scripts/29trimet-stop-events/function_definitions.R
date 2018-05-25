@@ -98,11 +98,15 @@ compute_lagged_columns <- function(stop_events) {
 
 compute_bad_trips <- function(stop_events) {
   temp <- stop_events %>% summarize(
-    min_seconds = min(TRAVEL_SECONDS, na.rm = TRUE)
+    stops = n(),
+    min_seconds = min(TRAVEL_SECONDS, na.rm = TRUE),
+    max_seconds = max(TRAVEL_SECONDS, na.rm = TRUE)
   )
   temp <- temp %>% filter(
     is.infinite(min_seconds) |
-    min_seconds < 0
+      is.infinite(max_seconds) |
+      stops < 3 |
+      min_seconds < 0
   )
   return(temp)
 }
