@@ -1,0 +1,7 @@
+#! /bin/bash
+
+# define parameters
+export DBOWNER=transportation-systems
+export PGDATABASE=transportation-systems-main
+
+/usr/bin/time ./import-shapefiles
