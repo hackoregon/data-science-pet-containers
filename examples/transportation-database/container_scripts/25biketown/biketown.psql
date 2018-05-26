@@ -26,10 +26,8 @@ CREATE TABLE biketown (
   multiple_rental text,
   duration_minutes double precision
 );
-
 \copy biketown from '~/Raw/cleaned_biketown.csv' with csv header
 
--- GIS processing
 ALTER TABLE biketown ADD COLUMN start_geom_4326 geometry;
 UPDATE biketown
   SET start_geom_4326 = ST_SetSRID(ST_MakePoint(start_longitude, start_latitude), 4326);
@@ -50,5 +48,3 @@ CREATE MATERIALIZED VIEW trip_counts AS
   GROUP BY start_hub, start_geom_4326, end_hub, end_geom_4326
   ORDER BY trips DESC
 ;
-
-VACUUM ANALYZE;
