@@ -1,9 +1,8 @@
 \connect "transportation-systems-main"
 
+DROP SCHEMA IF EXISTS biketown CASCADE;
 CREATE SCHEMA biketown;
 SET search_path TO biketown, public;
-
-DROP TABLE IF EXISTS biketown;
 
 CREATE TABLE biketown (
   route_id text,
@@ -28,8 +27,6 @@ CREATE TABLE biketown (
   duration_minutes double precision
 );
 
-ALTER TABLE biketown OWNER TO "transportation-systems";
-
 \copy biketown from '~/Raw/cleaned_biketown.csv' with csv header
 
 -- GIS processing
@@ -40,11 +37,18 @@ ALTER TABLE biketown ADD COLUMN end_geom_4326 geometry;
 UPDATE biketown
   SET end_geom_4326 = ST_SetSRID(ST_MakePoint(end_longitude, end_latitude), 4326);
 
--- create a primary key - Django needs it
 ALTER TABLE biketown
   ADD COLUMN id serial;
 ALTER TABLE biketown
   ADD CONSTRAINT biketown_pkey PRIMARY KEY (id);
 
--- VACUUM ANALYZE
+-- materialized view - trip counts by origin and destination
+CREATE MATERIALIZED VIEW trip_counts AS
+  SELECT start_hub, start_geom_4326, end_hub, end_geom_4326,
+    count(distance_miles) AS trips
+  FROM biketown
+  GROUP BY start_hub, start_geom_4326, end_hub, end_geom_4326
+  ORDER BY trips DESC
+;
+
 VACUUM ANALYZE;
