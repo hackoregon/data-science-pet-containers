@@ -31,6 +31,7 @@ RUN apt-get update \
     expat \
     gdal-bin \
     geotiff-bin \
+    gsl-bin \
     git \
     less \
     libboost-dev \
@@ -38,6 +39,7 @@ RUN apt-get update \
     libexpat1-dev \
     libgdal-dev \
     libgeotiff-dev \
+    libgsl-dev \
     libpq-dev \
     libpqxx-dev \
     libspatialite-dev \

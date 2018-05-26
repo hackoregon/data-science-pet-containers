@@ -3,14 +3,18 @@
 # define parameters
 export DBOWNER=transportation-systems
 export PGDATABASE=transportation-systems-main
+export HERE=${PWD}
 
-echo "Downloading Biketown dataset"
+echo "Downloading BikeTown dataset"
 pushd ~/Raw
 wget -nc -q https://s3.amazonaws.com/biketown-tripdata-public/BiketownPublicTripData201804.zip
 unzip -o BiketownPublicTripData201804.zip
-grep -h -v -e ',,,,,,,,,,,,,,,,,,' PublicTripData/*.csv | \
-  grep -v RouteID > biketown.csv
+echo "Stacking CSV files"
+cp ${HERE}/header biketown.csv
+grep -h -v RouteID PublicTripData/*.csv >> biketown.csv
 popd
 
-echo "Importing Biketown data"
+echo "Cleaning BikeTown data"
+./clean.R
+echo "Importing BikeTown data"
 psql -U ${DBOWNER} -d ${PGDATABASE} -f "biketown.psql"

@@ -96,13 +96,31 @@ compute_lagged_columns <- function(stop_events) {
   return(temp)
 }
 
-compute_bad_trips <- function(stop_events) {
-  temp <- stop_events %>% summarize(
-    min_seconds = min(TRAVEL_SECONDS, na.rm = TRUE)
+compute_trip_table <- function(stop_events) {
+  trips <- stop_events %>% summarize(
+    stops = n(),
+    min_seconds = min(TRAVEL_SECONDS, na.rm = TRUE),
+    max_seconds = max(TRAVEL_SECONDS, na.rm = TRUE)
   )
-  temp <- temp %>% filter(
+  return(trips)
+}
+
+compute_route_summary <- function(trips) {
+  temp <- trips %>% group_by(ROUTE_NUMBER, DIRECTION)
+  temp <- temp %>% summarize(
+    p05 = quantile(stops, probs = 0.05, names = FALSE, na.rm = TRUE),
+    p95 = quantile(stops, probs = 0.95, names = FALSE, na.rm = TRUE)
+  )
+  return(temp)
+}
+
+compute_bad_trips <- function(trips) {
+  temp <- trips %>% filter(
     is.infinite(min_seconds) |
-    min_seconds < 0
+      is.infinite(max_seconds) |
+      stops < p05 |
+      stops > p95 |
+      min_seconds < 0
   )
   return(temp)
 }

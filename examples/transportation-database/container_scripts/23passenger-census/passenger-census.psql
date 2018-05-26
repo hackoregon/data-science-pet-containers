@@ -1,9 +1,8 @@
 \connect "transportation-systems-main"
 
+DROP SCHEMA IF EXISTS passenger_census CASCADE;
 CREATE SCHEMA passenger_census;
 SET search_path TO passenger_census, public;
-
-DROP TABLE IF EXISTS passenger_census;
 
 CREATE TABLE passenger_census (
   summary_begin_date date,
@@ -18,8 +17,6 @@ CREATE TABLE passenger_census (
   x_coord double precision,
   y_coord double precision
 );
-ALTER TABLE passenger_census OWNER TO "transportation-systems";
-
 \copy passenger_census from '~/Raw/passenger_census.csv' with csv header
 
 -- add geometry column
@@ -36,6 +33,3 @@ ALTER TABLE passenger_census
   ADD COLUMN id serial;
 ALTER TABLE passenger_census
   ADD CONSTRAINT passenger_census_pkey PRIMARY KEY (id);
-
--- VACUUM ANALYZE
-VACUUM ANALYZE;

@@ -12,19 +12,27 @@ echo "Checking input sha512 sums"
 ./03checksum-input-data.bash
 
 for dataset in \
-  20trimet-shapefiles \
-  21trimet-stop-events \
+  20reference \
   22odot-crash-data \
   23passenger-census \
   24safety-hotline \
   25biketown \
-  26origin-destination \
-  27census_blocks
+  27origin-destination
 do
   pushd ${dataset}
   nice -10 ./create-tables
   popd
 done
 
+# require a parameter to ignore the big one
+if [ "$#" -eq 0 ]; then
+  echo "Processing 'trimet_stop_events'"
+  pushd 29trimet-stop-events
+  nice -10 ./create-tables
+  popd
+fi
+
+# vacuum analyze
+psql -U ${DBOWNER} -d ${PGDATABASE} -c "VACUUM ANALYZE;"
 echo "Creating database backup"
 ./90create-database-backup.bash

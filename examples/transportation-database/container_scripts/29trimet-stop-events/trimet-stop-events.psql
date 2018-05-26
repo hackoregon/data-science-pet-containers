@@ -1,9 +1,8 @@
 \connect "transportation-systems-main"
 
+DROP SCHEMA IF EXISTS trimet_stop_events CASCADE;
 CREATE SCHEMA trimet_stop_events;
 SET search_path TO trimet_stop_events, public;
-
-DROP TABLE IF EXISTS trimet_stop_events;
 
 CREATE TABLE trimet_stop_events (
   service_date date,
@@ -31,18 +30,22 @@ CREATE TABLE trimet_stop_events (
   travel_miles double precision,
   travel_seconds integer
 );
-
-ALTER TABLE trimet_stop_events OWNER TO "transportation-systems";
-
 \copy trimet_stop_events from '~/Raw/m2017_09_trimet_stop_events.csv' with csv header
 \copy trimet_stop_events from '~/Raw/m2017_10_trimet_stop_events.csv' with csv header
 \copy trimet_stop_events from '~/Raw/m2017_11_trimet_stop_events.csv' with csv header
 
--- create a primary key - Django needs it
 ALTER TABLE trimet_stop_events
   ADD COLUMN id serial;
 ALTER TABLE trimet_stop_events
   ADD CONSTRAINT trimet_stop_events_pkey PRIMARY KEY (id);
 
--- VACUUM ANALYZE
-VACUUM ANALYZE;
+-- create the detail table for time of day analysis
+CREATE MATERIALIZED VIEW totals_ons_by_hour AS
+  SELECT service_date, service_key,
+    to_char(service_date, 'D') AS weekday,
+    round(arrive_time / 3600.0, 1) AS hour_of_day,
+    sum(ons) AS total_ons
+  FROM trimet_stop_events
+  GROUP BY service_date, service_key, hour_of_day
+  ORDER BY service_date, hour_of_day
+;

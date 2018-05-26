@@ -1,9 +1,8 @@
 \connect "transportation-systems-main"
 
+DROP SCHEMA IF EXISTS safety_hotline_tickets CASCADE;
 CREATE SCHEMA safety_hotline_tickets;
 SET search_path TO safety_hotline_tickets, public;
-
-DROP TABLE IF EXISTS safety_hotline_tickets;
 
 CREATE TABLE safety_hotline_tickets (
   item_id integer,
@@ -15,19 +14,13 @@ CREATE TABLE safety_hotline_tickets (
   longitude double precision,
   latitude double precision
 );
-ALTER TABLE safety_hotline_tickets OWNER TO "transportation-systems";
-
 \copy safety_hotline_tickets from '~/Raw/Safety_Hotline_Tickets.csv' with csv header
 
 ALTER TABLE safety_hotline_tickets ADD COLUMN geom_4326 geometry;
 UPDATE safety_hotline_tickets
   SET geom_4326 = ST_SetSRID(ST_MakePoint(longitude, latitude), 4326);
 
--- create a primary key - Django needs it
 ALTER TABLE safety_hotline_tickets
   ADD COLUMN id serial;
 ALTER TABLE safety_hotline_tickets
   ADD CONSTRAINT safety_hotline_tickets_pkey PRIMARY KEY (id);
-
--- VACUUM ANALYZE
-VACUUM ANALYZE;
