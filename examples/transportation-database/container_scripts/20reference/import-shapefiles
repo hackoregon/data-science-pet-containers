@@ -34,5 +34,3 @@ do
   cd ..
 done
 popd
-
-psql -U ${DBOWNER} -d ${PGDATABASE} -c "VACUUM ANALYZE;"
