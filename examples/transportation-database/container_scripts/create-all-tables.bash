@@ -31,5 +31,8 @@ if [ "$#" -eq 0 ]; then
   nice -10 ./create-tables
   popd
 fi
+
+# vacuum analyze
+psql -U ${DBOWNER} -d ${PGDATABASE} -c "VACUUM ANALYZE;"
 echo "Creating database backup"
 ./90create-database-backup.bash
