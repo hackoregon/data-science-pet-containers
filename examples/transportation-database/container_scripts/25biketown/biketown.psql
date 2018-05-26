@@ -6,7 +6,7 @@ SET search_path TO biketown, public;
 DROP TABLE IF EXISTS biketown;
 
 CREATE TABLE biketown (
-  route_id integer,
+  route_id text,
   payment_plan text,
   start_hub text,
   start_latitude double precision,
@@ -19,19 +19,18 @@ CREATE TABLE biketown (
   end_date date,
   end_time time,
   trip_type text,
-  bike_id integer,
+  bike_id text,
   bike_name text,
   distance_miles double precision,
   duration_text text,
   rental_access_path text,
-  multiple_rental text
+  multiple_rental text,
+  duration_minutes double precision
 );
 
 ALTER TABLE biketown OWNER TO "transportation-systems";
 
-\copy biketown from '~/Raw/biketown.csv' with csv
-
--- TBD convert duration_text to a number
+\copy biketown from '~/Raw/cleaned_biketown.csv' with csv header
 
 -- GIS processing
 ALTER TABLE biketown ADD COLUMN start_geom_4326 geometry;
