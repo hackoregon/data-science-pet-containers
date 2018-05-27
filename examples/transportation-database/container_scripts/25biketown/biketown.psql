@@ -43,8 +43,8 @@ ALTER TABLE biketown
 -- materialized view - trip counts by origin and destination
 CREATE MATERIALIZED VIEW trip_counts AS
   SELECT start_hub, start_geom_4326, end_hub, end_geom_4326,
-    count(distance_miles) AS trips
+    count(distance_miles) AS trips, start_hub = end_hub AS start_equals_end
   FROM biketown
-  GROUP BY start_hub, start_geom_4326, end_hub, end_geom_4326
+  GROUP BY start_hub, start_geom_4326, end_hub, end_geom_4326, start_equals_end
   ORDER BY trips DESC
 ;
