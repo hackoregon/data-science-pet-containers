@@ -9,12 +9,12 @@ if (as.list(Sys.info())$user != 'root') {
 
 install.packages(
   c(
-    "devtools",
     "Hmisc",
     "sf",
     "stplanr",
     "tidytext",
     "tidyverse",
+    "tmap",
     "topicmodels",
     "RPostgres"
   ),
