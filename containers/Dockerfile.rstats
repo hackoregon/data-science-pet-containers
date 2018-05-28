@@ -21,16 +21,21 @@ RUN apt-get update \
     curl \
     emacs-nox \
     git \
+    libcairo2-dev \
     libgdal-dev \
+    libjq-dev \
     libpq-dev \
     libpqxx-dev \
+    libprotobuf-dev \
     libssh2-1-dev \
     libudunits2-dev \
+    libv8-3.14-dev \
     lynx \
     nano \
     mdbtools-dev \
     openssh-client \
     postgresql-client-9.6 \
+    protobuf-compiler \
     unixodbc-dev \
     vim-nox \
     wget \
