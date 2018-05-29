@@ -20,6 +20,7 @@ RUN apt-get update \
     command-not-found \
     curl \
     emacs-nox \
+    gdebi \
     git \
     libcairo2-dev \
     libgdal-dev \
