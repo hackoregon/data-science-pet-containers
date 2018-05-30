@@ -9,6 +9,7 @@ if (as.list(Sys.info())$user != 'root') {
 
 install.packages(
   c(
+    "devtools",
     "Hmisc",
     "sf",
     "stplanr",
@@ -22,3 +23,4 @@ install.packages(
   lib = Sys.getenv('R_LIBS_USER'),
   repos = "https://cran.rstudio.com/"
 )
+devtools::install_github("ropensci/gtfsr")
