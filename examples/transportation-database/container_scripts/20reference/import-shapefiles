@@ -4,8 +4,15 @@
 export DBOWNER=transportation-systems
 export PGDATABASE=transportation-systems-main
 
-echo "Importing TriMet and TIGER/Line® shapefiles"
+for schema in trimet_gis census_gis
+do
+  echo "Creating schema ${schema}"
+  psql -U ${DBOWNER} -d ${PGDATABASE} -c "DROP SCHEMA IF EXISTS ${schema} CASCADE;"
+  psql -U ${DBOWNER} -d ${PGDATABASE} -c "CREATE SCHEMA ${schema};"
+done
+
 pushd ~/Raw
+echo "Importing TriMet shapefiles"
 for zipfile in \
   https://developer.trimet.org/gis/data/tm_boundary.zip \
   https://developer.trimet.org/gis/data/tm_parkride.zip \
@@ -14,7 +21,25 @@ for zipfile in \
   https://developer.trimet.org/gis/data/tm_routes.zip \
   https://developer.trimet.org/gis/data/tm_stops.zip \
   https://developer.trimet.org/gis/data/tm_route_stops.zip \
-  https://developer.trimet.org/gis/data/tm_tran_cen.zip \
+  https://developer.trimet.org/gis/data/tm_tran_cen.zip
+do
+  echo "Downloading ${zipfile}"
+  wget -nc -q ${zipfile}
+  table=`echo ${zipfile} | sed 's;^.*/;;' | sed 's;.zip$;;'`
+
+  # in theory, ogr2ogr can import zipped shapefiles directly but older versions may not work
+  rm -fr ${table}; mkdir $table; cd $table
+  unzip -qq ../${table}.zip
+
+  echo "Creating table '${table}' in the 'trimet_gis' schema"
+  ogr2ogr -f PostgreSQL -overwrite -lco PRECISION=NO -nlt PROMOTE_TO_MULTI \
+    -lco SCHEMA=trimet_gis PG:"dbname=${PGDATABASE}" ${table}.shp
+  psql -U ${DBOWNER} -d ${PGDATABASE} -c "ALTER TABLE ${table} OWNER TO \"${DBOWNER}\";"
+  cd ..
+done
+
+echo "Importing TIGER/Line® shapefiles"
+for zipfile in \
   https://www2.census.gov/geo/tiger/TIGER2017/TRACT/tl_2017_41_tract.zip \
   https://www2.census.gov/geo/tiger/TIGER2017/BG/tl_2017_41_bg.zip \
   https://www2.census.gov/geo/tiger/TIGER2017/TABBLOCK/tl_2017_41_tabblock10.zip
@@ -27,9 +52,9 @@ do
   rm -fr ${table}; mkdir $table; cd $table
   unzip -qq ../${table}.zip
 
-  echo "Creating table '${table}' in the 'public' schema"
+  echo "Creating table '${table}' in the 'census_gis' schema"
   ogr2ogr -f PostgreSQL -overwrite -lco PRECISION=NO -nlt PROMOTE_TO_MULTI \
-    PG:"dbname=${PGDATABASE}" ${table}.shp
+    -lco SCHEMA=census_gis PG:"dbname=${PGDATABASE}" ${table}.shp
   psql -U ${DBOWNER} -d ${PGDATABASE} -c "ALTER TABLE ${table} OWNER TO \"${DBOWNER}\";"
   cd ..
 done
