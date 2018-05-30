@@ -7,7 +7,7 @@ export HERE=${PWD}
 
 echo "Downloading BikeTown dataset"
 pushd ~/Raw
-wget -nc -q https://s3.amazonaws.com/biketown-tripdata-public/BiketownPublicTripData201804.zip
+wget -nc https://s3.amazonaws.com/biketown-tripdata-public/BiketownPublicTripData201804.zip
 unzip -o BiketownPublicTripData201804.zip
 echo "Stacking CSV files"
 cp ${HERE}/header biketown.csv

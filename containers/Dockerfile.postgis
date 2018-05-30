@@ -36,16 +36,20 @@ RUN apt-get update \
     less \
     libboost-dev \
     libboost-program-options-dev \
+    libcairo2-dev \
     libexpat1-dev \
     libgdal-dev \
     libgeotiff-dev \
     libgsl-dev \
+    libjq-dev \
     libpq-dev \
     libpqxx-dev \
+    libprotobuf-dev \
     libspatialite-dev \
     libssh2-1-dev \
     libssl-dev \
     libudunits2-dev \
+    libv8-3.14-dev \
     lynx \
     mdbtools \
     mdbtools-dev \
@@ -54,6 +58,7 @@ RUN apt-get update \
     p7zip \
     postgresql-client-9.6 \
     proj-bin \
+    protobuf-compiler \
     python-dev \
     python3-dev \
     python3-csvkit \
