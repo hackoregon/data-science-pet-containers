@@ -12,6 +12,8 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(stplanr)
 library(DBI)
+library(sf)
+library(tmap)
 
 ### connect to the database
 connection <- dbConnect(
@@ -25,5 +27,8 @@ execute_status <- dbExecute(connection, "SET search_path TO biketown, public;")
 ### get the tables
 biketown <- dbReadTable(connection, "biketown")
 trip_counts <- dbReadTable(connection, "trip_counts")
+biketown_hubs <- st_read(
+  "PG:dbname=transportation-systems-main",
+  "biketown.biketown_hubs"
+) %>% as("Spatial")
 ```
-
