@@ -27,24 +27,31 @@ CREATE TABLE biketown (
   duration_minutes double precision
 );
 \copy biketown from '~/Raw/cleaned_biketown.csv' with csv header
-
-ALTER TABLE biketown ADD COLUMN start_geom_4326 geometry;
-UPDATE biketown
-  SET start_geom_4326 = ST_SetSRID(ST_MakePoint(start_longitude, start_latitude), 4326);
-ALTER TABLE biketown ADD COLUMN end_geom_4326 geometry;
-UPDATE biketown
-  SET end_geom_4326 = ST_SetSRID(ST_MakePoint(end_longitude, end_latitude), 4326);
-
 ALTER TABLE biketown
   ADD COLUMN id serial;
 ALTER TABLE biketown
   ADD CONSTRAINT biketown_pkey PRIMARY KEY (id);
 
+CREATE TABLE biketown_hubs(
+  hub text,
+  longitude double precision,
+  latitude double precision
+);
+\copy biketown_hubs from '~/Raw/biketown_hubs.csv' with csv header
+ALTER TABLE biketown_hubs
+  ADD COLUMN geom_4326 geometry;
+UPDATE biketown_hubs
+  SET geom_4326 = ST_SetSRID(ST_MakePoint(longitude, latitude), 4326);
+ALTER TABLE biketown_hubs
+  ADD COLUMN id serial;
+ALTER TABLE biketown_hubs
+  ADD CONSTRAINT biketown_hubs_pkey PRIMARY KEY (id);
+
 -- materialized view - trip counts by origin and destination
 CREATE MATERIALIZED VIEW trip_counts AS
-  SELECT start_hub, start_geom_4326, end_hub, end_geom_4326,
-    count(distance_miles) AS trips, start_hub = end_hub AS start_equals_end
+  SELECT start_hub, end_hub, count(distance_miles) AS trips,
+    start_hub = end_hub AS start_equals_end
   FROM biketown
-  GROUP BY start_hub, start_geom_4326, end_hub, end_geom_4326, start_equals_end
+  GROUP BY start_hub, end_hub, start_equals_end
   ORDER BY trips DESC
 ;
