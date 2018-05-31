@@ -1,0 +1,29 @@
+---
+title: "Exploring BikeTown Data"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Fetch the data
+```{r}
+library(tidyverse)
+library(stplanr)
+library(DBI)
+
+### connect to the database
+connection <- dbConnect(
+  drv = RPostgres::Postgres(),
+  dbname = "transportation-systems-main",
+  user = "transportation-systems")
+
+### set search path
+execute_status <- dbExecute(connection, "SET search_path TO biketown, public;")
+
+### get the tables
+biketown <- dbReadTable(connection, "biketown")
+trip_counts <- dbReadTable(connection, "trip_counts")
+```
+
