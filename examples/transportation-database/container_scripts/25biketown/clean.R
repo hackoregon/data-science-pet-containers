@@ -58,3 +58,20 @@ biketown %>% write_csv(
   path = "~/Raw/cleaned_biketown.csv",
   na = ""
 )
+
+# make a table of unique start / end points
+start_hubs <- biketown %>% select(
+  hub = start_hub,
+  longitude = start_longitude,
+  latitude = start_latitude
+) %>% unique()
+end_hubs <- biketown %>% select(
+  hub = end_hub,
+  longitude = end_longitude,
+  latitude = end_latitude
+) %>% unique()
+biketown_hubs <- bind_rows(start_hubs, end_hubs) %>% unique()
+biketown_hubs %>% write_csv(
+  path = "~/Raw/biketown_hubs.csv",
+  na = ""
+)
