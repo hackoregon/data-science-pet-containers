@@ -1,0 +1,11 @@
+SET search_path TO census_gis, public;
+CREATE MATERIALIZED VIEW gis_lookup
+AS
+  SELECT geoid10, countyfp10, ST_Transform(wkb_geometry, 4326) AS boundary_4326
+  FROM tl_2017_41_tabblock10
+  WHERE countyfp10 = '005' OR countyfp10 = '051' OR countyfp10 = '067'
+WITH DATA;
+-- '005' is Clackamas, '051' is Multnomah, '067' is Washington
+
+ALTER TABLE gis_lookup OWNER TO "transportation-systems";
+CREATE INDEX ON gis_lookup USING GIST (boundary_4326);

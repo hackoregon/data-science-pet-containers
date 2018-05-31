@@ -58,3 +58,6 @@ do
   cd ..
 done
 popd
+
+echo "Creating the census block GIS lookup table"
+psql -U ${DBOWNER} -d ${PGDATABASE} -f gis_lookup.psql
