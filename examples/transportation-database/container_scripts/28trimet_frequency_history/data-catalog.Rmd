@@ -29,5 +29,5 @@ for (zipfile in zipfiles) {
 }
 
 trips_catalog %>% write_csv(path = "~/Raw/trips_catalog.csv")
-calendar_dates_catalog %>%  write_csv(path = calendar_dates_catalog.csv)
+calendar_dates_catalog %>%  write_csv(path = "~/Raw/calendar_dates_catalog.csv")
 ```
