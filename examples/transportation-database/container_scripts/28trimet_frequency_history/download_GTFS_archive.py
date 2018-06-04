@@ -28,7 +28,7 @@ for page in [str(i+1) for i in range(34)]:
     print(f'Processing: {this_url}')
     for name in soup.findAll('a', href=True):
         zipurl = name['href']
-        if zipurl.endswith('.zip') and 'archiver' in zipurl:
+        if zipurl.endswith('.zip') and 'trimet_' in zipurl:
             outfname = outpath / Path(zipurl.split('/')[-1])
             r = requests.get(zipurl, stream=True)
             if r.status_code == requests.codes.ok:
