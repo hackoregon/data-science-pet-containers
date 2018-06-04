@@ -1,0 +1,33 @@
+---
+title: "Data Catalog"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+if (!require(gtfsr)) {
+  devtools::install_github("znmeb/gtfsr", force = TRUE)
+  library(gtfsr)
+}
+library(tidyverse)
+```
+
+```{r}
+zipfiles <- list.files(
+  path = "/d/Sync/Hack_Oregon/trimet-gtfs-archives/",
+  pattern = ".zip",
+  full.names = TRUE)
+calendar_dates_catalog <- trips_catalog <- tibble()
+
+for (zipfile in zipfiles) {
+  import <- gtfsr::import_gtfs(zipfile, local = TRUE)
+  trips <- import$trips_df %>% mutate(source = zipfile)
+  calendar_dates <- import$calendar_dates_df %>% mutate(source = zipfile)
+  rm(import); gc(full = TRUE, verbose = TRUE)
+  trips_catalog <- trips_catalog %>% bind_rows(trips)
+  calendar_dates_catalog <- calendar_dates_catalog %>% bind_rows(calendar_dates)
+}
+
+trips_catalog %>% write.csv(path = "~/Raw/trips_catalog.csv")
+calendar_dates_catalog %>%  write_csv(path = calendar_dates_catalog.csv)
+```
