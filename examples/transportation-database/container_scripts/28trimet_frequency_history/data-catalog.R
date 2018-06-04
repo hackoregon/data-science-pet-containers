@@ -1,6 +1,7 @@
 #! /usr/bin/env Rscript
 
 library(tidyverse)
+library(gtfsr)
 here <- setwd("~/Raw/trimet-gtfs-archives")
 zipfiles <- list.files(
   path = ".",
