@@ -1,22 +1,11 @@
----
-title: "Data Catalog"
-output: github_document
----
+#! /usr/bin/env Rscript
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-if (!require(gtfsr)) {
-  devtools::install_github("znmeb/gtfsr", force = TRUE)
-  library(gtfsr)
-}
 library(tidyverse)
-```
-
-```{r}
+here <- setwd("~/Raw/trimet-gtfs-archives")
 zipfiles <- list.files(
-  path = "/d/Sync/Hack_Oregon/trimet-gtfs-archives/",
-  pattern = ".zip",
-  full.names = TRUE)
+  path = ".",
+  pattern = ".zip"
+)
 calendar_dates_catalog <- trips_catalog <- tibble()
 
 for (zipfile in zipfiles) {
@@ -30,4 +19,3 @@ for (zipfile in zipfiles) {
 
 trips_catalog %>% write_csv(path = "~/Raw/trips_catalog.csv")
 calendar_dates_catalog %>%  write_csv(path = "~/Raw/calendar_dates_catalog.csv")
-```
