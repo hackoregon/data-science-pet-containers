@@ -27,10 +27,8 @@ CREATE TABLE biketown (
   duration_minutes double precision
 );
 \copy biketown from '~/Raw/cleaned_biketown.csv' with csv header
-ALTER TABLE biketown
-  ADD COLUMN id serial;
-ALTER TABLE biketown
-  ADD CONSTRAINT biketown_pkey PRIMARY KEY (id);
+ALTER TABLE biketown ADD COLUMN id serial;
+ALTER TABLE biketown ADD PRIMARY KEY (id);
 
 CREATE TABLE biketown_hubs(
   hub text,
@@ -38,14 +36,11 @@ CREATE TABLE biketown_hubs(
   latitude double precision
 );
 \copy biketown_hubs from '~/Raw/biketown_hubs.csv' with csv header
-ALTER TABLE biketown_hubs
-  ADD COLUMN geom_4326 geometry;
+ALTER TABLE biketown_hubs ADD COLUMN geom_4326 geometry;
 UPDATE biketown_hubs
   SET geom_4326 = ST_SetSRID(ST_MakePoint(longitude, latitude), 4326);
-ALTER TABLE biketown_hubs
-  ADD COLUMN id serial;
-ALTER TABLE biketown_hubs
-  ADD CONSTRAINT biketown_hubs_pkey PRIMARY KEY (id);
+ALTER TABLE biketown_hubs ADD COLUMN id serial;
+ALTER TABLE biketown_hubs ADD PRIMARY KEY (id);
 
 -- trip counts by origin and destination
 CREATE TABLE trip_counts AS
@@ -55,3 +50,4 @@ CREATE TABLE trip_counts AS
   GROUP BY start_hub, end_hub, start_equals_end
   ORDER BY trips DESC
 ;
+ALTER TABLE trip_counts ADD PRIMARY KEY (start_hub, end_hub);
