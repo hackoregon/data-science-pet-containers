@@ -21,10 +21,8 @@ CREATE TABLE origin_destination (
 );
 \copy origin_destination from '~/Raw/metro_origin_destination.csv' with csv header
 
-ALTER TABLE origin_destination
-  ADD COLUMN id serial;
-ALTER TABLE origin_destination
-  ADD CONSTRAINT origin_destination_pkey PRIMARY KEY (id);
+ALTER TABLE origin_destination ADD COLUMN id serial;
+ALTER TABLE origin_destination ADD PRIMARY KEY (id);
 
 DROP TABLE IF EXISTS or_xwalk;
 
@@ -76,5 +74,4 @@ CREATE TABLE or_xwalk (
 
 \copy or_xwalk from '~/Raw/or_xwalk.csv' with csv header
 
-ALTER TABLE or_xwalk
-  ADD CONSTRAINT or_xwalk_pkey PRIMARY KEY (tabblk2010);
+ALTER TABLE or_xwalk ADD PRIMARY KEY (tabblk2010);
