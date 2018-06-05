@@ -47,8 +47,8 @@ ALTER TABLE biketown_hubs
 ALTER TABLE biketown_hubs
   ADD CONSTRAINT biketown_hubs_pkey PRIMARY KEY (id);
 
--- materialized view - trip counts by origin and destination
-CREATE MATERIALIZED VIEW trip_counts AS
+-- trip counts by origin and destination
+CREATE TABLE trip_counts AS
   SELECT start_hub, end_hub, count(distance_miles) AS trips,
     start_hub = end_hub AS start_equals_end
   FROM biketown

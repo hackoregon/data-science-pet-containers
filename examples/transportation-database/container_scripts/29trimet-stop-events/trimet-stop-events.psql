@@ -40,7 +40,7 @@ ALTER TABLE trimet_stop_events
   ADD CONSTRAINT trimet_stop_events_pkey PRIMARY KEY (id);
 
 -- create the detail table for time of day analysis
-CREATE MATERIALIZED VIEW totals_ons_by_hour AS
+CREATE TABLE totals_ons_by_hour AS
   SELECT service_date, service_key,
     to_char(service_date, 'D') AS weekday,
     round(arrive_time / 3600.0, 1) AS hour_of_day,
