@@ -59,3 +59,5 @@ ORDER BY year, route_number, direction;
 
 ALTER TABLE annual_route_ridership ADD COLUMN id serial;
 ALTER TABLE annual_route_ridership ADD CONSTRAINT annual_route_ridership_pkey PRIMARY KEY (id);
+
+DROP TABLE passenger_census_raw;
