@@ -2,9 +2,7 @@ SET search_path TO trimet_gis, census_gis, public;
 CREATE MATERIALIZED VIEW route_stop_census_block_lookup
 AS
 SELECT rte, dir, rte_desc, dir_desc, type, stop_seq, stop_id, stop_name, jurisdic, zipcode, frequent, 
-       census_gis.tl_2017_41_tabblock10.geoid10,
-       census_gis.tl_2017_41_tabblock10.intptlat10,
-       census_gis.tl_2017_41_tabblock10.intptlon10
+       census_gis.tl_2017_41_tabblock10.geoid10
 FROM trimet_gis.tm_route_stops 
 INNER JOIN census_gis.tl_2017_41_tabblock10
 ON ST_Contains(
