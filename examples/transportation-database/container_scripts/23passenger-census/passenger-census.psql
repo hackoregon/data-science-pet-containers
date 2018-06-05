@@ -32,7 +32,7 @@ UPDATE passenger_census_raw
 CREATE TABLE passenger_census AS
 SELECT summary_begin_date, route_number, direction, service_key, stop_seq, 
   location_id, public_location_description, ons, offs, x_coord, y_coord, geom_4326, 
-  census_gis.tl_2017_41_tabblock10.geoid10
+  census_gis.tl_2017_41_tabblock10.geoid10 AS census_block
 FROM passenger_census.passenger_census_raw
 LEFT JOIN census_gis.tl_2017_41_tabblock10
 ON ST_Contains(
@@ -42,7 +42,7 @@ ALTER TABLE passenger_census OWNER TO "transportation-systems";
 
 -- primary key
 ALTER TABLE passenger_census ADD COLUMN id serial;
-ALTER TABLE passenger_census ADD CONSTRAINT passenger_census_pkey PRIMARY KEY (id);
+ALTER TABLE passenger_census ADD PRIMARY KEY (id);
 
 -- summary
 CREATE TABLE annual_route_ridership
@@ -60,6 +60,6 @@ ORDER BY year, route_number, direction;
 
 ALTER TABLE annual_route_ridership OWNER TO "transportation-systems";
 ALTER TABLE annual_route_ridership ADD COLUMN id serial;
-ALTER TABLE annual_route_ridership ADD CONSTRAINT annual_route_ridership_pkey PRIMARY KEY (id);
+ALTER TABLE annual_route_ridership ADD PRIMARY KEY (id);
 
 DROP TABLE passenger_census_raw;
