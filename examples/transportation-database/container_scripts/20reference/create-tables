@@ -58,8 +58,3 @@ do
   cd ..
 done
 popd
-
-echo "Creating the census block GIS lookup table"
-psql -U ${DBOWNER} -d ${PGDATABASE} -f gis_lookup.psql
-echo "Creating the TriMet route-stop lookup table"
-psql -U ${DBOWNER} -d ${PGDATABASE} -f route_stop_census_block_lookup.psql
