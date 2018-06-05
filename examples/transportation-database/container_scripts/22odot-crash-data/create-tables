@@ -32,6 +32,11 @@ pgcon <- get_postgresql_connection(PGDATABASE, DBOWNER)
 # create destination schema
 dummy <- DBI::dbSendStatement(
   pgcon,
+  "DROP SCHEMA IF EXISTS odot_crash_data CASCADE;"
+)
+DBI::dbClearResult(dummy)
+dummy <- DBI::dbSendStatement(
+  pgcon,
   "CREATE SCHEMA odot_crash_data;"
 )
 DBI::dbClearResult(dummy)
@@ -51,22 +56,34 @@ for (table_name in tables) {
   DBI::dbWriteTable(pgcon, tolower(table_name), work, overwrite = TRUE)
 }
 
+# add geometry
+dummy <- DBI::dbSendStatement(
+  pgcon,
+  "ALTER TABLE crash ADD COLUMN geom_point geometry;"
+)
+DBI::dbClearResult(dummy)
+dummy <- DBI::dbSendStatement(
+  pgcon,
+  "UPDATE crash SET geom_point = ST_MakePoint(longtd_dd, lat_dd);"
+)
+DBI::dbClearResult(dummy)
+
 # add primary keys
 dummy <- DBI::dbSendStatement(
   pgcon,
-  "ALTER TABLE crash ADD CONSTRAINT crash_pkey PRIMARY KEY (crash_id);"
+  "ALTER TABLE crash ADD PRIMARY KEY (crash_id);"
 )
 DBI::dbClearResult(dummy)
 
 dummy <- DBI::dbSendStatement(
   pgcon,
-  "ALTER TABLE partic ADD CONSTRAINT partic_pkey PRIMARY KEY (partic_id);"
+  "ALTER TABLE partic ADD PRIMARY KEY (partic_id);"
 )
 DBI::dbClearResult(dummy)
 
 dummy <- DBI::dbSendStatement(
   pgcon,
-  "ALTER TABLE vhcl ADD CONSTRAINT vhcl_pkey PRIMARY KEY (vhcl_id);"
+  "ALTER TABLE vhcl ADD PRIMARY KEY (vhcl_id);"
 )
 DBI::dbClearResult(dummy)
 
