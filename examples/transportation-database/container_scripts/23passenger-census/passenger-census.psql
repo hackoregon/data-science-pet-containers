@@ -38,6 +38,7 @@ LEFT JOIN census_gis.tl_2017_41_tabblock10
 ON ST_Contains(
   census_gis.tl_2017_41_tabblock10.wkb_geometry,
   ST_Transform(passenger_census_raw.geom_4326, 4269));
+ALTER TABLE passenger_census OWNER TO "transportation-systems";
 
 -- primary key
 ALTER TABLE passenger_census ADD COLUMN id serial;
@@ -57,6 +58,7 @@ FROM passenger_census.passenger_census
 GROUP BY year, route_number, direction, service_key
 ORDER BY year, route_number, direction;
 
+ALTER TABLE annual_route_ridership OWNER TO "transportation-systems";
 ALTER TABLE annual_route_ridership ADD COLUMN id serial;
 ALTER TABLE annual_route_ridership ADD CONSTRAINT annual_route_ridership_pkey PRIMARY KEY (id);
 
