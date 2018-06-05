@@ -20,7 +20,5 @@ ALTER TABLE safety_hotline_tickets ADD COLUMN geom_4326 geometry;
 UPDATE safety_hotline_tickets
   SET geom_4326 = ST_SetSRID(ST_MakePoint(longitude, latitude), 4326);
 
-ALTER TABLE safety_hotline_tickets
-  ADD COLUMN id serial;
-ALTER TABLE safety_hotline_tickets
-  ADD CONSTRAINT safety_hotline_tickets_pkey PRIMARY KEY (id);
+ALTER TABLE safety_hotline_tickets ADD COLUMN id serial;
+ALTER TABLE safety_hotline_tickets ADD PRIMARY KEY (id);
