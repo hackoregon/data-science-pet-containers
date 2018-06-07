@@ -94,9 +94,22 @@ workplaces <- SpatialPointsDataFrame(
 desire_lines <- od2line(flow, zones)
 ```
 
+### Load the polygon shapefile
+```{r}
+block_polygons <- 
+  read_sf("~/Raw/tl_2017_41_bg/tl_2017_41_bg.shp")  %>% filter(
+    COUNTYFP == "005" |
+      COUNTYFP == "051" |
+      COUNTYFP == "067"
+  )
+```
+
+### Plot
 ```{r}
 tmap_mode("view")
-qtm(desire_lines) + qtm(workplaces, symbols.size = "S000")
+qtm(desire_lines) + 
+  qtm(workplaces, symbols.size = "S000", symbols.col = "firebrick") + 
+  qtm(block_polygons)
 
 ```
 
