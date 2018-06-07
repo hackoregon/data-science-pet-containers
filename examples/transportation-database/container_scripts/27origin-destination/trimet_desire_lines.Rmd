@@ -8,26 +8,16 @@ bibliography: desire_lines.bib
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-if (!require(tidyverse)) {
-  install.packages("tidyverse")
-  library(tidyverse)
-}
-if (!require(stplanr)) {
-  install.packages("stplanr")
-  library(stplanr)
-}
-if (!require(sp)) {
-  install.packages("sp")
-  library(sp)
-}
+
+# install `lodes` from GitHub if needed
 if (!require(lodes)) {
-  devtools::install_github("hrbrmstr/lodes")
+  devtools::install_github("hrbrmstr/lodes", force = TRUE)
   library(lodes)
 }
-if (!require(tmap)) {
-  install.packages("tmap")
-  library(tmap)
-}
+library(tidyverse)
+library(stplanr)
+library(sp)
+library(tmap)
 ```
 ## Introduction
 As part of the Hack Oregon 2018 season, TriMet gave the Transportation Systems team a dataset summarizing ridership metrics by service stop, totaled over three-month quarters. This dataset covers March 2001 through November 2017, and includes breakdowns for weekday, Saturday and Sunday service.
@@ -55,23 +45,48 @@ or_xwalk <- or_xwalk %>% filter(
 )
 ```
 
-### Making the "zones" file
-The process `stplanr` uses to compute the desire lines has two inputs, the _flow_ and the _zones_ [@Lovelace2018a, vignette "Introducing stplanr"]. The `zones` data frame is a SpatialPointsDataFrame as defined by the `sp` package [@Pebesma2005, @Bivand2013]
-```{r}
-SpatialPointsDataFrame(
-  coords = select(or_xwalk, blklondd, blklatdd),
-    data = or_xwalk,
-    proj4string = CRS("+init=epsg:4269")) -> zones
-```
-
 ### Acquring the origin-destination files
 ```{r}
 or_od_main_JT00 <- tibble() 
 for (year in 2002:2015) {
-  or_od_main_JT00 <- or_od_main_JT00 %>% bind_rows(read_lodes(
-    "or", "od", "main", "JT00", year, download_dir = "~/Raw"
-  ))
+  or_od_main_JT00 <- or_od_main_JT00 %>% bind_rows(
+    read_lodes("or", "od", "main", "JT00", year, download_dir = "~/Raw") %>% 
+      mutate(year = year)
+  )
+  gc(full = TRUE, verbose = TRUE)
 }
+or_od_main_JT00$w_geocode <- as.character(or_od_main_JT00$w_geocode)
+or_od_main_JT00$h_geocode <- as.character(or_od_main_JT00$w_geocode)
+```
+
+### Filter down to the TriMet service area
+```{r}
+or_od_main_JT00 <- or_od_main_JT00 %>% 
+  semi_join(or_xwalk, by = c("w_geocode" = "tabblk2010")) %>% 
+  semi_join(or_xwalk, by = c("h_geocode" = "tabblk2010"))
+```
+
+## Computing the desire lines
+
+### Computing the flow
+```{r}
+flow <- or_od_main_JT00 %>% filter(year == 2015) %>% 
+  select(w_geocode, h_geocode, S000) %>% 
+  arrange(desc(S000)) %>% top_n(100, S000)
+```
+
+### Making the "zones" file
+The process `stplanr` uses to compute the desire lines has two inputs, the _flow_ and the _zones_ [@Lovelace2018a, vignette "Introducing stplanr"]. The `zones` data frame is a SpatialPointsDataFrame as defined by the `sp` package [@Pebesma2005, @Bivand2013]
+```{r}
+zones <- SpatialPointsDataFrame(
+  coords = select(or_xwalk, blklondd, blklatdd),
+    data = or_xwalk,
+    proj4string = CRS("+init=epsg:4269"))
+```
+
+### Make the desire lines
+```{r}
+desire_lines <- od2line2(flow, zones)
 ```
 
 ## Session info
