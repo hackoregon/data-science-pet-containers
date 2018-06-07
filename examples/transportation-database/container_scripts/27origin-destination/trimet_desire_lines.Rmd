@@ -1,0 +1,81 @@
+---
+title: "TriMet Service Area Desire Lines"
+author: "M. Edward (Ed) Borasky"
+date: "2018-06-06"
+output: github_document
+bibliography: desire_lines.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+if (!require(tidyverse)) {
+  install.packages("tidyverse")
+  library(tidyverse)
+}
+if (!require(stplanr)) {
+  install.packages("stplanr")
+  library(stplanr)
+}
+if (!require(sp)) {
+  install.packages("sp")
+  library(sp)
+}
+if (!require(lodes)) {
+  devtools::install_github("hrbrmstr/lodes")
+  library(lodes)
+}
+if (!require(tmap)) {
+  install.packages("tmap")
+  library(tmap)
+}
+```
+## Introduction
+As part of the Hack Oregon 2018 season, TriMet gave the Transportation Systems team a dataset summarizing ridership metrics by service stop, totaled over three-month quarters. This dataset covers March 2001 through November 2017, and includes breakdowns for weekday, Saturday and Sunday service.
+
+To provide context for the weekday service, which includes commuters, we analyzed another dataset, the US Census Bureau's Longitudinal Employer-Household Dynamics (LEHD) LEHD Origin-Destination Employment Statistics (LODES) data [@LODES2018]. This dataset covers the years 2002 through 2015.
+
+The LODES dataset provides job counts by the workers' home and work census blocks, where the blocks are defined by the 2010 decennial census. We use the `lodes` package {@Rudis2017] to acquire the LODES data and `stplanr` [Lovelace2018a] to compute the desire lines.
+
+## Acquiring the LODES data
+
+### Downloading the crosswalk file
+First, we download the "crosswalk" file for Oregon. This file contains the geographic information for the census blocks.
+```{r}
+or_xwalk <- read_xwalk("or", download_dir = "~/Raw")
+or_xwalk$tabblk2010 <- as.character(or_xwalk$tabblk2010) 
+```
+
+### Filtering down to the TriMet service area
+The TriMet service area is contained in three Oregon counties - Clackamas, Multnomah and Washington. So we filter the crosswalk table down to just those three counties.
+```{r}
+or_xwalk <- or_xwalk %>% filter(
+  ctyname == "Clackamas County, OR" |
+    ctyname == "Multnomah County, OR" |
+    ctyname == "Washington County, OR"
+)
+```
+
+### Making the "zones" file
+The process `stplanr` uses to compute the desire lines has two inputs, the _flow_ and the _zones_ [@Lovelace2018a, vignette "Introducing stplanr"]. The `zones` data frame is a SpatialPointsDataFrame as defined by the `sp` package [@Pebesma2005, @Bivand2013]
+```{r}
+SpatialPointsDataFrame(
+  coords = select(or_xwalk, blklondd, blklatdd),
+    data = or_xwalk,
+    proj4string = CRS("+init=epsg:4269")) -> zones
+```
+
+### Acquring the origin-destination files
+```{r}
+or_od_main_JT00 <- tibble() 
+for (year in 2002:2015) {
+  or_od_main_JT00 <- or_od_main_JT00 %>% bind_rows(read_lodes(
+    "or", "od", "main", "JT00", year, download_dir = "~/Raw"
+  ))
+}
+```
+
+## Session info
+```{r}
+devtools::session_info()
+```
+## References

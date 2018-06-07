@@ -24,3 +24,4 @@ install.packages(
   repos = "https://cran.rstudio.com/"
 )
 devtools::install_github("ropensci/gtfsr")
+devtools::install_github("hrbrmstr/lodes")
