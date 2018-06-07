@@ -4,6 +4,7 @@ author: "M. Edward (Ed) Borasky"
 date: "2018-06-06"
 output: github_document
 bibliography: desire_lines.bib
+always_allow_html: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -56,7 +57,7 @@ for (year in 2002:2015) {
   gc(full = TRUE, verbose = TRUE)
 }
 or_od_main_JT00$w_geocode <- as.character(or_od_main_JT00$w_geocode)
-or_od_main_JT00$h_geocode <- as.character(or_od_main_JT00$w_geocode)
+or_od_main_JT00$h_geocode <- as.character(or_od_main_JT00$h_geocode)
 ```
 
 ### Filter down to the TriMet service area
@@ -87,6 +88,8 @@ zones <- SpatialPointsDataFrame(
 ### Make the desire lines
 ```{r}
 desire_lines <- od2line(flow, zones)
+tmap_mode("view")
+qtm(desire_lines)
 ```
 
 ## Session info
