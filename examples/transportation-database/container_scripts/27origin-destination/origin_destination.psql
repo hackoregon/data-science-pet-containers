@@ -67,11 +67,16 @@ CREATE TABLE or_xwalk (
   milname text,
   stwib text,
   stwibname text,
-  blklatdd text,
-  blklondd text,
+  blklatdd double precision,
+  blklondd double precision,
   createdate date
 );
 
 \copy or_xwalk from '~/Raw/or_xwalk.csv' with csv header
+
+-- geometry of interior point
+ALTER TABLE or_xwalk ADD COLUMN geom_intpt_4269 geometry;
+UPDATE or_xwalk
+  SET geom_intpt_4269 = ST_SetSRID(ST_MakePoint(blklondd, blklatdd), 4269);
 
 ALTER TABLE or_xwalk ADD PRIMARY KEY (tabblk2010);
