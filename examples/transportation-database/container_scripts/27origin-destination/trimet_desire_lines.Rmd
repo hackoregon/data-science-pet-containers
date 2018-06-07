@@ -68,7 +68,7 @@ or_od_main_JT00_2015 <- or_od_main_JT00_2015 %>%
 ```{r}
 flow <- or_od_main_JT00_2015 %>%  
   select(w_geocode, h_geocode, S000) %>% 
-  arrange(desc(S000)) %>% top_n(200, S000)
+  arrange(desc(S000)) %>% top_n(100, S000)
 ```
 
 ### Making the "zones" file
@@ -80,14 +80,14 @@ zones <- SpatialPointsDataFrame(
     proj4string = CRS("+init=epsg:4269"))
 ```
 
-### Make the desire lines and home points
+### Make the desire lines and workplace points
 ```{r}
-home_points <- flow %>% select(h_geocode) %>% unique() %>% 
-  left_join(or_xwalk, by = c("h_geocode" = "tabblk2010")) %>% 
-  select(h_geocode, blklondd, blklatdd)
-home_points <- SpatialPointsDataFrame(
-  coords = select(home_points, blklondd, blklatdd),
-    data = select(home_points, h_geocode, blklondd, blklatdd),
+workplaces <- flow %>% select(w_geocode, S000) %>% unique() %>% 
+  left_join(or_xwalk, by = c("w_geocode" = "tabblk2010")) %>% 
+  select(w_geocode, blklondd, blklatdd, S000)
+workplaces <- SpatialPointsDataFrame(
+  coords = select(workplaces, blklondd, blklatdd),
+    data = select(workplaces, w_geocode, blklondd, blklatdd, S000),
     proj4string = CRS("+init=epsg:4269")
 )
   
@@ -96,7 +96,7 @@ desire_lines <- od2line(flow, zones)
 
 ```{r}
 tmap_mode("view")
-qtm(desire_lines)
+qtm(desire_lines) + qtm(workplaces, symbols.size = "S000")
 
 ```
 
