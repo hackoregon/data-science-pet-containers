@@ -17,9 +17,9 @@ then
   do
     echo "Downloading or_od_main_JT00_${year}.csv.gz"
     wget -nc -q ${WHERE}/or_od_main_JT00_${year}.csv.gz
+    echo "Decompressing or_od_main_JT00_${year}.csv.gz"
+    gzip -dc or_od_main_JT00_${year}.csv.gz > or_od_main_JT00_${year}.csv
   done
-  echo "Decompreessing the CSV files"
-  gunzip *.csv.gz
   wget -nc -q https://lehd.ces.census.gov/data/lodes/LODES7/or/lodes_or.sha256sum
 fi
 echo "Checking sha256 sums"
