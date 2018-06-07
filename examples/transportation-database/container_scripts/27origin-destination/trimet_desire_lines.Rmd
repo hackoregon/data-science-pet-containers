@@ -19,7 +19,9 @@ library(tidyverse)
 library(stplanr)
 library(sp)
 library(tmap)
+library(sf)
 ```
+
 ## Introduction
 As part of the Hack Oregon 2018 season, TriMet gave the Transportation Systems team a dataset summarizing ridership metrics by service stop, totaled over three-month quarters. This dataset covers March 2001 through November 2017, and includes breakdowns for weekday, Saturday and Sunday service.
 
@@ -67,8 +69,8 @@ or_od_main_JT00_2015 <- or_od_main_JT00_2015 %>%
 ### Computing the flow
 ```{r}
 flow <- or_od_main_JT00_2015 %>%  
-  select(w_geocode, h_geocode, S000) %>% 
-  arrange(desc(S000)) %>% top_n(100, S000)
+  select(w_geocode, h_geocode, Jobs = S000) %>% 
+  arrange(desc(Jobs)) %>% top_n(125, Jobs)
 ```
 
 ### Making the "zones" file
@@ -82,12 +84,15 @@ zones <- SpatialPointsDataFrame(
 
 ### Make the desire lines and workplace points
 ```{r}
-workplaces <- flow %>% select(w_geocode, S000) %>% unique() %>% 
+workplaces <- flow %>% 
+  group_by(w_geocode) %>%
+  summarize(Jobs = sum(Jobs)) %>% 
+  ungroup() %>% 
   left_join(or_xwalk, by = c("w_geocode" = "tabblk2010")) %>% 
-  select(w_geocode, blklondd, blklatdd, S000)
+  select(w_geocode, blklondd, blklatdd, Jobs)
 workplaces <- SpatialPointsDataFrame(
   coords = select(workplaces, blklondd, blklatdd),
-    data = select(workplaces, w_geocode, blklondd, blklatdd, S000),
+    data = select(workplaces, w_geocode, blklondd, blklatdd, Jobs),
     proj4string = CRS("+init=epsg:4269")
 )
   
@@ -108,7 +113,7 @@ block_polygons <-
 ```{r}
 tmap_mode("view")
 qtm(desire_lines) + 
-  qtm(workplaces, symbols.size = "S000", symbols.col = "firebrick") + 
+  qtm(workplaces, symbols.size = "Jobs", symbols.col = "black") + 
   qtm(block_polygons)
 
 ```
