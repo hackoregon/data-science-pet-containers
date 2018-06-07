@@ -11,10 +11,7 @@ always_allow_html: yes
 knitr::opts_chunk$set(echo = TRUE)
 
 # install `lodes` from GitHub if needed
-if (!require(lodes)) {
-  devtools::install_github("hrbrmstr/lodes", force = TRUE)
-  library(lodes)
-}
+library(lodes)
 library(tidyverse)
 library(stplanr)
 library(sp)
@@ -70,7 +67,7 @@ or_od_main_JT00_2015 <- or_od_main_JT00_2015 %>%
 ```{r}
 flow <- or_od_main_JT00_2015 %>%  
   select(w_geocode, h_geocode, Jobs = S000) %>% 
-  arrange(desc(Jobs)) %>% top_n(125, Jobs)
+  arrange(desc(Jobs)) %>% top_n(100, Jobs)
 ```
 
 ### Making the "zones" file
