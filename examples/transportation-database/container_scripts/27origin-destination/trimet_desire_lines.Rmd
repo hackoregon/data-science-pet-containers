@@ -80,13 +80,13 @@ The process `stplanr` uses to compute the desire lines has two inputs, the _flow
 ```{r}
 zones <- SpatialPointsDataFrame(
   coords = select(or_xwalk, blklondd, blklatdd),
-    data = or_xwalk,
+    data = select(or_xwalk, tabblk2010, blklondd, blklatdd),
     proj4string = CRS("+init=epsg:4269"))
 ```
 
 ### Make the desire lines
 ```{r}
-desire_lines <- od2line2(flow, zones)
+desire_lines <- od2line(flow, zones)
 ```
 
 ## Session info
