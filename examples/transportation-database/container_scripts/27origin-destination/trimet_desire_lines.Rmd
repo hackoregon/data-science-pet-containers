@@ -1,16 +1,15 @@
 ---
 title: "TriMet Service Area Desire Lines"
 author: "M. Edward (Ed) Borasky"
-date: "2018-06-06"
-output: github_document
+date: '2018-06-06'
+output:
+  html_document:
+    df_print: paged
 bibliography: desire_lines.bib
-always_allow_html: yes
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-
-# install `lodes` from GitHub if needed
 library(lodes)
 library(tidyverse)
 library(stplanr)
@@ -20,9 +19,9 @@ library(sf)
 ```
 
 ## Introduction
-As part of the Hack Oregon 2018 season, TriMet gave the Transportation Systems team a dataset summarizing ridership metrics by service stop, totaled over three-month quarters. This dataset covers March 2001 through November 2017, and includes breakdowns for weekday, Saturday and Sunday service.
+As part of the Hack Oregon 2018 season, TriMet gave the Transportation Systems team a dataset summarizing ridership metrics by service stop, totaled over three-month quarters. The ridership dataset covers March 2001 through November 2017, and includes breakdowns by weekday, Saturday and Sunday service.
 
-To provide context for the weekday service, which includes commuters, we analyzed another dataset, the US Census Bureau's Longitudinal Employer-Household Dynamics (LEHD) LEHD Origin-Destination Employment Statistics (LODES) data [@LODES2018]. This dataset covers the years 2002 through 2015.
+To provide context for the weekday service, which includes commuters, we analyzed another dataset, the US Census Bureau's Longitudinal Employer-Household Dynamics (LEHD) [@LEHD2018] LEHD Origin-Destination Employment Statistics (LODES) data [@LODES2018]. This dataset covers the years 2002 through 2015.
 
 The LODES dataset provides job counts by the workers' home and work census blocks, where the blocks are defined by the 2010 decennial census. We use the `lodes` package {@Rudis2017] to acquire the LODES data and `stplanr` [Lovelace2018a] to compute the desire lines.
 
@@ -30,62 +29,56 @@ The LODES dataset provides job counts by the workers' home and work census block
 
 ### Downloading the crosswalk file
 First, we download the "crosswalk" file for Oregon. This file contains the geographic information for the census blocks.
-```{r}
+```{r message=FALSE}
 or_xwalk <- read_xwalk("or", download_dir = "~/Raw")
 or_xwalk$tabblk2010 <- as.character(or_xwalk$tabblk2010) 
 ```
+### Downloading the origin-destination data
+```{r message=FALSE, warning=FALSE, error=FALSE, results='hide'}
+or_od_main_JT00 <- tibble()
+for (ixyear in 2002:2015) {
+  temp <-   read_lodes("or", "od", "main", "JT00", ixyear, download_dir = "~/Raw")
+  temp$w_geocode <- as.character(temp$w_geocode)
+  temp$h_geocode <- as.character(temp$h_geocode)
+  temp <- temp %>% mutate(year = ixyear) %>% select(-createdate)
+  or_od_main_JT00 <- or_od_main_JT00 %>% bind_rows(temp)
+  rm(temp); gc()
+}
+```
 
 ### Filtering down to the TriMet service area
-The TriMet service area is contained in three Oregon counties - Clackamas, Multnomah and Washington. So we filter the crosswalk table down to just those three counties.
+The TriMet service area is contained in three Oregon counties - Clackamas, Multnomah and Washington. So we define a function to filter in those three counties.
 ```{r}
-or_xwalk <- or_xwalk %>% filter(
-  ctyname == "Clackamas County, OR" |
-    ctyname == "Multnomah County, OR" |
-    ctyname == "Washington County, OR"
-)
+is_trimet_area <- function(census_fips_code) {
+  county_fips_code <- substr(census_fips_code, 1, 5)
+  
+  # Clackamas = "41005"
+  # Multnomah = "41051"
+  # Washington = "41067"
+  return(
+    county_fips_code == "41005" |
+      county_fips_code == "41051" |
+      county_fips_code == "41067"
+  )
+}
 ```
 
-### Acquring the origin-destination files
-```{r}
-or_od_main_JT00_2015 <- 
-  read_lodes("or", "od", "main", "JT00", 2015, download_dir = "~/Raw")
 
-or_od_main_JT00_2015$w_geocode <- as.character(or_od_main_JT00_2015$w_geocode)
-or_od_main_JT00_2015$h_geocode <- as.character(or_od_main_JT00_2015$h_geocode)
-```
-
-### Filter down to the TriMet service area
+## Aggregate and geotag the job counts
 ```{r}
-or_od_main_JT00_2015 <- or_od_main_JT00_2015 %>% 
-  semi_join(or_xwalk, by = c("w_geocode" = "tabblk2010")) %>% 
-  semi_join(or_xwalk, by = c("h_geocode" = "tabblk2010"))
-```
-
-### Aggregate the workplaces
-```{r}
-workplaces <- or_od_main_JT00_2015 %>% 
-  group_by(w_geocode) %>% summarize(Jobs = sum(S000)) %>% ungroup() %>% arrange(desc(Jobs)) %>% 
+or_workplaces <- or_od_main_JT00 %>% 
+  group_by(year, w_geocode) %>% 
+  summarize(jobs = sum(S000)) %>% ungroup() %>% arrange(year, desc(jobs)) %>% 
   left_join(or_xwalk, by = c("w_geocode" = "tabblk2010")) %>% 
-  select(w_geocode, blklondd, blklatdd, Jobs) %>% 
-  mutate(cumsum = cumsum(Jobs), cumfrac = cumsum / sum(Jobs))
-workplaces <- SpatialPointsDataFrame(
-  coords = select(workplaces, blklondd, blklatdd),
-    data = select(workplaces, w_geocode, blklondd, blklatdd, Jobs, cumsum, cumfrac),
+  select(year, w_geocode, blklondd, blklatdd, jobs) 
+or_workplaces <- SpatialPointsDataFrame(
+  coords = select(or_workplaces, blklondd, blklatdd),
+    data = select(or_workplaces, year, w_geocode, blklondd, blklatdd, jobs),
     proj4string = CRS("+init=epsg:4269")
 ) %>% st_as_sf()
-
 ```
 
-## Computing the desire lines
-
-### Computing the flow
-```{r}
-flow <- or_od_main_JT00_2015 %>%  
-  select(w_geocode, h_geocode, Jobs = S000) %>% 
-  arrange(desc(Jobs)) %>% top_n(100, Jobs)
-```
-
-### Making the "zones" file
+### Make the "zones" data frame
 The process `stplanr` uses to compute the desire lines has two inputs, the _flow_ and the _zones_ [@Lovelace2018a, vignette "Introducing stplanr"]. The `zones` data frame is a SpatialPointsDataFrame as defined by the `sp` package [@Pebesma2005, @Bivand2013]
 ```{r}
 zones <- SpatialPointsDataFrame(
@@ -94,30 +87,104 @@ zones <- SpatialPointsDataFrame(
     proj4string = CRS("+init=epsg:4269"))
 ```
 
-### Make the desire lines and workplace points
+
+## Computing the desire lines
+
+### Computing the flows
+```{r}
+top_metro_workplaces_2002 <- or_workplaces %>% filter(
+  is_trimet_area(w_geocode),
+  year == 2002
+) %>% arrange(desc(jobs)) %>% top_n(20, jobs)
+
+flow_metro_2002 <- or_od_main_JT00 %>% filter(year == 2002) %>% 
+  semi_join(top_metro_workplaces_2002, by = "w_geocode") %>% 
+  select(w_geocode, h_geocode, jobs = S000) %>% filter(jobs > 4)
+
+top_metro_workplaces_2015 <- or_workplaces %>% filter(
+  is_trimet_area(w_geocode),
+  year == 2015
+) %>% arrange(desc(jobs)) %>% top_n(20, jobs)
+
+flow_metro_2015 <- or_od_main_JT00 %>% filter(year == 2015) %>% 
+  semi_join(top_metro_workplaces_2015, by = "w_geocode") %>% 
+  select(w_geocode, h_geocode, jobs = S000) %>% filter(jobs > 4)
+```
+
+### Make the desire lines
 ```{r}
   
-desire_lines <- od2line(flow, zones)
+desire_lines_metro_2002 <- od2line(flow_metro_2002, zones)
+desire_lines_metro_2015 <- od2line(flow_metro_2015, zones)
 ```
 
-### Load the polygon shapefile
-```{r}
-block_polygons <- 
-  read_sf("~/Raw/tl_2017_41_bg/tl_2017_41_bg.shp")  %>% filter(
-    COUNTYFP == "005" |
-      COUNTYFP == "051" |
-      COUNTYFP == "067"
-  )
-```
-
-### Plot
+### Plot 2002
 ```{r}
 tmap_mode("view")
-qtm(desire_lines) + 
-  qtm(workplaces, symbols.size = "Jobs", symbols.col = "black") + 
-  qtm(block_polygons)
+qtm(
+  desire_lines_metro_2002, 
+  lines.lwd = "jobs", 
+  lines.scale = 5, 
+  lines.col = "firebrick"
+) + 
+  qtm(
+    top_metro_workplaces_2002, 
+    symbols.col = "jobs", 
+    symbols.size = "jobs", 
+    symbols.scale = 1)
+save_tmap(filename = "desire_lines_metro_2002.html")
+```
+
+### Plot 2015
+```{r}
+qtm(
+  desire_lines_metro_2015, 
+  lines.lwd = "jobs", 
+  lines.scale = 5, 
+  lines.col = "firebrick"
+) + 
+  qtm(
+    top_metro_workplaces_2015, 
+    symbols.col = "jobs", 
+    symbols.size = "jobs", 
+    symbols.scale = 1
+  )
+save_tmap(filename = "desire_lines_metro_2015.html")
 
 ```
+
+### City of Portland (minus OHSU) 2015
+```{r}
+portland_xwalk <- or_xwalk %>% filter(stplcname == "Portland city, OR")
+
+# The census block containing OHSU is so big (over 16,000 jobs) that it obscures
+# the other workplaces in Portland. So we filter it out.
+top_portland_workplaces_2015 <- or_workplaces %>% 
+  filter(year == 2015, jobs < 10000) %>% 
+  semi_join(portland_xwalk, by = c("w_geocode" = "tabblk2010")) %>% 
+  arrange(desc(jobs)) %>% top_n(20, jobs)
+
+flow_portland_2015 <- or_od_main_JT00 %>% filter(year == 2015) %>% 
+  semi_join(top_portland_workplaces_2015, by = "w_geocode") %>% 
+  select(w_geocode, h_geocode, jobs = S000) %>% filter(jobs > 4)
+
+desire_lines_portland_2015 <- od2line(flow_portland_2015, zones)
+
+qtm(
+  desire_lines_portland_2015, 
+  lines.lwd = "jobs", 
+  lines.scale = 5, 
+  lines.col = "firebrick"
+) + 
+  qtm(
+    top_portland_workplaces_2015, 
+    symbols.col = "jobs", 
+    symbols.size = "jobs", 
+    symbols.scale = 1
+  )
+save_tmap(filename = "desire_lines_portland_2015.html")
+```
+
 
 ## Session info
 ```{r}
