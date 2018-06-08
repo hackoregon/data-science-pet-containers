@@ -2,9 +2,7 @@
 title: "TriMet Service Area Desire Lines"
 author: "M. Edward (Ed) Borasky"
 date: '2018-06-06'
-output:
-  html_document:
-    df_print: paged
+output: html_notebook
 bibliography: desire_lines.bib
 ---
 
@@ -90,7 +88,7 @@ zones <- SpatialPointsDataFrame(
 
 ## Computing the desire lines
 
-### Computing the flows
+### Metro 2002
 ```{r}
 top_metro_workplaces_2002 <- or_workplaces %>% filter(
   is_trimet_area(w_geocode),
@@ -99,27 +97,11 @@ top_metro_workplaces_2002 <- or_workplaces %>% filter(
 
 flow_metro_2002 <- or_od_main_JT00 %>% filter(year == 2002) %>% 
   semi_join(top_metro_workplaces_2002, by = "w_geocode") %>% 
-  select(w_geocode, h_geocode, jobs = S000) %>% filter(jobs > 4)
+  select(w_geocode, h_geocode, jobs = S000) %>% 
+  arrange(desc(jobs)) %>% top_n(50, jobs)
 
-top_metro_workplaces_2015 <- or_workplaces %>% filter(
-  is_trimet_area(w_geocode),
-  year == 2015
-) %>% arrange(desc(jobs)) %>% top_n(20, jobs)
-
-flow_metro_2015 <- or_od_main_JT00 %>% filter(year == 2015) %>% 
-  semi_join(top_metro_workplaces_2015, by = "w_geocode") %>% 
-  select(w_geocode, h_geocode, jobs = S000) %>% filter(jobs > 4)
-```
-
-### Make the desire lines
-```{r}
-  
 desire_lines_metro_2002 <- od2line(flow_metro_2002, zones)
-desire_lines_metro_2015 <- od2line(flow_metro_2015, zones)
-```
 
-### Plot 2002
-```{r}
 tmap_mode("view")
 qtm(
   desire_lines_metro_2002, 
@@ -135,8 +117,20 @@ qtm(
 save_tmap(filename = "desire_lines_metro_2002.html")
 ```
 
-### Plot 2015
+## Metro 2015
 ```{r}
+top_metro_workplaces_2015 <- or_workplaces %>% filter(
+  is_trimet_area(w_geocode),
+  year == 2015
+) %>% arrange(desc(jobs)) %>% top_n(20, jobs)
+
+flow_metro_2015 <- or_od_main_JT00 %>% filter(year == 2015) %>% 
+  semi_join(top_metro_workplaces_2015, by = "w_geocode") %>% 
+  select(w_geocode, h_geocode, jobs = S000) %>% 
+  arrange(desc(jobs)) %>% top_n(50, jobs)
+
+desire_lines_metro_2015 <- od2line(flow_metro_2015, zones)
+
 qtm(
   desire_lines_metro_2015, 
   lines.lwd = "jobs", 
@@ -160,13 +154,14 @@ portland_xwalk <- or_xwalk %>% filter(stplcname == "Portland city, OR")
 # The census block containing OHSU is so big (over 16,000 jobs) that it obscures
 # the other workplaces in Portland. So we filter it out.
 top_portland_workplaces_2015 <- or_workplaces %>% 
-  filter(year == 2015, jobs < 10000) %>% 
+  filter(year == 2015, jobs < 15000) %>% 
   semi_join(portland_xwalk, by = c("w_geocode" = "tabblk2010")) %>% 
   arrange(desc(jobs)) %>% top_n(20, jobs)
 
 flow_portland_2015 <- or_od_main_JT00 %>% filter(year == 2015) %>% 
   semi_join(top_portland_workplaces_2015, by = "w_geocode") %>% 
-  select(w_geocode, h_geocode, jobs = S000) %>% filter(jobs > 4)
+  select(w_geocode, h_geocode, jobs = S000) %>% 
+  arrange(desc(jobs)) %>% top_n(20, jobs)
 
 desire_lines_portland_2015 <- od2line(flow_portland_2015, zones)
 
