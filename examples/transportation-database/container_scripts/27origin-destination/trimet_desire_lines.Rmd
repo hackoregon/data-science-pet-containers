@@ -44,40 +44,31 @@ for (ixyear in 2002:2015) {
 }
 ```
 
-### Filtering down to the TriMet service area
-The TriMet service area is contained in three Oregon counties - Clackamas, Multnomah and Washington. So we define a function to filter in those three counties.
+### Workplace analysis
+First, we want to look at the geographical properties of workplaces. To do this, we create an aggregated geotagged data frame [@Pebesma2005, @Bivand2013]
 ```{r}
-is_trimet_area <- function(census_fips_code) {
-  county_fips_code <- substr(census_fips_code, 1, 5)
-  
-  # Clackamas = "41005"
-  # Multnomah = "41051"
-  # Washington = "41067"
-  return(
-    county_fips_code == "41005" |
-      county_fips_code == "41051" |
-      county_fips_code == "41067"
-  )
-}
-```
-
-
-## Aggregate and geotag the job counts
-```{r}
+## sum all the job counts by year and workplace census block (w_geocode)
 or_workplaces <- or_od_main_JT00 %>% 
-  group_by(year, w_geocode) %>% 
-  summarize(jobs = sum(S000)) %>% ungroup() %>% arrange(year, desc(jobs)) %>% 
+  group_by(year, w_geocode) %>%
+  summarize_at(.funs = sum, .vars = vars(S000:SI03)) %>% 
   left_join(or_xwalk, by = c("w_geocode" = "tabblk2010")) %>% 
-  select(year, w_geocode, blklondd, blklatdd, jobs) 
+  select(
+    year, w_geocode, S000:SI03,
+    cbsaname, stplcname,
+    blklondd, blklatdd
+  ) %>% 
+  ungroup()
+
+## convert to a "simple features" data frame
 or_workplaces <- SpatialPointsDataFrame(
-  coords = select(or_workplaces, blklondd, blklatdd),
-    data = select(or_workplaces, year, w_geocode, blklondd, blklatdd, jobs),
-    proj4string = CRS("+init=epsg:4269")
+  coords = or_workplaces %>% select(blklondd, blklatdd),
+  data = or_workplaces,
+  proj4string = CRS("+init=epsg:4269")
 ) %>% st_as_sf()
 ```
 
 ### Make the "zones" data frame
-The process `stplanr` uses to compute the desire lines has two inputs, the _flow_ and the _zones_ [@Lovelace2018a, vignette "Introducing stplanr"]. The `zones` data frame is a SpatialPointsDataFrame as defined by the `sp` package [@Pebesma2005, @Bivand2013]
+The process `stplanr` uses to compute the desire lines has two inputs, the _flow_ and the _zones_ [@Lovelace2018a, vignette "Introducing stplanr"]. The `zones` data frame is a SpatialPointsDataFrame as defined by the `sp` package [@Pebesma2005]
 ```{r}
 zones <- SpatialPointsDataFrame(
   coords = select(or_xwalk, blklondd, blklatdd),
@@ -85,101 +76,113 @@ zones <- SpatialPointsDataFrame(
     proj4string = CRS("+init=epsg:4269"))
 ```
 
-
 ## Computing the desire lines
 
 ### Metro 2002
+We start by isolating the top 20 Oregon workplaces in the Portland metro area. We use `S000` (all jobs) as the jobs count.
 ```{r}
 top_metro_workplaces_2002 <- or_workplaces %>% filter(
-  is_trimet_area(w_geocode),
+  cbsaname == "Portland-Vancouver-Hillsboro, OR-WA",
   year == 2002
-) %>% arrange(desc(jobs)) %>% top_n(20, jobs)
+) %>% 
+  mutate(jobs = S000) %>% arrange(desc(jobs)) %>% top_n(20, jobs)
+```
 
-flow_metro_2002 <- or_od_main_JT00 %>% filter(year == 2002) %>% 
+Now compute the flow - number of commuters into the workplaces by home and work census blocks. To keep things simple we only take the top 50 entries.
+```{r}
+flow_metro_2002 <- or_od_main_JT00 %>% filter(
+  year == 2002,
+  w_geocode != h_geocode) %>% 
   semi_join(top_metro_workplaces_2002, by = "w_geocode") %>% 
   select(w_geocode, h_geocode, jobs = S000) %>% 
   arrange(desc(jobs)) %>% top_n(50, jobs)
+```
 
+Compute the desire lines with `od2line` from `stplanr` [@Lovelace2018a].
+```{r}
 desire_lines_metro_2002 <- od2line(flow_metro_2002, zones)
+```
 
+Make an interactive map with `qtm` from `tmap` [@Tennekes2018]. This is a Leaflet map. The "+" and "-" buttons can be used to zoom in and out and you can drag the map around with the mouse. You can select the basemap and whether to display the desire lines and workplace circles with the "layers" button below the "-". If you click on one of the circles you'll see the number of jobs.
+
+Note that the bulk of the top 20 workplaces / desire lines are on the west side. The three leftmost points are Intel in Hillsboro. The cluster of three points in Beaverton are Nike and Tektronix. The dark orange (9728 jobs) circle near the Willamette is the OHSU complex, and the circle near the 217 - 26 interchange (4368 jobs) is Providence St. Vincent's. 
+```{r}
 tmap_mode("view")
 qtm(
   desire_lines_metro_2002, 
   lines.lwd = "jobs", 
   lines.scale = 5, 
   lines.col = "firebrick"
-) + 
-  qtm(
-    top_metro_workplaces_2002, 
-    symbols.col = "jobs", 
-    symbols.size = "jobs", 
-    symbols.scale = 1)
+) + qtm(
+  top_metro_workplaces_2002, symbols.scale = 1, symbols.col = "jobs")
 save_tmap(filename = "desire_lines_metro_2002.html")
 ```
 
-## Metro 2015
+### Metro 2015
+Let's repeat the process for the last year in our dataset, 2015.
 ```{r}
 top_metro_workplaces_2015 <- or_workplaces %>% filter(
-  is_trimet_area(w_geocode),
+  cbsaname == "Portland-Vancouver-Hillsboro, OR-WA",
   year == 2015
-) %>% arrange(desc(jobs)) %>% top_n(20, jobs)
+) %>% 
+  mutate(jobs = S000) %>% arrange(desc(jobs)) %>% top_n(20, jobs)
 
-flow_metro_2015 <- or_od_main_JT00 %>% filter(year == 2015) %>% 
+flow_metro_2015 <- or_od_main_JT00 %>% filter(
+  year == 2015,
+  w_geocode != h_geocode) %>% 
   semi_join(top_metro_workplaces_2015, by = "w_geocode") %>% 
   select(w_geocode, h_geocode, jobs = S000) %>% 
   arrange(desc(jobs)) %>% top_n(50, jobs)
 
 desire_lines_metro_2015 <- od2line(flow_metro_2015, zones)
+```
 
+The dominance of the west side in 2015 is even more pronounced.
+```{r}
+tmap_mode("view")
 qtm(
   desire_lines_metro_2015, 
   lines.lwd = "jobs", 
   lines.scale = 5, 
   lines.col = "firebrick"
-) + 
-  qtm(
-    top_metro_workplaces_2015, 
-    symbols.col = "jobs", 
-    symbols.size = "jobs", 
-    symbols.scale = 1
-  )
+) + qtm(
+  top_metro_workplaces_2015, symbols.scale = 1, symbols.col = "jobs")
 save_tmap(filename = "desire_lines_metro_2015.html")
 
 ```
 
 ### City of Portland (minus OHSU) 2015
+To see the flows with the city of Portland, we have to remove the census block containing the OHSU complex, `410510058002014`.
 ```{r}
-portland_xwalk <- or_xwalk %>% filter(stplcname == "Portland city, OR")
+top_portland_workplaces_2015 <- or_workplaces %>% filter(
+  stplcname == "Portland city, OR",
+  year == 2015,
+  w_geocode != "410510058002014"
+) %>% 
+  mutate(jobs = S000) %>% arrange(desc(jobs)) %>% top_n(20, jobs)
 
-# The census block containing OHSU is so big (over 16,000 jobs) that it obscures
-# the other workplaces in Portland. So we filter it out.
-top_portland_workplaces_2015 <- or_workplaces %>% 
-  filter(year == 2015, jobs < 15000) %>% 
-  semi_join(portland_xwalk, by = c("w_geocode" = "tabblk2010")) %>% 
-  arrange(desc(jobs)) %>% top_n(20, jobs)
-
-flow_portland_2015 <- or_od_main_JT00 %>% filter(year == 2015) %>% 
+flow_portland_2015 <- or_od_main_JT00 %>% filter(
+  year == 2015,
+  w_geocode != h_geocode) %>% 
   semi_join(top_portland_workplaces_2015, by = "w_geocode") %>% 
   select(w_geocode, h_geocode, jobs = S000) %>% 
-  arrange(desc(jobs)) %>% top_n(20, jobs)
+  arrange(desc(jobs)) %>% top_n(50, jobs)
 
 desire_lines_portland_2015 <- od2line(flow_portland_2015, zones)
+```
 
+With the focus on the city of Portland with OHSU removed, you can see the diversity of the commuters' transit needs.
+```{r}
+tmap_mode("view")
 qtm(
   desire_lines_portland_2015, 
   lines.lwd = "jobs", 
   lines.scale = 5, 
   lines.col = "firebrick"
-) + 
-  qtm(
-    top_portland_workplaces_2015, 
-    symbols.col = "jobs", 
-    symbols.size = "jobs", 
-    symbols.scale = 1
-  )
+) + qtm(
+  top_portland_workplaces_2015, symbols.scale = 1, symbols.col = "jobs")
 save_tmap(filename = "desire_lines_portland_2015.html")
 ```
-
 
 ## Session info
 ```{r}
