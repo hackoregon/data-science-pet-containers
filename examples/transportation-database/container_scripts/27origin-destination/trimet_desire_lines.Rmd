@@ -149,11 +149,11 @@ tmap_mode("view")
 qtm(
   metro_rac %>% 
     filter(year == 2015) %>% 
-    mutate(Workers = C000) %>% 
-    arrange(desc(Workers)) %>% 
-    top_n(50, Workers),
-  symbols.col = "Workers",
-  symbols.size = "Workers"
+    mutate(Employees = C000) %>% 
+    arrange(desc(Employees)) %>% 
+    top_n(50, Employees),
+  symbols.col = "Employees",
+  symbols.size = "Employees"
 )
 save_tmap(filename = "metro_rac_2015.html")
 
@@ -202,11 +202,11 @@ tmap_mode("view")
 qtm(
   metro_wac %>% 
     filter(year == 2015) %>% 
-    mutate(Workers = C000) %>% 
-    arrange(desc(Workers)) %>% 
-    top_n(50, Workers),
-  symbols.col = "Workers",
-  symbols.size = "Workers"
+    mutate(Employees = C000) %>% 
+    arrange(desc(Employees)) %>% 
+    top_n(50, Employees),
+  symbols.col = "Employees",
+  symbols.size = "Employees"
 )
 save_tmap(filename = "metro_wac_2015.html")
 
@@ -217,36 +217,44 @@ save_tmap(filename = "metro_wac_2015.html")
 ### Flow by residence
 To compute the desire lines, `stplanr` needs two datasets - the `flow` and the `zones`. The zones don't change - they're simply a table of the spatial locations of the census blocks, and we've already computed them.
 
-But there are two ways we can look at the flows - from the point of view of the workers or the point of view of the employers. Let's look at the desire lines from the workers' point of view 2015 first.
+But there are two ways we can look at the flows - from the point of view of the workers or the point of view of the employers. Let's look at the desire lines from the workers' point of view for 2015 first.
 
 The top residence areas:
 ```{r}
-residence_2015 <- metro_rac %>% 
-  filter(year == 2015) %>% 
-  mutate(Workers = C000) %>% 
-  select(-C000:-CS02) %>% 
-  arrange(desc(Workers)) %>% 
-  top_n(20, Workers)
+top_residences <- function(rac, ixyear, rows) {
+  residences <- rac %>% 
+    filter(year == ixyear) %>% 
+    mutate(Workers = C000) %>% 
+    select(-C000:-CS02) %>% 
+    arrange(desc(Workers)) %>% 
+    top_n(rows, Workers)
+}
+residences_2015 <- top_residences(metro_rac, 2015, 20)
 ```
 
 And the flows - we remove flows where the home and work geocode are the same:
 ```{r}
-residence_flow_2015 <- metro_od %>% 
+residence_flow <- function(od, ixyear, top_residences, rows) {
+  flow <- od %>% 
   filter(
-    year == 2015,
+    year == ixyear,
     w_geocode != h_geocode
   ) %>% 
-  semi_join(residence_2015, by = "h_geocode") %>% 
-  select(w_geocode, h_geocode, Workers = S000) %>% 
-  arrange(desc(Workers)) %>% 
-  top_n(100, Workers)
+  semi_join(top_residences, by = "h_geocode") %>% 
+  select(w_geocode, h_geocode, year, Jobs = S000) %>% 
+  arrange(desc(Jobs)) %>% 
+  top_n(rows, Jobs)
+}
+residence_flow_2015 <- residence_flow(metro_od, 2015, residences_2015, 100)
 
 ```
 
 ### Compute the desire lines
 ```{r}
-residence_desire_lines_2015 <-
-  od2line(flow = residence_flow_2015, zones = zones)
+desire_lines <- function(flow, zones) {
+  lines <- od2line(flow, zones) %>% as("sf")
+}
+residence_desire_lines_2015 <- desire_lines(residence_flow_2015, zones)
 
 ```
 
@@ -256,12 +264,12 @@ This map shows the desire lines from the point of view of the workers - where sh
 tmap_mode("view")
 qtm(
   residence_desire_lines_2015, 
-  lines.lwd = "Workers", 
+  lines.lwd = "Jobs", 
   lines.scale = 10, 
   lines.col = "firebrick"
 ) + 
 qtm(
-  residence_2015, 
+  residences_2015, 
   symbols.scale = 2, 
   symbols.size = "Workers", 
   symbols.col = "Workers"
@@ -272,24 +280,32 @@ save_tmap(filename = "residence_desire_lines_2015.html")
 
 ### Flow by workplace
 ```{r}
-workplace_2015 <- metro_wac %>% 
-  filter(year == 2015) %>% 
-  mutate(Workers = C000) %>% 
-  select(-C000:-CFS05) %>% 
-  arrange(desc(Workers)) %>% 
-  top_n(20, Workers)
-workplace_flow_2015 <- metro_od %>% 
+top_workplaces <- function(wac, ixyear, rows) {
+  workplaces <- wac %>% 
+    filter(year == ixyear) %>% 
+    mutate(Employees = C000) %>% 
+    select(-C000:-CFS05) %>% 
+    arrange(desc(Employees)) %>% 
+    top_n(rows, Employees)
+}
+
+workplace_flow <- function(od, ixyear, top_workplaces, rows) {
+  flow <- od %>% 
   filter(
-    year == 2015,
+    year == ixyear,
     w_geocode != h_geocode
   ) %>% 
-  semi_join(workplace_2015, by = "w_geocode") %>% 
-  select(w_geocode, h_geocode, Workers = S000) %>% 
-  arrange(desc(Workers)) %>% 
-  top_n(100, Workers)
+  semi_join(top_workplaces, by = "w_geocode") %>% 
+  select(w_geocode, h_geocode, year, Jobs = S000) %>% 
+  arrange(desc(Jobs)) %>% 
+  top_n(rows, Jobs)
+}
 
-workplace_desire_lines_2015 <-
-  od2line(flow = workplace_flow_2015, zones = zones)
+
+workplaces_2015 <- top_workplaces(metro_wac, 2015, 20)
+workplace_flow_2015 <- workplace_flow(metro_od, 2015, workplaces_2015, 100)
+workplace_desire_lines_2015 <- desire_lines(workplace_flow_2015, zones)
+
 ```
 
 This map shows the desire lines from the point of view of the employers - where should the service stops and routes be to deliver workers to their jobs. Desire lines flow into workplace census blocks.
@@ -297,18 +313,43 @@ This map shows the desire lines from the point of view of the employers - where 
 tmap_mode("view")
 qtm(
   workplace_desire_lines_2015, 
-  lines.lwd = "Workers", 
+  lines.lwd = "Jobs", 
   lines.scale = 10, 
   lines.col = "firebrick"
 ) + 
 qtm(
-  workplace_2015, 
+  workplaces_2015, 
   symbols.scale = 2, 
-  symbols.size = "Workers", 
-  symbols.col = "Workers"
+  symbols.size = "Employees", 
+  symbols.col = "Employees"
 )
 save_tmap(filename = "workplace_desire_lines_2015.html")
 
+```
+
+## Tabulate desire lines for all years
+To provide a convenient dataset for future plotting, we create two `sf` data frames with the two variants of desire lines.
+```{r}
+ixyear <- 2002
+top_r <- top_residences(metro_rac, ixyear, 20)
+top_w <- top_workplaces(metro_wac, ixyear, 20)
+flow_r <- residence_flow(metro_od, ixyear, top_r, 100)
+flow_w <- workplace_flow(metro_od, ixyear, top_w, 100)
+desire_r <- desire_lines(flow_r, zones)
+desire_w <- desire_lines(flow_w, zones)
+residence_desire_lines <- desire_r
+workplace_desire_lines <- desire_w
+
+for (ixyear in 2003:2015) {
+  top_r <- top_residences(metro_rac, ixyear, 20)
+  top_w <- top_workplaces(metro_wac, ixyear, 20)
+  flow_r <- residence_flow(metro_od, ixyear, top_r, 100)
+  flow_w <- workplace_flow(metro_od, ixyear, top_w, 100)
+  desire_r <- desire_lines(flow_r, zones)
+  desire_w <- desire_lines(flow_w, zones)
+  residence_desire_lines <- residence_desire_lines %>% rbind(desire_r)
+  workplace_desire_lines <- workplace_desire_lines %>% rbind(desire_w)
+}
 ```
 
 ## Session info
