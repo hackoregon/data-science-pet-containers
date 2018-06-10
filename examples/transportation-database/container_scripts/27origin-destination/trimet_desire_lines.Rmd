@@ -349,6 +349,49 @@ for (ixyear in 2003:2015) {
 }
 ```
 
+### Rerun 2015 for the plots
+```{r}
+ixyear <- 2015
+top_r <- top_residences(metro_rac, ixyear, npoints)
+flow_r <- residence_flow(metro_od, ixyear, top_r, nlines)
+desire_r <- desire_lines(flow_r, zones)
+
+tmap_mode("view")
+qtm(
+  desire_r, 
+  lines.lwd = "Jobs", 
+  lines.scale = 10, 
+  lines.col = "firebrick"
+) + 
+qtm(
+  top_r, 
+  symbols.scale = 2, 
+  symbols.size = "Workers", 
+  symbols.col = "Workers"
+)
+save_tmap(filename = "residence_desire_lines_2015.html")
+
+top_w <- top_workplaces(metro_wac, ixyear, npoints)
+flow_w <- workplace_flow(metro_od, ixyear, top_w, nlines)
+desire_w <- desire_lines(flow_w, zones)
+
+tmap_mode("view")
+qtm(
+  desire_w, 
+  lines.lwd = "Jobs", 
+  lines.scale = 10, 
+  lines.col = "firebrick"
+) + 
+qtm(
+  top_w, 
+  symbols.scale = 2, 
+  symbols.size = "Employees", 
+  symbols.col = "Employees"
+)
+save_tmap(filename = "workplace_desire_lines_2015.html")
+
+```
+
 ## Session info
 ```{r}
 devtools::session_info()
