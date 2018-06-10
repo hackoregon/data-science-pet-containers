@@ -45,10 +45,15 @@ gc()
 ### Make the "zones" SpatialPointsDataFrame
 The process `stplanr` uses to compute the desire lines has two inputs, the _flow_ and the _zones_ [@Lovelace2018a, vignette "Introducing stplanr"]. The `zones` data frame is a SpatialPointsDataFrame, as defined by the `sp` package [@Pebesma2005], that provides the coordinates of the interior points of the census blocks.
 ```{r}
+to_4326 <- function(sp_object) {
+  spTransform(sp_object, CRSobj = CRS("+init=epsg:4326"))
+}
+
 zones <- SpatialPointsDataFrame(
   coords = select(xwalk, blklondd, blklatdd),
     data = select(xwalk, tabblk2010, blklondd, blklatdd),
     proj4string = CRS("+init=epsg:4269"))
+zones <- to_4326(zones)
 
 ```
 
@@ -60,7 +65,7 @@ xwalk_4_joins <- xwalk %>%
 ```
 
 ### Download the origin-destination data
-The origin-destination data is split into two datasets, "main" and "aux". "Main" covers jobs where the workers live in the state; "aux" covers jobs where the workers live outside the state. Because some Oregon workers live in Washington and vice versa, we acquire both "main" and "aux" for Oregon and Washington.
+The origin-destination data is split into two segments, "main" and "aux". "Main" covers jobs where the workers live in the state; "aux" covers jobs where the workers live outside the state. Because some Oregon workers live in Washington and vice versa, we acquire both "main" and "aux" for Oregon and Washington.
 ```{r message=FALSE, warning=FALSE, error=FALSE, results='hide'}
 # define a fucntion to fetch a file
 fetch_od <- function(state, segment, ixyear, xwalk_4_joins) {
@@ -117,8 +122,11 @@ for (ixyear in 2002:2015) {
 
 metro_rac <- SpatialPointsDataFrame(
   coords = select(metro_rac, blklondd, blklatdd),
-  data = metro_rac
+  data = metro_rac,
+  proj4string = CRS("+init=epsg:4269")
 )
+gc()
+metro_rac <- to_4326(metro_rac)
 gc()
 metro_rac <- metro_rac %>% as("sf")
 gc()
@@ -168,8 +176,11 @@ for (ixyear in 2002:2015) {
 
 metro_wac <- SpatialPointsDataFrame(
   coords = select(metro_wac, blklondd, blklatdd),
-  data = metro_wac
+  data = metro_wac,
+  proj4string = CRS("+init=epsg:4269")
 )
+gc()
+metro_wac <- to_4326(metro_wac)
 gc()
 metro_wac <- metro_wac %>% as("sf")
 gc()
@@ -192,6 +203,7 @@ qtm(
 save_tmap(filename = "metro_wac_2015.html")
 
 ```
+
 ## Computing the desire lines
 
 ### Flow by residence
@@ -231,7 +243,7 @@ residence_desire_lines_2015 <-
 ```
 
 ### Plot the desire lines
-This map shows the desire lines from the point of view of the workers - where should the service stops and routes be to get them to work and back home.
+This map shows the desire lines from the point of view of the workers - where should the service stops and routes be to get them to work and back home. The desire lines flow outward from residence census blocks.
 ```{r}
 tmap_mode("view")
 qtm(
@@ -240,7 +252,12 @@ qtm(
   lines.scale = 10, 
   lines.col = "firebrick"
 ) + 
-qtm(residence_2015, symbols.scale = 2, symbols.size = "Workers", symbols.col = "Workers")
+qtm(
+  residence_2015, 
+  symbols.scale = 2, 
+  symbols.size = "Workers", 
+  symbols.col = "Workers"
+)
 save_tmap(filename = "residence_desire_lines_2015.html")
 
 ```
@@ -267,7 +284,7 @@ workplace_desire_lines_2015 <-
   od2line(flow = workplace_flow_2015, zones = zones)
 ```
 
-This map shows the desire lines from the point of view of the employers - where should the service stops and routes be to deliver workers to their jobs.
+This map shows the desire lines from the point of view of the employers - where should the service stops and routes be to deliver workers to their jobs. Desire lines flow into workplace census blocks.
 ```{r}
 tmap_mode("view")
 qtm(
@@ -276,100 +293,14 @@ qtm(
   lines.scale = 10, 
   lines.col = "firebrick"
 ) + 
-qtm(workplace_2015, symbols.scale = 2, symbols.size = "Workers", symbols.col = "Workers")
+qtm(
+  workplace_2015, 
+  symbols.scale = 2, 
+  symbols.size = "Workers", 
+  symbols.col = "Workers"
+)
 save_tmap(filename = "workplace_desire_lines_2015.html")
 
-```
-
-  semi_join(top_metro_workplaces_2002, by = "w_geocode") %>% 
-  select(w_geocode, h_geocode, jobs = S000) %>% 
-  arrange(desc(jobs)) %>% top_n(20, jobs)
-```
-
-Compute the desire lines with `od2line` from `stplanr` [@Lovelace2018a].
-```{r}
-desire_lines_metro_2002 <- od2line(flow_metro_2002, zones)
-```
-
-```{r}
-tmap_mode("view")
-qtm(
-  desire_lines_metro_2002, 
-  lines.lwd = "jobs", 
-  lines.scale = 10, 
-  lines.col = "firebrick"
-) + 
-qtm(top_metro_workplaces_2002, symbols.scale = 2, symbols.size = "jobs", symbols.col = "jobs") +
-qtm(top_metro_residences_2002, symbols.scale = 2, symbols.size = "workers", symbols.col = "darkgreen")
-save_tmap(filename = "desire_lines_metro_2002.html")
-```
-
-### Metro 2015
-Let's repeat the process for the last year in our dataset, 2015.
-```{r}
-top_metro_workplaces_2015 <- metro_workplaces %>% 
-  filter(year == 2015) %>% 
-  mutate(jobs = S000) %>% arrange(desc(jobs)) %>% top_n(15, jobs)
-
-top_metro_residences_2015 <- metro_workers %>% 
-  filter(year == 2015) %>% 
-  mutate(workers = S000) %>% arrange(desc(workers)) %>% top_n(15, workers)
-
-flow_metro_2015 <- metro_od %>% filter(
-  year == 2015,
-  w_geocode != h_geocode) %>% 
-  semi_join(top_metro_workplaces_2015, by = "w_geocode") %>% 
-  select(w_geocode, h_geocode, jobs = S000) %>% 
-  arrange(desc(jobs)) %>% top_n(20, jobs)
-
-desire_lines_metro_2015 <- od2line(flow_metro_2015, zones)
-```
-
-The dominance of the west side in 2015 is even more pronounced. And the census block containing the OHSU complex is the dominant workplace in the region, with over 15,000 jobs! Our next map will focus on the city of Portland and remove OHSU.
-```{r}
-tmap_mode("view")
-qtm(
-  desire_lines_metro_2015, 
-  lines.lwd = "jobs", 
-  lines.scale = 5, 
-  lines.col = "firebrick"
-) + 
-qtm(top_metro_workplaces_2015, symbols.scale = 2, symbols.size = "jobs", symbols.col = "jobs") +
-qtm(top_metro_residences_2015, symbols.scale = 2, symbols.size = "workers", symbols.col = "darkgreen")
-save_tmap(filename = "desire_lines_metro_2015.html")
-
-```
-
-### City of Portland (minus OHSU) 2015
-To see the flows with the city of Portland, we have to remove the census block containing the OHSU complex, `410510058002014`.
-```{r}
-top_portland_workplaces_2015 <- portland_workplaces %>% 
-  filter(year == 2015,
-  w_geocode != "410510058002014") %>% 
-  mutate(jobs = S000) %>% arrange(desc(jobs)) %>% top_n(15, jobs)
-
-flow_portland_2015 <- metro_od %>% filter(
-  year == 2015,
-  w_geocode != h_geocode) %>% 
-  semi_join(top_portland_workplaces_2015, by = "w_geocode") %>% 
-  select(w_geocode, h_geocode, jobs = S000) %>% 
-  arrange(desc(jobs)) %>% top_n(20, jobs)
-
-desire_lines_portland_2015 <- od2line(flow_portland_2015, zones)
-```
-
-With the focus on the city of Portland with OHSU removed, you can see the diversity of the commuters' transit needs.
-```{r}
-tmap_mode("view")
-qtm(
-  desire_lines_portland_2015, 
-  lines.lwd = "jobs", 
-  lines.scale = 5, 
-  lines.col = "firebrick"
-) + 
-qtm(top_portland_workplaces_2015, symbols.scale = 2, symbols.size = "jobs", symbols.col = "jobs") +
-qtm(top_metro_residences_2015, symbols.scale = 2, symbols.size = "workers", symbols.col = "darkgreen")
-save_tmap(filename = "desire_lines_portland_2015.html")
 ```
 
 ## Session info
