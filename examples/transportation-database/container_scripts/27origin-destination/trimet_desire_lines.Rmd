@@ -1,7 +1,7 @@
 ---
 title: "TriMet Service Area Desire Lines"
 author: "M. Edward (Ed) Borasky"
-date: '2018-06-06'
+date: '2018-06-09'
 output: html_notebook
 bibliography: desire_lines.bib
 ---
@@ -330,21 +330,23 @@ save_tmap(filename = "workplace_desire_lines_2015.html")
 ## Tabulate desire lines for all years
 To provide a convenient dataset for future plotting, we create two `sf` data frames with the two variants of desire lines.
 ```{r}
+npoints <- 20
+nlines <- 100
 ixyear <- 2002
-top_r <- top_residences(metro_rac, ixyear, 20)
-top_w <- top_workplaces(metro_wac, ixyear, 20)
-flow_r <- residence_flow(metro_od, ixyear, top_r, 100)
-flow_w <- workplace_flow(metro_od, ixyear, top_w, 100)
+top_r <- top_residences(metro_rac, ixyear, npoints)
+top_w <- top_workplaces(metro_wac, ixyear, npoints)
+flow_r <- residence_flow(metro_od, ixyear, top_r, nlines)
+flow_w <- workplace_flow(metro_od, ixyear, top_w, nlines)
 desire_r <- desire_lines(flow_r, zones)
 desire_w <- desire_lines(flow_w, zones)
 residence_desire_lines <- desire_r
 workplace_desire_lines <- desire_w
 
 for (ixyear in 2003:2015) {
-  top_r <- top_residences(metro_rac, ixyear, 20)
-  top_w <- top_workplaces(metro_wac, ixyear, 20)
-  flow_r <- residence_flow(metro_od, ixyear, top_r, 100)
-  flow_w <- workplace_flow(metro_od, ixyear, top_w, 100)
+  top_r <- top_residences(metro_rac, ixyear, npoints)
+  top_w <- top_workplaces(metro_wac, ixyear, npoints)
+  flow_r <- residence_flow(metro_od, ixyear, top_r, nlines)
+  flow_w <- workplace_flow(metro_od, ixyear, top_w, nlines)
   desire_r <- desire_lines(flow_r, zones)
   desire_w <- desire_lines(flow_w, zones)
   residence_desire_lines <- residence_desire_lines %>% rbind(desire_r)
