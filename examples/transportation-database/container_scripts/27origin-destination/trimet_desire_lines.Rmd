@@ -2,7 +2,9 @@
 title: "TriMet Service Area Desire Lines"
 author: "M. Edward (Ed) Borasky"
 date: '2018-06-09'
-output: html_notebook
+output:
+  html_document:
+    df_print: paged
 bibliography: desire_lines.bib
 ---
 
@@ -153,7 +155,8 @@ qtm(
     arrange(desc(Employees)) %>% 
     top_n(50, Employees),
   symbols.col = "Employees",
-  symbols.size = "Employees"
+  symbols.size = "Employees",
+  title = "Year = 2015"
 )
 save_tmap(filename = "metro_rac_2015.html")
 
@@ -196,7 +199,7 @@ gc()
 ```
 
 ## Plot the workplace map
-This map shows the dominance of the West Side for jobs. The large circle near the Willamette is the OHSU complex on Marquam Hill. On the MAX Blue Line, the two circles in Hillsboro and Orenco are Intel, the 9,205-worker circle in Beaverton is Nike, and the 4,611-worker circle near the Sunset Highway - 217 interchange is the St. Vincent's complex.
+This map shows the dominance of the West Side for jobs. The large circle near the Willamette is the OHSU complex on Marquam Hill. On the MAX Blue Line, the two circles in Hillsboro and Orenco are Intel, the 9,205-employee circle in Beaverton is Nike, and the 4,611-employee circle near the Sunset Highway - 217 interchange is the St. Vincent's complex.
 ```{r}
 tmap_mode("view")
 qtm(
@@ -206,7 +209,8 @@ qtm(
     arrange(desc(Employees)) %>% 
     top_n(50, Employees),
   symbols.col = "Employees",
-  symbols.size = "Employees"
+  symbols.size = "Employees",
+  title = "Year = 2015"
 )
 save_tmap(filename = "metro_wac_2015.html")
 
@@ -296,7 +300,8 @@ qtm(
   desire_r, 
   lines.lwd = "Jobs", 
   lines.scale = 10, 
-  lines.col = "firebrick"
+  lines.col = "firebrick",
+  title = paste("Year =", ixyear)
 ) + 
 qtm(
   top_r, 
@@ -318,7 +323,8 @@ qtm(
   desire_w, 
   lines.lwd = "Jobs", 
   lines.scale = 10, 
-  lines.col = "firebrick"
+  lines.col = "firebrick",
+  title = paste("Year =", ixyear)
 ) + 
 qtm(
   top_w, 
@@ -361,7 +367,8 @@ qtm(
   desire_r, 
   lines.lwd = "Jobs", 
   lines.scale = 10, 
-  lines.col = "firebrick"
+  lines.col = "firebrick",
+  title = paste("Year =", ixyear)
 ) + 
 qtm(
   top_r, 
@@ -371,6 +378,9 @@ qtm(
 )
 save_tmap(filename = "residence_desire_lines_2015.html")
 
+```
+
+```{r}
 top_w <- top_workplaces(metro_wac, ixyear, npoints)
 flow_w <- workplace_flow(metro_od, ixyear, top_w, nlines)
 desire_w <- desire_lines(flow_w, zones)
@@ -380,7 +390,8 @@ qtm(
   desire_w, 
   lines.lwd = "Jobs", 
   lines.scale = 10, 
-  lines.col = "firebrick"
+  lines.col = "firebrick",
+  title = paste("Year =", ixyear)
 ) + 
 qtm(
   top_w, 
