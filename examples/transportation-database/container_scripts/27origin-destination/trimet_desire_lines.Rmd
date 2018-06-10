@@ -18,16 +18,21 @@ library(sf)
 ```
 
 ## Introduction
+
+### About the data
 As part of the Hack Oregon 2018 season, TriMet gave the Transportation Systems team a dataset summarizing ridership metrics by service stop, totaled over three-month quarters. The ridership dataset covers March 2001 through November 2017, and includes breakdowns by weekday, Saturday and Sunday service.
 
 To provide context for the weekday service, which includes commuters, we analyzed another dataset, the US Census Bureau's Longitudinal Employer-Household Dynamics (LEHD) [@LEHD2018] LEHD Origin-Destination Employment Statistics (LODES) data [@LODES2018a]. This dataset covers the years 2002 through 2015.
 
-The LODES dataset provides job counts by the workers' home and work census blocks, where the blocks are defined by the 2010 decennial census [@LODES2018b]. We use the `lodes` package {@Rudis2017] to acquire the LODES data and `stplanr` [@Lovelace2018a] to compute the desire lines.
+The LODES dataset provides job counts by the workers' home and work census blocks, where the blocks are defined by the 2010 decennial census [@LODES2018b]. 
+
+### About the software
+We use the `lodes` package [@Rudis2017] to acquire the LODES data, `stplanr` [@Lovelace2018a] to compute the desire lines, `tmap` [@Tennekes2018] to generate the interactive maps, both `sp` [@Pebesma2005] and `sf` [@Bivand2013] for spatial processing, and the `tidyverse` [@Wickham2017] for data wrangling.
 
 ## Acquiring the LODES data
 
 ### Download the crosswalk files
-First, we download the "crosswalk" files for Oregon and Washington. These files contain the geographic information for the census blocks. We filter in only the Portland - Vancouver - Hillsboro CBSA.
+First, we download the "crosswalk" files for Oregon and Washington. These files contain the geographic information for the census blocks. We filter down to only the Portland - Vancouver - Hillsboro core-based statistical area (CBSA).
 ```{r message=FALSE}
 xwalk <- bind_rows(
   read_xwalk("or", download_dir = "~/Raw/LODES") %>% 
@@ -44,6 +49,8 @@ gc()
 
 ### Make the "zones" SpatialPointsDataFrame
 The process `stplanr` uses to compute the desire lines has two inputs, the _flow_ and the _zones_ [@Lovelace2018a, vignette "Introducing stplanr"]. The `zones` data frame is a SpatialPointsDataFrame, as defined by the `sp` package [@Pebesma2005], that provides the coordinates of the interior points of the census blocks.
+
+Note that the Census Bureau uses the coordinate reference system (CRS) EPSG:4269, but our tools require EPSG:4326. So we re-project to EPSG:4326.
 ```{r}
 to_4326 <- function(sp_object) {
   spTransform(sp_object, CRSobj = CRS("+init=epsg:4326"))
@@ -58,6 +65,7 @@ zones <- to_4326(zones)
 ```
 
 ### Make the `xwalk_4_joins` data frame
+The `xwalk` data frame contains numerous fields we won't be using, so we filter down to just the ones we need, creating the `xwalk_4_joins` data frame.
 ```{r}
 xwalk_4_joins <- xwalk %>% 
   select(tabblk2010, cbsaname, stplcname, blklatdd, blklondd)
@@ -67,18 +75,18 @@ xwalk_4_joins <- xwalk %>%
 ### Download the origin-destination data
 The origin-destination data is split into two segments, "main" and "aux". "Main" covers jobs where the workers live in the state; "aux" covers jobs where the workers live outside the state. Because some Oregon workers live in Washington and vice versa, we acquire both "main" and "aux" for Oregon and Washington.
 ```{r message=FALSE, warning=FALSE, error=FALSE, results='hide'}
-# define a fucntion to fetch a file
+# define a function to fetch a file
 fetch_od <- function(state, segment, ixyear, xwalk_4_joins) {
   temp <-read_lodes(
     state, "od", segment, "JT00", ixyear, download_dir = "~/Raw/LODES")
   temp$w_geocode <- as.character(temp$w_geocode)
   temp$h_geocode <- as.character(temp$h_geocode)
+  temp <- temp %>% select(-createdate)
+  temp <- temp %>% mutate(year = ixyear)
   temp <- temp %>% 
     semi_join(xwalk_4_joins, by = c("w_geocode" = "tabblk2010"))
   temp <- temp %>% 
     semi_join(xwalk_4_joins, by = c("h_geocode" = "tabblk2010")) 
-  temp <- temp %>% mutate(year = ixyear)
-  temp <- temp  %>% select(-createdate)
   gc()
   return(temp)
 }
@@ -134,7 +142,7 @@ gc()
 ```
 
 ### Plot top 50 residence areas
-We make interactive maps with `qtm` from `tmap` [@Tennekes2018]. This is a Leaflet map. The "+" and "-" buttons can be used to zoom in and out and you can drag the map around with the mouse. You can select the basemap and whether to display plotted features with the "layers" button below the "-". If you click on one of the circles you'll see the number of workers.
+We make interactive maps with `qtm` from `tmap` [@Tennekes2018]. This is a Leaflet map. The "+" and "-" buttons can be used to zoom in and out and you can drag the map around with the mouse to center it before zooming in. You can select the basemap and whether to display plotted features with the "layers" button below the "-". If you click on one of the circles you'll see the number of workers.
 
 ```{r}
 tmap_mode("view")
@@ -209,7 +217,7 @@ save_tmap(filename = "metro_wac_2015.html")
 ### Flow by residence
 To compute the desire lines, `stplanr` needs two datasets - the `flow` and the `zones`. The zones don't change - they're simply a table of the spatial locations of the census blocks, and we've already computed them.
 
-But there are two ways we can look at the flows - from residence to workplace or the other way around. Let's look at the desire lines for residence to workplace for 2015 first.
+But there are two ways we can look at the flows - from the point of view of the workers or the point of view of the employers. Let's look at the desire lines from the workers' point of view 2015 first.
 
 The top residence areas:
 ```{r}
@@ -221,7 +229,7 @@ residence_2015 <- metro_rac %>%
   top_n(20, Workers)
 ```
 
-And the flows. We remove flows where the home and work geocode are the same.
+And the flows - we remove flows where the home and work geocode are the same:
 ```{r}
 residence_flow_2015 <- metro_od %>% 
   filter(
@@ -267,7 +275,7 @@ save_tmap(filename = "residence_desire_lines_2015.html")
 workplace_2015 <- metro_wac %>% 
   filter(year == 2015) %>% 
   mutate(Workers = C000) %>% 
-  select(-C000:-CSF05) %>% 
+  select(-C000:-CFS05) %>% 
   arrange(desc(Workers)) %>% 
   top_n(20, Workers)
 workplace_flow_2015 <- metro_od %>% 
