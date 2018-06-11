@@ -74,6 +74,7 @@ ALTER TABLE or_census_block_polygons ADD COLUMN geom_polygon_4326 geometry;
 UPDATE or_census_block_polygons
   SET geom_polygon_4326 = ST_Transform(wkb_geometry, 4326);
 ALTER TABLE or_census_block_polygons DROP COLUMN wkb_geometry;
+ALTER TABLE or_census_block_polygons ADD PRIMARY KEY (census_block);
 
 CREATE TABLE wa_census_block_polygons
 AS
@@ -82,3 +83,4 @@ ALTER TABLE wa_census_block_polygons ADD COLUMN geom_polygon_4326 geometry;
 UPDATE wa_census_block_polygons
   SET geom_polygon_4326 = ST_Transform(wkb_geometry, 4326);
 ALTER TABLE wa_census_block_polygons DROP COLUMN wkb_geometry;
+ALTER TABLE wa_census_block_polygons ADD PRIMARY KEY (census_block);
