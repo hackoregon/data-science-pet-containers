@@ -42,7 +42,7 @@ done
 echo "Importing TIGER/Line® shapefiles"
 schema=census_gis
 for zipfile in \
-  https://www2.census.gov/geo/tiger/TIGER2017/TABBLOCK/tl_2017_41_tabblock10.zip
+  https://www2.census.gov/geo/tiger/TIGER2017/TABBLOCK/tl_2017_41_tabblock10.zip \
   https://www2.census.gov/geo/tiger/TIGER2017/TABBLOCK/tl_2017_53_tabblock10.zip
 do
   echo "Downloading ${zipfile}"
