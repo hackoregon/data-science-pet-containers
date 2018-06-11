@@ -7,5 +7,5 @@ export PGDATABASE=transportation-systems-main
 ./download-raw.bash
 ./tidy-origin-destination.R
 
-echo "Importing origin_destination.csv"
+echo "Importing origin_destination tables"
 psql -U ${DBOWNER} -d ${PGDATABASE} -f "origin_destination.psql"
