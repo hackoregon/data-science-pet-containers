@@ -128,7 +128,7 @@ CREATE TABLE workplace_area_characteristics (
   year integer
 );
 \copy workplace_area_characteristics from '~/Raw/LODES/workplace_area_characteristics.csv' with csv header
-ALTER TABLE workplace_area_characteristics ADD PRIMARY KEY (w_geocode);
+ALTER TABLE workplace_area_characteristics ADD PRIMARY KEY (w_geocode, year);
 
 CREATE TABLE residence_area_characteristics (
   h_geocode text,
@@ -176,4 +176,4 @@ CREATE TABLE residence_area_characteristics (
   year integer
 );
 \copy residence_area_characteristics from '~/Raw/LODES/residence_area_characteristics.csv' with csv header
-ALTER TABLE residence_area_characteristics ADD PRIMARY KEY (h_geocode);
+ALTER TABLE residence_area_characteristics ADD PRIMARY KEY (h_geocode, year);
