@@ -63,3 +63,22 @@ ALTER TABLE annual_route_ridership ADD COLUMN id serial;
 ALTER TABLE annual_route_ridership ADD PRIMARY KEY (id);
 
 DROP TABLE passenger_census_raw;
+
+-- census block polygons
+CREATE TABLE or_census_block_polygons
+AS
+  SELECT * FROM census_gis.tl_2017_41_tabblock10;
+
+-- transform to SRID 4326
+ALTER TABLE or_census_block_polygons ADD COLUMN geom_polygon_4326 geometry;
+UPDATE or_census_block_polygons
+  SET geom_polygon_4326 = ST_Transform(wkb_geometry, 4326);
+ALTER TABLE or_census_block_polygons DROP COLUMN wkb_geometry;
+
+CREATE TABLE wa_census_block_polygons
+AS
+  SELECT * FROM census_gis.tl_2017_53_tabblock10;
+ALTER TABLE wa_census_block_polygons ADD COLUMN geom_polygon_4326 geometry;
+UPDATE wa_census_block_polygons
+  SET geom_polygon_4326 = ST_Transform(wkb_geometry, 4326);
+ALTER TABLE wa_census_block_polygons DROP COLUMN wkb_geometry;
