@@ -17,8 +17,7 @@ for dataset in \
   23passenger-census \
   24safety-hotline \
   25biketown \
-  26multnomah_county_permits \
-  27origin-destination
+  26multnomah_county_permits
 do
   pushd ${dataset}
   nice -10 ./create-tables
