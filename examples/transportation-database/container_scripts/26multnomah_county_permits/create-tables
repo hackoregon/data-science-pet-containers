@@ -1,0 +1,114 @@
+#! /usr/bin/env Rscript
+
+library(readxl)
+library(snakecase)
+library(tidyverse)
+library(DBI)
+
+# point to the raw data files
+current <- "~/Raw/multcoperm/Transportation_Current_ROW_Permits.xlsx"
+archived <- "~/Raw/multcoperm/Transportation_Archived_ROW_Permits.xlsx"
+
+# Database definitions
+DBOWNER <- "transportation-systems"
+PGDATABASE <- "transportation-systems-main"
+SCHEMA <- "multnomah_county_permits"
+
+# we read all the data as text
+# this function converts an Excel date read as text to an R date value
+as_date_excel <- function(excel_date) {
+  as.Date(as.numeric(excel_date), origin = "1899-12-30")
+}
+
+# read data as all text
+archived_permits_raw <- read_excel(archived, col_types = "text")
+
+# convert the string "NULL" to a character NA
+archived_permits <- apply(
+  archived_permits_raw,
+  c(1, 2),
+  sub, pattern = "NULL", replacement = NA_character_) %>%
+  as_tibble()
+
+# database-friendly column names
+colnames(archived_permits) <- to_snake_case(colnames(archived_permits))
+
+# convert the dates, reveling in the miracle of snake case
+archived_permits <- archived_permits %>%
+  mutate_at(.vars = vars(ends_with("_date")), .funs = as_date_excel)
+
+# do the same for current permits
+current_permits_raw <- read_excel(current, col_types = "text")
+current_permits <- apply(
+  current_permits_raw,
+  c(1, 2),
+  sub, pattern = "NULL", replacement = NA_character_) %>%
+  as_tibble()
+colnames(current_permits) <- to_snake_case(colnames(current_permits))
+current_permits <- current_permits %>%
+  mutate_at(.vars = vars(ends_with("_date")), .funs = as_date_excel)
+
+# extract the coordinates from the current permits
+current_permits <- current_permits %>% mutate(
+  longitude = as.double(sub("^.*,", "", lat_lng)),
+  latitude = as.double(sub(",.*$", "", lat_lng))
+)
+
+# connect to the database
+pgcon <- dbConnect(
+  drv = RPostgres::Postgres(),
+  dbname = PGDATABASE,
+  user = DBOWNER
+)
+
+# create destination schema
+dbExecute(
+  pgcon,
+  "DROP SCHEMA IF EXISTS multnomah_county_permits CASCADE;"
+)
+dbExecute(
+  pgcon,
+  "CREATE SCHEMA multnomah_county_permits;"
+)
+dbExecute(
+  pgcon,
+  "SET search_path TO multnomah_county_permits, public;"
+)
+
+dbWriteTable(pgcon, "archived_permits", archived_permits)
+dbExecute(
+  pgcon,
+  'ALTER TABLE archived_permits OWNER TO "transportation-systems";'
+)
+dbWriteTable(pgcon, "current_permits", current_permits)
+dbExecute(
+  pgcon,
+  'ALTER TABLE current_permits OWNER TO "transportation-systems";'
+)
+
+# add a geometry column to current_permits
+dbExecute(
+  pgcon,
+  "ALTER TABLE current_permits ADD COLUMN geom_point geometry;"
+)
+dbExecute(
+  pgcon,
+  "UPDATE current_permits SET geom_point = ST_SetSRID(ST_MakePoint(longitude, latitude), 4326);"
+)
+
+# add primary keys
+dbExecute(
+  pgcon,
+  "ALTER TABLE archived_permits ADD COLUMN pkey serial;"
+)
+dbExecute(
+  pgcon,
+  "ALTER TABLE archived_permits ADD PRIMARY KEY (pkey);"
+)
+dbExecute(
+  pgcon,
+  "ALTER TABLE current_permits ADD PRIMARY KEY (permit_id);"
+)
+
+# disconnect
+dbDisconnect(pgcon)

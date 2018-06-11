@@ -15,6 +15,11 @@ for (i in 1:nrow(month_table)) {
   trimet_stop_events <- load_csv(month_table$input_file[i])
   gc(full = TRUE, verbose = TRUE)
 
+  cat("\nSelecting routes 4, 14 and 73\n")
+  trimet_stop_events <- trimet_stop_events %>%
+    routes_4_14_73()
+  gc(full = TRUE, verbose = TRUE)
+
   cat("\nRemoving unwanted rows\n")
   trimet_stop_events <- trimet_stop_events %>%
     filter_unwanted_rows()
