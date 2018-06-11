@@ -17,6 +17,7 @@ for dataset in \
   23passenger-census \
   24safety-hotline \
   25biketown \
+  26multnomah_county_permits \
   27origin-destination
 do
   pushd ${dataset}
