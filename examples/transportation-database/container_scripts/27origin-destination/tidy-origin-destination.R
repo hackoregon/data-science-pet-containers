@@ -69,7 +69,8 @@ for (ixyear in 2002:2015) {
   }
 }
 
-colnames(workplace_area_characteristics) <- tolower(workplace_area_characteristics)
+colnames(workplace_area_characteristics) <-
+  tolower(colnames(workplace_area_characteristics))
 workplace_area_characteristics %>%
   write_csv("~/Raw/LODES/workplace_area_characteristics.csv")
 
@@ -95,6 +96,7 @@ for (ixyear in 2002:2015) {
   }
 }
 
-colnames(residence_area_characteristics) <- tolower(residence_area_characteristics)
+colnames(residence_area_characteristics) <-
+  tolower(colnames(residence_area_characteristics))
 residence_area_characteristics %>%
   write_csv("~/Raw/LODES/residence_area_characteristics.csv")
