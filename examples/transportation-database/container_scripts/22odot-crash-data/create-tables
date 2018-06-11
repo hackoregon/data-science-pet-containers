@@ -64,7 +64,7 @@ dummy <- DBI::dbSendStatement(
 DBI::dbClearResult(dummy)
 dummy <- DBI::dbSendStatement(
   pgcon,
-  "UPDATE crash SET geom_point = ST_MakePoint(longtd_dd, lat_dd);"
+  "UPDATE crash SET geom_point = ST_SetSRID(ST_MakePoint(longtd_dd, lat_dd), 4326);"
 )
 DBI::dbClearResult(dummy)
 
