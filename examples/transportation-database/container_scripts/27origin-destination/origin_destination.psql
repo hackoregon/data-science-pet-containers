@@ -4,29 +4,9 @@ DROP SCHEMA IF EXISTS origin_destination CASCADE;
 CREATE SCHEMA origin_destination;
 SET search_path TO origin_destination, public;
 
-CREATE TABLE origin_destination (
-  year integer,
-  w_geocode text,
-  h_geocode text,
-  s000 integer,
-  sa01 integer,
-  sa02 integer,
-  sa03 integer,
-  se01 integer,
-  se02 integer,
-  se03 integer,
-  si01 integer,
-  si02 integer,
-  si03 integer
-);
-\copy origin_destination from '~/Raw/metro_origin_destination.csv' with csv header
+DROP TABLE IF EXISTS xwalk;
 
-ALTER TABLE origin_destination ADD COLUMN id serial;
-ALTER TABLE origin_destination ADD PRIMARY KEY (id);
-
-DROP TABLE IF EXISTS or_xwalk;
-
-CREATE TABLE or_xwalk (
+CREATE TABLE xwalk (
   tabblk2010 text,
   st text,
   stusps text,
@@ -72,11 +52,22 @@ CREATE TABLE or_xwalk (
   createdate date
 );
 
-\copy or_xwalk from '~/Raw/or_xwalk.csv' with csv header
+\copy xwalk from '~/Raw/LODES/xwalk.csv' with csv header
 
 -- geometry of interior point
-ALTER TABLE or_xwalk ADD COLUMN geom_intpt_4269 geometry;
-UPDATE or_xwalk
-  SET geom_intpt_4269 = ST_SetSRID(ST_MakePoint(blklondd, blklatdd), 4269);
+ALTER TABLE xwalk ADD COLUMN geom_intpt_4326 geometry;
+UPDATE xwalk
+  SET geom_intpt_4326 = ST_Transform(ST_SetSRID(ST_MakePoint(blklondd, blklatdd), 4269), 4326);
 
-ALTER TABLE or_xwalk ADD PRIMARY KEY (tabblk2010);
+ALTER TABLE xwalk ADD PRIMARY KEY (tabblk2010);
+
+CREATE TABLE origin_destination (
+  w_geocode text,
+  h_geocode text,
+  commuters integer,
+  year integer
+);
+\copy origin_destination from '~/Raw/LODES/origin_destination.csv' with csv header
+
+ALTER TABLE origin_destination ADD COLUMN id serial;
+ALTER TABLE origin_destination ADD PRIMARY KEY (id);
