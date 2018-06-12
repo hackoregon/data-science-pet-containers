@@ -28,7 +28,9 @@ CREATE TABLE trimet_stop_events (
   mileage_there double precision,
   left_there integer,
   travel_miles double precision,
-  travel_seconds integer
+  travel_seconds integer,
+  x_coordinate double precision,
+  y_coordinate double precision
 );
 \copy trimet_stop_events from '~/Raw/m2017_09_trimet_stop_events.csv' with csv header
 \copy trimet_stop_events from '~/Raw/m2017_10_trimet_stop_events.csv' with csv header
@@ -36,10 +38,11 @@ CREATE TABLE trimet_stop_events (
 \copy trimet_stop_events from '~/Raw/m2018_04_trimet_stop_events.csv' with csv header
 \copy trimet_stop_events from '~/Raw/m2018_05_trimet_stop_events.csv' with csv header
 
-ALTER TABLE trimet_stop_events
-  ADD COLUMN id serial;
-ALTER TABLE trimet_stop_events
-  ADD CONSTRAINT trimet_stop_events_pkey PRIMARY KEY (id);
+ALTER TABLE trimet_stop_events ADD COLUMN geom_point_4326 geometry;
+UPDATE trimet_stop_events
+  SET geom_point_4326 = ST_Transform(ST_SetSRID(ST_MakePoint(x_coordinate, y_coordinate), 2913), 4326);
+ALTER TABLE trimet_stop_events ADD COLUMN id serial;
+ALTER TABLE trimet_stop_events ADD PRIMARY KEY (id);
 
 -- create the detail table for time of day analysis
 CREATE TABLE totals_ons_by_hour AS
