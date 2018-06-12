@@ -1,0 +1,134 @@
+ogc_fid,rte,dir,rte_desc,dir_desc,type,stop_seq,stop_id,stop_name,jurisdic,zipcode,frequent
+5505,4,0,4-Division/Fessenden,To Gresham Transit Center,BUS,4400,1375,SE Division & 12th,Portland,97202,True
+5506,4,0,4-Division/Fessenden,To Gresham Transit Center,BUS,4450,1419,SE Division & 17th,Portland,97202,True
+5507,4,0,4-Division/Fessenden,To Gresham Transit Center,BUS,4500,1435,SE Division & 20th,Portland,97202,True
+5508,4,0,4-Division/Fessenden,To Gresham Transit Center,BUS,4550,1439,SE Division & 23rd,Portland,97202,True
+5509,4,0,4-Division/Fessenden,To Gresham Transit Center,BUS,4600,1441,SE Division & 26th,Portland,97202,True
+5566,4,0,4-Division/Fessenden,To Gresham Transit Center,BUS,4650,1445,SE Division & 28th Pl,Portland,97202,True
+5567,4,0,4-Division/Fessenden,To Gresham Transit Center,BUS,4700,1447,SE Division & 30th,Portland,97202,True
+5575,4,0,4-Division/Fessenden,To Gresham Transit Center,BUS,4750,1449,SE Division & 32nd,Portland,97202,True
+5568,4,0,4-Division/Fessenden,To Gresham Transit Center,BUS,4800,1451,SE Division & 34th,Portland,97202,True
+5574,4,0,4-Division/Fessenden,To Gresham Transit Center,BUS,4875,13753,SE Division & 36th,Portland,97202,True
+5569,4,0,4-Division/Fessenden,To Gresham Transit Center,BUS,4950,1458,SE Division & Cesar Chavez Blvd,Portland,97202,True
+5510,4,0,4-Division/Fessenden,To Gresham Transit Center,BUS,5000,1462,SE Division & 41st,Portland,97202,True
+5572,4,0,4-Division/Fessenden,To Gresham Transit Center,BUS,5050,13696,SE Division & 42nd,Portland,97206,True
+5511,4,0,4-Division/Fessenden,To Gresham Transit Center,BUS,5100,1465,SE Division & 45th,Portland,97206,True
+5512,4,0,4-Division/Fessenden,To Gresham Transit Center,BUS,5150,1467,SE Division & 48th,Portland,97206,True
+5585,4,0,4-Division/Fessenden,To Gresham Transit Center,BUS,5200,13952,SE Division & 49th,Portland,97206,True
+5513,4,0,4-Division/Fessenden,To Gresham Transit Center,BUS,5250,1471,SE Division & 52nd,Portland,97206,True
+5514,4,0,4-Division/Fessenden,To Gresham Transit Center,BUS,5300,1475,SE Division & 55th,Portland,97206,True
+5515,4,0,4-Division/Fessenden,To Gresham Transit Center,BUS,5350,1477,SE Division & 60th,Portland,97206,True
+5516,4,0,4-Division/Fessenden,To Gresham Transit Center,BUS,5400,1480,SE Division & 64th,Portland,97206,True
+5517,4,0,4-Division/Fessenden,To Gresham Transit Center,BUS,5450,1483,SE Division & 67th,Portland,97206,True
+5518,4,0,4-Division/Fessenden,To Gresham Transit Center,BUS,5500,1486,SE Division & 71st,Portland,97206,True
+5519,4,0,4-Division/Fessenden,To Gresham Transit Center,BUS,5550,1314,7300 Block SE Division,Portland,97206,True
+5520,4,0,4-Division/Fessenden,To Gresham Transit Center,BUS,5600,1489,SE Division & 76th,Portland,97206,True
+5521,4,0,4-Division/Fessenden,To Gresham Transit Center,BUS,5650,1493,SE Division & 79th,Portland,97206,True
+5522,4,0,4-Division/Fessenden,To Gresham Transit Center,BUS,5700,1497,SE Division & 82nd,Portland,97266,True
+5523,4,0,4-Division/Fessenden,To Gresham Transit Center,BUS,5750,1500,SE Division & 85th,Portland,97266,True
+5524,4,0,4-Division/Fessenden,To Gresham Transit Center,BUS,5800,1503,SE Division & 89th,Portland,97266,True
+5525,4,0,4-Division/Fessenden,To Gresham Transit Center,BUS,5850,1505,SE Division & 92nd,Portland,97266,True
+5570,4,0,4-Division/Fessenden,To Gresham Transit Center,BUS,5875,13297,SE Division & SE Division St MAX Station,Portland,97266,True
+5571,4,0,4-Division/Fessenden,To Gresham Transit Center,BUS,5900,8949,SE Division & 96th,Portland,97266,True
+5526,4,0,4-Division/Fessenden,To Gresham Transit Center,BUS,5950,1359,SE Division & 101st,Portland,97266,True
+5527,4,0,4-Division/Fessenden,To Gresham Transit Center,BUS,6000,1361,SE Division & 103rd,Portland,97266,True
+5528,4,0,4-Division/Fessenden,To Gresham Transit Center,BUS,6050,1363,SE Division & 105th,Portland,97266,True
+5529,4,0,4-Division/Fessenden,To Gresham Transit Center,BUS,6100,1365,SE Division & 109th,Portland,97266,True
+5530,4,0,4-Division/Fessenden,To Gresham Transit Center,BUS,6150,1368,SE Division & 112th,Portland,97266,True
+5531,4,0,4-Division/Fessenden,To Gresham Transit Center,BUS,6200,1370,SE Division & 116th,Portland,97266,True
+5532,4,0,4-Division/Fessenden,To Gresham Transit Center,BUS,6250,1373,SE Division & 119th,Portland,97266,True
+5533,4,0,4-Division/Fessenden,To Gresham Transit Center,BUS,6300,1379,SE Division & 122nd,Portland,97236,True
+5618,4,1,4-Division/Fessenden,To St Johns,BUS,1700,1381,SE Division & 122nd,Portland,97266,True
+5619,4,1,4-Division/Fessenden,To St Johns,BUS,1750,1374,SE Division & 119th,Portland,97266,True
+5620,4,1,4-Division/Fessenden,To St Johns,BUS,1800,1371,SE Division & 115th,Portland,97266,True
+5621,4,1,4-Division/Fessenden,To St Johns,BUS,1850,1369,SE Division & 112th,Portland,97266,True
+5622,4,1,4-Division/Fessenden,To St Johns,BUS,1900,1367,SE Division & 110th,Portland,97266,True
+5623,4,1,4-Division/Fessenden,To St Johns,BUS,1950,1364,SE Division & 106th,Portland,97266,True
+5624,4,1,4-Division/Fessenden,To St Johns,BUS,2000,1362,SE Division & 104th Dr,Portland,97266,True
+5625,4,1,4-Division/Fessenden,To St Johns,BUS,2050,1360,SE Division & 101st,Portland,97266,True
+5724,4,1,4-Division/Fessenden,To St Johns,BUS,2100,1508,SE Division & 98th,Portland,97266,True
+5723,4,1,4-Division/Fessenden,To St Johns,BUS,2125,13298,SE Division & SE Division St MAX Station,Portland,97216,True
+5626,4,1,4-Division/Fessenden,To St Johns,BUS,2150,1506,SE Division & 92nd,Portland,97266,True
+5627,4,1,4-Division/Fessenden,To St Johns,BUS,2200,1502,SE Division & 89th,Portland,97266,True
+5628,4,1,4-Division/Fessenden,To St Johns,BUS,2250,1501,SE Division & 85th,Portland,97266,True
+5629,4,1,4-Division/Fessenden,To St Johns,BUS,2300,1499,SE Division & 82nd,Portland,97206,True
+5630,4,1,4-Division/Fessenden,To St Johns,BUS,2350,1492,SE Division & 77th,Portland,97206,True
+5631,4,1,4-Division/Fessenden,To St Johns,BUS,2400,1490,SE Division & 76th,Portland,97206,True
+5632,4,1,4-Division/Fessenden,To St Johns,BUS,2450,1488,SE Division & 74th,Portland,97206,True
+5633,4,1,4-Division/Fessenden,To St Johns,BUS,2500,1487,SE Division & 71st,Portland,97206,True
+5634,4,1,4-Division/Fessenden,To St Johns,BUS,2550,1313,SE Division & 68th,Portland,97206,True
+5635,4,1,4-Division/Fessenden,To St Johns,BUS,2600,1481,SE Division & 64th,Portland,97206,True
+5636,4,1,4-Division/Fessenden,To St Johns,BUS,2650,9248,SE Division & 61st,Portland,97206,True
+5637,4,1,4-Division/Fessenden,To St Johns,BUS,2700,1478,SE Division & 60th,Portland,97206,True
+5638,4,1,4-Division/Fessenden,To St Johns,BUS,2750,1476,SE Division & 58th,Portland,97206,True
+5639,4,1,4-Division/Fessenden,To St Johns,BUS,2800,1472,SE Division & 52nd,Portland,97206,True
+5640,4,1,4-Division/Fessenden,To St Johns,BUS,2850,1470,SE Division & 50th,Portland,97206,True
+5641,4,1,4-Division/Fessenden,To St Johns,BUS,2900,1468,SE Division & 48th,Portland,97206,True
+5642,4,1,4-Division/Fessenden,To St Johns,BUS,2950,1466,SE Division & 45th,Portland,97206,True
+5716,4,1,4-Division/Fessenden,To St Johns,BUS,3000,9265,SE Division & 42nd,Portland,97206,True
+5643,4,1,4-Division/Fessenden,To St Johns,BUS,3050,1461,SE Division & 41st,Portland,97202,True
+5718,4,1,4-Division/Fessenden,To St Johns,BUS,3100,1459,SE Division & Cesar Chavez Blvd,Portland,97202,True
+5726,4,1,4-Division/Fessenden,To St Johns,BUS,3150,1457,SE Division & 37th,Portland,97202,True
+5719,4,1,4-Division/Fessenden,To St Johns,BUS,3250,1452,SE Division & 34th,Portland,97202,True
+5720,4,1,4-Division/Fessenden,To St Johns,BUS,3300,1450,SE Division & 32nd,Portland,97202,True
+5721,4,1,4-Division/Fessenden,To St Johns,BUS,3350,1448,SE Division & 30th,Portland,97202,True
+5722,4,1,4-Division/Fessenden,To St Johns,BUS,3400,1444,SE Division & 28th Pl,Portland,97202,True
+5644,4,1,4-Division/Fessenden,To St Johns,BUS,3450,1442,SE Division & 26th,Portland,97202,True
+5729,4,1,4-Division/Fessenden,To St Johns,BUS,3500,13741,SE Division & 23rd,Portland,97202,True
+5733,4,1,4-Division/Fessenden,To St Johns,BUS,3550,13893,SE Division & Tamarack,Portland,97202,True
+5645,4,1,4-Division/Fessenden,To St Johns,BUS,3600,1420,SE Division & 17th,Portland,97202,True
+5646,4,1,4-Division/Fessenden,To St Johns,BUS,3700,1376,SE Division & 12th,Portland,97202,True
+740,14,0,14-Hawthorne,To Foster & 94th,BUS,650,2599,SE Hawthorne & 12th,Portland,97214,True
+741,14,0,14-Hawthorne,To Foster & 94th,BUS,700,2595,SE Hawthorne & Maple,Portland,97214,True
+756,14,0,14-Hawthorne,To Foster & 94th,BUS,750,2603,SE Hawthorne & 16th,Portland,97214,True
+755,14,0,14-Hawthorne,To Foster & 94th,BUS,800,2596,SE Hawthorne & Poplar,Portland,97214,True
+770,14,0,14-Hawthorne,To Foster & 94th,BUS,850,2607,SE Hawthorne & 20th,Portland,97214,True
+760,14,0,14-Hawthorne,To Foster & 94th,BUS,900,2608,SE Hawthorne & 23rd,Portland,97214,True
+742,14,0,14-Hawthorne,To Foster & 94th,BUS,950,2612,SE Hawthorne & 25th,Portland,97214,True
+771,14,0,14-Hawthorne,To Foster & 94th,BUS,1000,2614,SE Hawthorne & 28th,Portland,97214,True
+724,14,0,14-Hawthorne,To Foster & 94th,BUS,1050,2615,SE Hawthorne & 30th,Portland,97214,True
+743,14,0,14-Hawthorne,To Foster & 94th,BUS,1100,2617,SE Hawthorne & 32nd Pl,Portland,97214,True
+725,14,0,14-Hawthorne,To Foster & 94th,BUS,1150,2620,SE Hawthorne & 34th,Portland,97214,True
+726,14,0,14-Hawthorne,To Foster & 94th,BUS,1200,2623,SE Hawthorne & 37th,Portland,97214,True
+744,14,0,14-Hawthorne,To Foster & 94th,BUS,1250,2625,SE Hawthorne & Cesar Chavez Blvd,Portland,97214,True
+727,14,0,14-Hawthorne,To Foster & 94th,BUS,1300,2628,SE Hawthorne & 41st,Portland,97214,True
+772,14,0,14-Hawthorne,To Foster & 94th,BUS,1350,2630,SE Hawthorne & 44th,Portland,97215,True
+757,14,0,14-Hawthorne,To Foster & 94th,BUS,1400,2633,SE Hawthorne & 47th,Portland,97215,True
+4233,14,1,14-Hawthorne,To Portland City Center,BUS,1550,2635,SE Hawthorne & 47th,Portland,97215,True
+4210,14,1,14-Hawthorne,To Portland City Center,BUS,1600,2632,SE Hawthorne & 44th,Portland,97215,True
+4198,14,1,14-Hawthorne,To Portland City Center,BUS,1650,2629,SE Hawthorne & 41st,Portland,97214,True
+4220,14,1,14-Hawthorne,To Portland City Center,BUS,1700,2626,SE Hawthorne & Cesar Chavez Blvd,Portland,97214,True
+4211,14,1,14-Hawthorne,To Portland City Center,BUS,1750,2624,SE Hawthorne & 37th,Portland,97214,True
+4221,14,1,14-Hawthorne,To Portland City Center,BUS,1800,12892,SE Hawthorne & 34th,Portland,97214,True
+4212,14,1,14-Hawthorne,To Portland City Center,BUS,1850,2619,SE Hawthorne & 32nd,Portland,97214,True
+4230,14,1,14-Hawthorne,To Portland City Center,BUS,1900,2616,SE Hawthorne & 30th,Portland,97214,True
+4223,14,1,14-Hawthorne,To Portland City Center,BUS,1950,2613,SE Hawthorne & 27th,Portland,97214,True
+4213,14,1,14-Hawthorne,To Portland City Center,BUS,2000,2611,SE Hawthorne & 25th,Portland,97214,True
+4199,14,1,14-Hawthorne,To Portland City Center,BUS,2050,2609,SE Hawthorne & 22nd,Portland,97214,True
+4200,14,1,14-Hawthorne,To Portland City Center,BUS,2100,2606,SE Hawthorne & 19th,Portland,97214,True
+4217,14,1,14-Hawthorne,To Portland City Center,BUS,2150,2604,SE Hawthorne & 16th,Portland,97214,True
+4201,14,1,14-Hawthorne,To Portland City Center,BUS,2200,2602,SE Hawthorne & 14th,Portland,97214,True
+4214,14,1,14-Hawthorne,To Portland City Center,BUS,2250,3637,SE Madison & 11th,Portland,97214,True
+8234,73,0,73-122nd Ave,To Foster & 94th,BUS,1200,6623,SE 122nd & Burnside,Portland,97216,False
+8235,73,0,73-122nd Ave,To Foster & 94th,BUS,1250,6653,SE 122nd & Oak,Portland,97233,False
+8236,73,0,73-122nd Ave,To Foster & 94th,BUS,1300,9219,SE 122nd & Stark,Portland,97233,False
+8237,73,0,73-122nd Ave,To Foster & 94th,BUS,1350,6650,SE 122nd & Midland Library (Morrison),Portland,97233,False
+8238,73,0,73-122nd Ave,To Foster & 94th,BUS,1400,6643,1300 Block SE 122nd,Portland,97233,False
+8239,73,0,73-122nd Ave,To Foster & 94th,BUS,1450,6646,SE 122nd & Market,Portland,97233,False
+8240,73,0,73-122nd Ave,To Foster & 94th,BUS,1500,6641,SE 122nd & Lincoln,Portland,97233,False
+8241,73,0,73-122nd Ave,To Foster & 94th,BUS,1550,6631,SE 122nd & Division,Portland,97236,False
+8242,73,0,73-122nd Ave,To Foster & 94th,BUS,1600,6676,SE 122nd & Woodward Pl,Portland,97236,False
+8243,73,0,73-122nd Ave,To Foster & 94th,BUS,1650,8843,SE 122nd & Powell,Portland,97236,False
+8244,73,0,73-122nd Ave,To Foster & 94th,BUS,1700,6668,SE 122nd & Rhone,Portland,97236,False
+8245,73,0,73-122nd Ave,To Foster & 94th,BUS,1750,6625,SE 122nd & Bush,Portland,97236,False
+8280,73,1,73-122nd Ave,To Parkrose Transit Center,BUS,850,6624,SE 122nd & Bush,Portland,97236,False
+8281,73,1,73-122nd Ave,To Parkrose Transit Center,BUS,900,6655,SE 122nd & Powell,Portland,97236,False
+8282,73,1,73-122nd Ave,To Parkrose Transit Center,BUS,950,6675,SE 122nd & Woodward Pl,Portland,97236,False
+8283,73,1,73-122nd Ave,To Parkrose Transit Center,BUS,1000,6630,SE 122nd & Division,Portland,97233,False
+8284,73,1,73-122nd Ave,To Parkrose Transit Center,BUS,1050,6640,SE 122nd & Lincoln,Portland,97233,False
+8285,73,1,73-122nd Ave,To Parkrose Transit Center,BUS,1100,6645,SE 122nd & Market,Portland,97233,False
+8286,73,1,73-122nd Ave,To Parkrose Transit Center,BUS,1150,6642,SE 122nd & Madison,Portland,97233,False
+8287,73,1,73-122nd Ave,To Parkrose Transit Center,BUS,1200,6669,SE 122nd & Salmon,Portland,97233,False
+8288,73,1,73-122nd Ave,To Parkrose Transit Center,BUS,1250,8940,SE 122nd & Midland Library,Portland,97233,False
+8289,73,1,73-122nd Ave,To Parkrose Transit Center,BUS,1300,6652,SE 122nd & Oak,Portland,97233,False
+8290,73,1,73-122nd Ave,To Parkrose Transit Center,BUS,1350,6621,SE 122nd & E Burnside,Portland,97233,False
