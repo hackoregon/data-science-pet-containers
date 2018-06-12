@@ -6,12 +6,9 @@ bibliography: Text_Mining_with_R.bibtex
 
 ## Loading the libraries
 ```{r}
-library("readr")
+library("tidyverse")
 library("tidytext")
-library("dplyr")
-library("magrittr")
 library("topicmodels")
-library("ggplot2")
 ```
 
 ## Reading the data file
@@ -96,6 +93,41 @@ top_terms <- safety_topics %>%
   ungroup() %>%
   arrange(topic, -beta) %>% 
   write_csv(path = "~/Raw/top_terms.csv")
+```
+
+## Repeating with bigrams
+Many of the terms we're interested in are bigrams - "bike lane", "stop sign", "speed bump", "street light" and so on. So we repeat the above anaylsis using bigrams for the terms [@silge2017text, chapter 4].
+
+```{r}
+raw_bigrams <- Safety_Hotline_Tickets %>% 
+  select(Item_ID, Description) %>% 
+  unnest_tokens(bigram, Description, token = "ngrams", n = 2)
+
+# filter out stopwords
+bigrams_separated <- raw_bigrams %>%
+  separate(bigram, c("word1", "word2"), sep = " ")
+
+bigrams_filtered <- bigrams_separated %>%
+  filter(!word1 %in% pdx_stop_words$word) %>%
+  filter(!word2 %in% pdx_stop_words$word)
+
+# new bigram counts:
+bigram_counts <- bigrams_filtered %>% 
+  count(word1, word2, sort = TRUE)
+
+bigram_counts
+
+bigrams_united <- bigrams_filtered %>%
+  unite(bigram, word1, word2, sep = " ")
+
+bigrams_united
+
+bigram_tf_idf <- bigrams_united %>%
+  count(Item_ID, bigram) %>%
+  bind_tf_idf(bigram, Item_ID, n) %>%
+  arrange(desc(tf_idf))
+
+bigram_tf_idf
 ```
 
 ## References
