@@ -174,7 +174,9 @@ select_output_columns <- function(stop_events) {
     MILEAGE_THERE,
     LEFT_THERE,
     TRAVEL_MILES,
-    TRAVEL_SECONDS
+    TRAVEL_SECONDS,
+    X_COORDINATE,
+    Y_COORDINATE
   )
   return(temp)
 }
