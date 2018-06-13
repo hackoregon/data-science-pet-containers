@@ -205,5 +205,9 @@ routes_4_14_73 <- function(stop_events) {
         ROUTE_NUMBER == 14 |
         ROUTE_NUMBER == 73
     )
+  temp <- temp %>% semi_join(
+    pudl,
+    by = c("ROUTE_NUMBER" = "rte", "DIRECTION" = "dir", "LOCATION_ID" = "stop_id")
+  )
   return(temp)
 }

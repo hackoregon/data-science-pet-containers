@@ -7,6 +7,9 @@ options(warn = 2)
 library(tidyverse)
 source("function_definitions.R")
 
+## load the PUDL table
+pudl <- read_csv("pudl.csv")
+
 ## loop over months
 for (i in 1:nrow(month_table)) {
 
