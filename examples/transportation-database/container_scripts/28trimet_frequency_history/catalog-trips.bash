@@ -24,8 +24,8 @@ grep -h service_id trips_*.csv | head -n 1 > trips_catalog.csv
 wc -l trips_catalog.csv
 
 echo "Stacking routes"
-grep -h service_id routes_*.csv | head -n 1
-grep -h service_id routes_*.csv | head -n 1 > routes_catalog.csv
+grep -h route_id routes_*.csv | head -n 1
+grep -h route_id routes_*.csv | head -n 1 > routes_catalog.csv
 /usr/bin/time tail -n +2 -q routes_*csv |dos2unix|sort -u >> routes_catalog.csv
 wc -l routes_catalog.csv
 
