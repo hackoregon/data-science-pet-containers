@@ -1,0 +1,30 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+```{r}
+library(tidyverse)
+# trips_catalog <- read_csv(
+#   "~/Raw/trimet-gtfs-archives/trips_catalog.csv",
+#   col_types = cols(.default = col_character())
+# )
+
+# routes_catalog <- read_csv(
+#   "~/Raw/trimet-gtfs-archives/routes_catalog.csv",
+#   col_types = cols(.default = col_character())
+# )
+
+calendar_dates_catalog <- read_csv(
+  "~/Raw/trimet-gtfs-archives/calendar_dates_catalog.csv",
+  col_types = cols(
+    .default = col_character(),
+    date = col_date("%Y%m%d"))
+)
+
+date_service_summary <- calendar_dates_catalog %>% 
+  group_by(service_id) %>% 
+  summarize(first = min(date), last = max(date), days = n()) %>% 
+  arrange(first, last, service_id)
+
+```
+
