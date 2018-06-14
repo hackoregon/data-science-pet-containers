@@ -70,7 +70,7 @@ ALTER TABLE passenger_census OWNER TO "transportation-systems";
 ALTER TABLE passenger_census ADD COLUMN id serial;
 ALTER TABLE passenger_census ADD PRIMARY KEY (id);
 
--- summary by route
+-- annual summary by route
 CREATE TABLE annual_route_ridership
 AS
 SELECT
@@ -88,7 +88,7 @@ ALTER TABLE annual_route_ridership OWNER TO "transportation-systems";
 ALTER TABLE annual_route_ridership ADD COLUMN id serial;
 ALTER TABLE annual_route_ridership ADD PRIMARY KEY (id);
 
--- summary by census_block
+-- annual summary by census_block
 CREATE TABLE annual_census_block_ridership
 AS
 SELECT
@@ -133,3 +133,6 @@ SELECT y2009.census_block,
 FROM y2009
 INNER JOIN y2017
 ON y2009.census_block = y2017.census_block;
+
+ALTER TABLE census_block_change OWNER TO "transportation-systems";
+ALTER TABLE census_block_change ADD PRIMARY KEY (census_block);
