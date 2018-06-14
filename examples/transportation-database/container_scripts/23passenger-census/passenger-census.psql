@@ -15,6 +15,7 @@ UPDATE or_census_block_polygons
   SET geom_polygon_4326 = ST_Transform(wkb_geometry, 4326);
 ALTER TABLE or_census_block_polygons DROP COLUMN wkb_geometry;
 ALTER TABLE or_census_block_polygons ADD PRIMARY KEY (census_block);
+CREATE INDEX ON or_census_block_polygons USING GIST (geom_polygon_4326);
 
 CREATE TABLE wa_census_block_polygons
 AS
@@ -24,6 +25,7 @@ UPDATE wa_census_block_polygons
   SET geom_polygon_4326 = ST_Transform(wkb_geometry, 4326);
 ALTER TABLE wa_census_block_polygons DROP COLUMN wkb_geometry;
 ALTER TABLE wa_census_block_polygons ADD PRIMARY KEY (census_block);
+CREATE INDEX ON wa_census_block_polygons USING GIST (geom_polygon_4326);
 
 CREATE TABLE passenger_census_raw (
   summary_begin_date date,
@@ -53,13 +55,15 @@ UPDATE passenger_census_raw
 CREATE TABLE passenger_census AS
 SELECT summary_begin_date, route_number, direction, service_key, stop_seq,
   location_id, public_location_description, ons, offs, x_coord, y_coord, geom_4326,
-  census_gis.tl_2017_41_tabblock10.geoid10 AS census_block
-FROM passenger_census.passenger_census_raw
-LEFT JOIN census_gis.tl_2017_41_tabblock10
+  census_block
+FROM passenger_census_raw
+LEFT JOIN or_census_block_polygons
 ON ST_Contains(
-  census_gis.tl_2017_41_tabblock10.wkb_geometry,
-  ST_Transform(passenger_census_raw.geom_4326, 4269));
+  or_census_block_polygons.geom_polygon_4326,
+  passenger_census_raw.geom_4326
+);
 ALTER TABLE passenger_census OWNER TO "transportation-systems";
+CREATE INDEX ON passenger_census USING GIST (geom_4326);
 
 -- primary key
 ALTER TABLE passenger_census ADD COLUMN id serial;

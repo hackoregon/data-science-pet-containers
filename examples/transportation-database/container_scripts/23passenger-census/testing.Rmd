@@ -72,7 +72,7 @@ brief_passenger_census <- passenger_census %>% filter(year == 2009 | year == 201
 
 # summarize by census block and year
 ```{r}
-annual_census_block_ridership <- brief_passenger_census %>% 
+annual_census_block_ridership <- passenger_census %>% 
   mutate(year = year(summary_begin_date)) %>% 
   group_by(census_block, year)
 gc()
@@ -80,7 +80,7 @@ annual_census_block_ridership <- annual_census_block_ridership %>%
   summarize(total_ons = sum(ons), stops = n())
 gc()
 annual_census_block_ridership <- annual_census_block_ridership %>% 
-  arrange(census_block, year) %>% 
+  arrange(desc(total_ons)) %>% 
   ungroup()
 gc()
 
