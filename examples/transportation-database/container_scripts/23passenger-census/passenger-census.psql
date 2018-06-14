@@ -4,6 +4,27 @@ DROP SCHEMA IF EXISTS passenger_census CASCADE;
 CREATE SCHEMA passenger_census;
 SET search_path TO passenger_census, public;
 
+-- census block polygons
+CREATE TABLE or_census_block_polygons
+AS
+  SELECT geoid10 AS census_block, wkb_geometry FROM census_gis.tl_2017_41_tabblock10;
+
+-- transform to SRID 4326
+ALTER TABLE or_census_block_polygons ADD COLUMN geom_polygon_4326 geometry;
+UPDATE or_census_block_polygons
+  SET geom_polygon_4326 = ST_Transform(wkb_geometry, 4326);
+ALTER TABLE or_census_block_polygons DROP COLUMN wkb_geometry;
+ALTER TABLE or_census_block_polygons ADD PRIMARY KEY (census_block);
+
+CREATE TABLE wa_census_block_polygons
+AS
+  SELECT geoid10 AS census_block, wkb_geometry FROM census_gis.tl_2017_53_tabblock10;
+ALTER TABLE wa_census_block_polygons ADD COLUMN geom_polygon_4326 geometry;
+UPDATE wa_census_block_polygons
+  SET geom_polygon_4326 = ST_Transform(wkb_geometry, 4326);
+ALTER TABLE wa_census_block_polygons DROP COLUMN wkb_geometry;
+ALTER TABLE wa_census_block_polygons ADD PRIMARY KEY (census_block);
+
 CREATE TABLE passenger_census_raw (
   summary_begin_date date,
   route_number integer,
@@ -30,8 +51,8 @@ UPDATE passenger_census_raw
 
 -- tag with census block
 CREATE TABLE passenger_census AS
-SELECT summary_begin_date, route_number, direction, service_key, stop_seq, 
-  location_id, public_location_description, ons, offs, x_coord, y_coord, geom_4326, 
+SELECT summary_begin_date, route_number, direction, service_key, stop_seq,
+  location_id, public_location_description, ons, offs, x_coord, y_coord, geom_4326,
   census_gis.tl_2017_41_tabblock10.geoid10 AS census_block
 FROM passenger_census.passenger_census_raw
 LEFT JOIN census_gis.tl_2017_41_tabblock10
@@ -44,7 +65,7 @@ ALTER TABLE passenger_census OWNER TO "transportation-systems";
 ALTER TABLE passenger_census ADD COLUMN id serial;
 ALTER TABLE passenger_census ADD PRIMARY KEY (id);
 
--- summary
+-- summary by route
 CREATE TABLE annual_route_ridership
 AS
 SELECT
@@ -62,25 +83,23 @@ ALTER TABLE annual_route_ridership OWNER TO "transportation-systems";
 ALTER TABLE annual_route_ridership ADD COLUMN id serial;
 ALTER TABLE annual_route_ridership ADD PRIMARY KEY (id);
 
+-- summary by census_block
+CREATE TABLE annual_census_block_ridership
+AS
+SELECT
+  extract(year from summary_begin_date) AS year,
+  passenger_census.census_block,
+  SUM(ons) AS total_ons,
+  COUNT(ons) AS stops,
+  or_census_block_polygons.geom_polygon_4326
+FROM passenger_census
+LEFT JOIN or_census_block_polygons
+ON passenger_census.census_block = or_census_block_polygons.census_block
+GROUP BY year, passenger_census.census_block, or_census_block_polygons.census_block
+ORDER BY passenger_census.census_block, year;
+
+ALTER TABLE annual_census_block_ridership OWNER TO "transportation-systems";
+ALTER TABLE annual_census_block_ridership ADD COLUMN id serial;
+ALTER TABLE annual_census_block_ridership ADD PRIMARY KEY (id);
+
 DROP TABLE passenger_census_raw;
-
--- census block polygons
-CREATE TABLE or_census_block_polygons
-AS
-  SELECT geoid10 AS census_block, wkb_geometry FROM census_gis.tl_2017_41_tabblock10;
-
--- transform to SRID 4326
-ALTER TABLE or_census_block_polygons ADD COLUMN geom_polygon_4326 geometry;
-UPDATE or_census_block_polygons
-  SET geom_polygon_4326 = ST_Transform(wkb_geometry, 4326);
-ALTER TABLE or_census_block_polygons DROP COLUMN wkb_geometry;
-ALTER TABLE or_census_block_polygons ADD PRIMARY KEY (census_block);
-
-CREATE TABLE wa_census_block_polygons
-AS
-  SELECT geoid10 AS census_block, wkb_geometry FROM census_gis.tl_2017_53_tabblock10;
-ALTER TABLE wa_census_block_polygons ADD COLUMN geom_polygon_4326 geometry;
-UPDATE wa_census_block_polygons
-  SET geom_polygon_4326 = ST_Transform(wkb_geometry, 4326);
-ALTER TABLE wa_census_block_polygons DROP COLUMN wkb_geometry;
-ALTER TABLE wa_census_block_polygons ADD PRIMARY KEY (census_block);
