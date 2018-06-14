@@ -76,7 +76,7 @@ for (i in 1:nrow(month_table)) {
     filter(!is.na(TRAVEL_SECONDS))
   gc(full = TRUE, verbose = TRUE)
 
-  cat("\nRestricting to PUDL street segments")
+  cat("\nRestricting to PUDL street segments\n")
   trimet_stop_events <- trimet_stop_events %>%
     semi_join(
       pudl,
