@@ -30,21 +30,18 @@ get_postgresql_connection <- function(dbname, user) {
 pgcon <- get_postgresql_connection(PGDATABASE, DBOWNER)
 
 # create destination schema
-dummy <- DBI::dbSendStatement(
+DBI::dbExecute(
   pgcon,
   "DROP SCHEMA IF EXISTS odot_crash_data CASCADE;"
 )
-DBI::dbClearResult(dummy)
-dummy <- DBI::dbSendStatement(
+DBI::dbExecute(
   pgcon,
   "CREATE SCHEMA odot_crash_data;"
 )
-DBI::dbClearResult(dummy)
-dummy <- DBI::dbSendStatement(
+DBI::dbExecute(
   pgcon,
   "SET search_path TO odot_crash_data, public;"
 )
-DBI::dbClearResult(dummy)
 
 # get list of tables from MDB file
 tables <- get_mdb_tables(raw_data)
@@ -57,35 +54,30 @@ for (table_name in tables) {
 }
 
 # add geometry
-dummy <- DBI::dbSendStatement(
+DBI::dbExecute(
   pgcon,
   "ALTER TABLE crash ADD COLUMN geom_point geometry;"
 )
-DBI::dbClearResult(dummy)
-dummy <- DBI::dbSendStatement(
+DBI::dbExecute(
   pgcon,
   "UPDATE crash SET geom_point = ST_SetSRID(ST_MakePoint(longtd_dd, lat_dd), 4326);"
 )
-DBI::dbClearResult(dummy)
 
 # add primary keys
-dummy <- DBI::dbSendStatement(
+DBI::dbExecute(
   pgcon,
   "ALTER TABLE crash ADD PRIMARY KEY (crash_id);"
 )
-DBI::dbClearResult(dummy)
 
-dummy <- DBI::dbSendStatement(
+DBI::dbExecute(
   pgcon,
   "ALTER TABLE partic ADD PRIMARY KEY (partic_id);"
 )
-DBI::dbClearResult(dummy)
 
-dummy <- DBI::dbSendStatement(
+DBI::dbExecute(
   pgcon,
   "ALTER TABLE vhcl ADD PRIMARY KEY (vhcl_id);"
 )
-DBI::dbClearResult(dummy)
 
 # disconnect
 DBI::dbDisconnect(pgcon)
