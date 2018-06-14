@@ -58,7 +58,7 @@ SELECT summary_begin_date, route_number, direction, service_key, stop_seq,
   census_block
 FROM passenger_census_raw
 LEFT JOIN or_census_block_polygons
-ON ST_Contains(
+ON ST_Intersects(
   or_census_block_polygons.geom_polygon_4326,
   passenger_census_raw.geom_4326
 );
