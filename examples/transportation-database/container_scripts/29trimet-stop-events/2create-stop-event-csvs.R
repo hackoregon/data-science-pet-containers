@@ -105,27 +105,9 @@ options(warn = 0)
 disturbance_stops <- read_csv(
   "~/Raw/Lines4_14_73_Disturbance_Stops.csv",
   col_types = cols(
-    .default = col_integer(),
+    .default = col_character(),
     OPD_DATE_x = col_date(format = "%d%b%Y:%H:%M:%S"),
-    OPD_DATE_y = col_date(format = "%d%b%Y:%H:%M:%S"),
-    ACT_END_TIME = col_double(),
-    TRIP_ID = col_double(),
-    PASSENGER_DATA = col_double(),
-    TIME_GRP_ID = col_double(),
-    DRIVER_ID = col_double(),
-    DISTANCE_TO_NEXT = col_double(),
-    DOORS_OPENING = col_double(),
-    STOP_TYPE = col_double(),
-    GPS_LONGITUDE = col_double(),
-    GPS_LATITUDE = col_double(),
-    DOOR_OPEN_TIME = col_double(),
-    TIME_DIFF_MIN = col_double(),
-    TRIP_ROLE = col_character(),
-    TRIP_SUBROLE = col_character(),
-    POINT_ROLE = col_character(),
-    POINT_ACTION = col_character(),
-    PLAN_STATUS = col_character(),
-    PATTERN_DIRECTION = col_character()
+    OPD_DATE_y = col_date(format = "%d%b%Y:%H:%M:%S")
   )
 )
 colnames(disturbance_stops)[1] <- "serial"
