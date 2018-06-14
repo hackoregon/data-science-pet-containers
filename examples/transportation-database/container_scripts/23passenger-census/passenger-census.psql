@@ -27,7 +27,7 @@ ALTER TABLE wa_census_block_polygons DROP COLUMN wkb_geometry;
 ALTER TABLE wa_census_block_polygons ADD PRIMARY KEY (census_block);
 CREATE INDEX ON wa_census_block_polygons USING GIST (geom_polygon_4326);
 
-CREATE TABLE passenger_census_raw (
+CREATE TEMPORARY TABLE passenger_census_raw (
   summary_begin_date date,
   route_number integer,
   direction integer,
@@ -46,6 +46,7 @@ CREATE TABLE passenger_census_raw (
 ALTER TABLE passenger_census_raw ADD COLUMN geom_4326 geometry;
 UPDATE passenger_census_raw
   SET geom_4326 = ST_Transform(ST_SetSRID(ST_MakePoint(x_coord, y_coord), 2913), 4326);
+CREATE INDEX ON passenger_census_raw USING GIST (geom_4326);
 
 -- trim service_key
 UPDATE passenger_census_raw
@@ -62,8 +63,8 @@ ON ST_Intersects(
   or_census_block_polygons.geom_polygon_4326,
   passenger_census_raw.geom_4326
 );
-ALTER TABLE passenger_census OWNER TO "transportation-systems";
 CREATE INDEX ON passenger_census USING GIST (geom_4326);
+ALTER TABLE passenger_census OWNER TO "transportation-systems";
 
 -- primary key
 ALTER TABLE passenger_census ADD COLUMN id serial;
@@ -81,7 +82,7 @@ SELECT
   SUM(offs) AS total_offs
 FROM passenger_census.passenger_census
 GROUP BY year, route_number, direction, service_key
-ORDER BY year, route_number, direction;
+ORDER BY route_number, direction, year;
 
 ALTER TABLE annual_route_ridership OWNER TO "transportation-systems";
 ALTER TABLE annual_route_ridership ADD COLUMN id serial;
@@ -106,4 +107,29 @@ ALTER TABLE annual_census_block_ridership OWNER TO "transportation-systems";
 ALTER TABLE annual_census_block_ridership ADD COLUMN id serial;
 ALTER TABLE annual_census_block_ridership ADD PRIMARY KEY (id);
 
-DROP TABLE passenger_census_raw;
+-- layout for sandbox
+CREATE TEMPORARY TABLE y2009
+AS
+SELECT census_block, total_ons, stops, geom_polygon_4326
+FROM annual_census_block_ridership
+WHERE year = 2009 AND total_ons > 0 AND stops > 0;
+
+CREATE TEMPORARY TABLE y2017
+AS
+SELECT census_block, total_ons, stops
+FROM annual_census_block_ridership
+WHERE year = 2017;
+
+CREATE TABLE census_block_change
+AS
+SELECT y2009.census_block,
+       y2009.total_ons AS total_ons_2009,
+       y2017.total_ons AS total_ons_2017,
+       ROUND(100.0 * (y2017.total_ons - y2009.total_ons) / y2009.total_ons, 1) AS ons_pct_change,
+       y2009.stops AS stops_2009,
+       y2017.stops AS stops_2017,
+       ROUND(100.0 * (y2017.stops - y2009.stops) / y2009.stops, 1) AS stops_pct_change,
+       y2009.geom_polygon_4326
+FROM y2009
+INNER JOIN y2017
+ON y2009.census_block = y2017.census_block;
