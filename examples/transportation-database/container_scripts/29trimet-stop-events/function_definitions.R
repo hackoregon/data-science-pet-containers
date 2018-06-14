@@ -180,34 +180,3 @@ select_output_columns <- function(stop_events) {
   )
   return(temp)
 }
-
-## define the month table
-month_table <- tibble::tribble(
-  ~output_file, ~input_file,
-  "~/Raw/m2017_09_trimet_stop_events.csv",
-  "~/Raw/trimet_stop_event 1-30SEP2017.csv",
-  "~/Raw/m2017_10_trimet_stop_events.csv",
-  "~/Raw/trimet_stop_event 1-31OCT2017.csv",
-  "~/Raw/m2017_11_trimet_stop_events.csv",
-  "~/Raw/trimet_stop_event 1-30NOV2017.csv",
-  "~/Raw/m2018_04_trimet_stop_events.csv",
-  "~/Raw/trimet_stop_event 1-30APR2018.csv",
-  "~/Raw/m2018_05_trimet_stop_events.csv",
-  "~/Raw/trimet_stop_event 1-31MAY2018.csv"
-
-)
-
-## filter for selecting routes
-routes_4_14_73 <- function(stop_events) {
-  temp <- stop_events %>%
-    filter(
-      ROUTE_NUMBER == 4 |
-        ROUTE_NUMBER == 14 |
-        ROUTE_NUMBER == 73
-    )
-  temp <- temp %>% semi_join(
-    pudl,
-    by = c("ROUTE_NUMBER" = "rte", "DIRECTION" = "dir", "LOCATION_ID" = "stop_id")
-  )
-  return(temp)
-}

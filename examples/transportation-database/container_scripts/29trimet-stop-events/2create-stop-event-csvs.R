@@ -10,6 +10,30 @@ source("function_definitions.R")
 ## load the PUDL table
 pudl <- read_csv("pudl.csv")
 
+## define the route filter
+route_filter <- function(stop_events) {
+  temp <- stop_events %>%
+  filter(ROUTE_NUMBER == 4 |
+           ROUTE_NUMBER == 14 |
+           ROUTE_NUMBER == 73
+  )
+}
+
+## define the month table
+month_table <- tibble::tribble(
+  ~output_file, ~input_file,
+  "~/Raw/m2017_09_trimet_stop_events.csv",
+  "~/Raw/trimet_stop_event 1-30SEP2017.csv",
+  "~/Raw/m2017_10_trimet_stop_events.csv",
+  "~/Raw/trimet_stop_event 1-31OCT2017.csv",
+  "~/Raw/m2017_11_trimet_stop_events.csv",
+  "~/Raw/trimet_stop_event 1-30NOV2017.csv",
+  "~/Raw/m2018_04_trimet_stop_events.csv",
+  "~/Raw/trimet_stop_event 1-30APR2018.csv",
+  "~/Raw/m2018_05_trimet_stop_events.csv",
+  "~/Raw/trimet_stop_event 1-31MAY2018.csv"
+)
+
 ## loop over months
 for (i in 1:nrow(month_table)) {
 
@@ -18,9 +42,9 @@ for (i in 1:nrow(month_table)) {
   trimet_stop_events <- load_csv(month_table$input_file[i])
   gc(full = TRUE, verbose = TRUE)
 
-  cat("\nSelecting routes 4, 14 and 73\n")
+  cat("\nFilter in selected routes\n")
   trimet_stop_events <- trimet_stop_events %>%
-    routes_4_14_73()
+    route_filter()
   gc(full = TRUE, verbose = TRUE)
 
   cat("\nRemoving unwanted rows\n")
@@ -50,6 +74,14 @@ for (i in 1:nrow(month_table)) {
   trimet_stop_events <- trimet_stop_events %>%
     anti_join(bad_trips) %>%
     filter(!is.na(TRAVEL_SECONDS))
+  gc(full = TRUE, verbose = TRUE)
+
+  cat("\nRestricting to PUDL street segments")
+  trimet_stop_events <- trimet_stop_events %>%
+    semi_join(
+      pudl,
+      by = c("ROUTE_NUMBER" = "rte", "DIRECTION" = "dir", "LOCATION_ID" = "stop_id")
+    )
   gc(full = TRUE, verbose = TRUE)
 
   cat(paste("\nSaving", month_table$output_file[i], "\n"))
