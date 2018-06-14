@@ -6,3 +6,5 @@ export PGDATABASE=transportation-systems-main
 
 echo "Creating the 'trimet_stop_events' (congestion data) table"
 /usr/bin/time psql -U ${DBOWNER} -d ${PGDATABASE} -f trimet-stop-events.psql
+echo "Creating the 'disturbance_stops' (congestion data) table"
+/usr/bin/time psql -U ${DBOWNER} -d ${PGDATABASE} -f disturbance-stops.psql

@@ -1,0 +1,68 @@
+\connect "transportation-systems-main"
+SET search_path TO trimet_stop_events, public;
+
+CREATE TABLE disturbance_stops (
+  serial integer,
+  opd_date_x date,
+  vehicle_id_x double precision,
+  master_id_x double precision,
+  event_no_x double precision,
+  event_no_course double precision,
+  meters_x double precision,
+  act_dep_time_x double precision,
+  nom_dep_time_x double precision,
+  nom_end_time double precision,
+  act_end_time double precision,
+  line_id double precision,
+  course_id double precision,
+  trip_id double precision,
+  pattern_id double precision,
+  pattern_direction text,
+  trip_type double precision,
+  highway_type double precision,
+  pattern_quality double precision,
+  block_id double precision,
+  passenger_data double precision,
+  time_grp_id double precision,
+  trip_code double precision,
+  driver_id double precision,
+  data_source double precision,
+  is_additional_trip double precision,
+  trip_role text,
+  trip_subrole text,
+  trip_purpose double precision,
+  event_no_y double precision,
+  event_no_trip double precision,
+  event_no_prev double precision,
+  opd_date_y date,
+  vehicle_id_y double precision,
+  master_id_y double precision,
+  meters_y double precision,
+  act_arr_time double precision,
+  act_dep_time_y double precision,
+  nom_arr_time double precision,
+  nom_dep_time_y double precision,
+  point_id double precision,
+  stop_id double precision,
+  stop_pos double precision,
+  distance_to_next double precision,
+  distance_to_trip double precision,
+  doors_opening double precision,
+  positioning_method double precision,
+  stop_type double precision,
+  gps_longitude double precision,
+  gps_latitude double precision,
+  pattern_idx double precision,
+  door_open_time double precision,
+  point_role text,
+  point_action text,
+  plan_status text,
+  time_diff double precision,
+  time_diff_min double precision
+);
+\copy disturbance_stops from '~/Raw/disturbance_stops.csv' with csv header
+ALTER TABLE disturbance_stops OWNER TO "transportation-systems";
+ALTER TABLE disturbance_stops ADD PRIMARY KEY (serial);
+ALTER TABLE disturbance_stops ADD COLUMN geom_4326 geometry;
+UPDATE disturbance_stops
+  SET geom_4326 = ST_SetSRID(ST_MakePoint(gps_longitude, gps_latitude), 4326);
