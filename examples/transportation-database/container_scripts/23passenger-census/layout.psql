@@ -1,0 +1,7 @@
+SELECT y2009.census_block, y2009.total_ons AS total_ons_2009, y2009.stops AS stops_2009,
+                      y2017.total_ons AS total_ons_2017, y2017.stops AS stops_2017
+	FROM public.y2009
+	INNER JOIN public.y2017
+	ON y2009.census_block = y2017.census_block
+	WHERE y2009.total_ons > 0 AND y2017.total_ons > 0;
+	
