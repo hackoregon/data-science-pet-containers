@@ -98,3 +98,19 @@ for (i in 1:nrow(month_table)) {
   gc(full = TRUE, verbose = TRUE)
 
 }
+
+# reformat the disturbance stops table
+cat(paste("\nFixing dates on disturbance stop table\n"))
+options(warn = -1)
+disturbamce_stops <- read_csv(
+  "~/Raw/Lines4_14_73_Disturbance_Stops.csv",
+  col_types = cols(
+    OPD_DATE_x = col_date(format = "%d%b%Y:%H:%M:%S")
+  )
+)
+colnames(disturbamce_stops)[1] <- "serial"
+colnames(disturbamce_stops) <- tolower(colnames(disturbamce_stops))
+disturbamce_stops %>% write_csv(
+  "~/Raw/disturbance_stops.csv",
+  na = ""
+)
