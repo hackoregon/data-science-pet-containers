@@ -125,10 +125,10 @@ AS
 SELECT y2009.census_block,
        y2009.total_ons AS total_ons_2009,
        y2017.total_ons AS total_ons_2017,
-       ROUND(100.0 * (y2017.total_ons - y2009.total_ons) / y2009.total_ons, 1) AS ons_pct_change,
+       100.0 * (y2017.total_ons - y2009.total_ons) / y2009.total_ons AS ons_pct_change,
        y2009.stops AS stops_2009,
        y2017.stops AS stops_2017,
-       ROUND(100.0 * (y2017.stops - y2009.stops) / y2009.stops, 1) AS stops_pct_change,
+       100.0 * (y2017.stops - y2009.stops) / y2009.stops AS stops_pct_change,
        y2009.geom_polygon_4326
 FROM y2009
 INNER JOIN y2017
