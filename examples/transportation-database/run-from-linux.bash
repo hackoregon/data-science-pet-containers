@@ -11,6 +11,7 @@ docker cp ~/Raw/scrapes.rar containers_postgis_1:/home/dbsuper/Raw
 docker cp ~/Raw/April\ 2018.rar containers_postgis_1:/home/dbsuper/Raw
 docker cp ~/Raw/May\ 2018.rar containers_postgis_1:/home/dbsuper/Raw
 docker cp ~/Raw/Lines4_14_73_Disturbance_Stops.csv containers_postgis_1:/home/dbsuper/Raw
+docker cp ~/Raw/annual_route_difference.csv containers_postgis_1:/home/dbsuper/Raw
 
 echo "Running the scripts in the container"
 echo ""
