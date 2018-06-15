@@ -110,13 +110,13 @@ ALTER TABLE annual_census_block_ridership ADD PRIMARY KEY (id);
 -- layout for sandbox
 CREATE TEMPORARY TABLE y2009
 AS
-SELECT census_block, total_ons, stops, geom_polygon_4326
+SELECT census_block, CAST(total_ons AS double precision), CAST(stops AS double precision), geom_polygon_4326
 FROM annual_census_block_ridership
 WHERE year = 2009 AND total_ons > 0 AND stops > 0;
 
 CREATE TEMPORARY TABLE y2017
 AS
-SELECT census_block, total_ons, stops
+SELECT census_block, CAST(total_ons AS double precision), CAST(stops AS double precision)
 FROM annual_census_block_ridership
 WHERE year = 2017;
 
