@@ -50,6 +50,11 @@ tables <- get_mdb_tables(raw_data)
 for (table_name in tables) {
   cat("\nImporting table", table_name, "\n")
   work <- get_mdb_table(raw_data, table_name)
+  if (table_name == "CRASH") {
+    work$crash_dt <- lubridate::make_date(
+      month = work$crash_mo_no, day = work$crash_day_no, year = work$crash_yr_no
+    )
+  }
   DBI::dbWriteTable(pgcon, tolower(table_name), work, overwrite = TRUE)
 }
 
