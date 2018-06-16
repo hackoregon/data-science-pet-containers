@@ -4,16 +4,9 @@ DROP SCHEMA IF EXISTS origin_destination CASCADE;
 CREATE SCHEMA origin_destination;
 SET search_path TO origin_destination, public;
 
--- census block polygons
-CREATE TEMPORARY TABLE or_wa_census_blocks AS
-SELECT geoid10, ST_Transform(wkb_geometry, 4326) AS geom_polygon_4326
-FROM census_gis.tl_2017_41_tabblock10
-UNION
-SELECT geoid10, ST_Transform(wkb_geometry, 4326) AS geom_polygon_4326
-FROM census_gis.tl_2017_53_tabblock10;
+DROP TABLE IF EXISTS xwalk;
 
--- "crosswalk" table
-CREATE TEMPORARY TABLE xwalk_raw (
+CREATE TABLE xwalk (
   tabblk2010 text,
   st text,
   stusps text,
@@ -59,22 +52,15 @@ CREATE TEMPORARY TABLE xwalk_raw (
   createdate date
 );
 
-\copy xwalk_raw from '~/Raw/LODES/xwalk.csv' with csv header
+\copy xwalk from '~/Raw/LODES/xwalk.csv' with csv header
 
--- geotag with polygons
-CREATE TABLE xwalk AS
-SELECT tabblk2010, st, stusps, stname, cty, ctyname, trct, trctname, bgrp, bgrpname,
-  cbsa, cbsaname, zcta, zctaname, stplc, stplcname, ctycsub, ctycsubname, stcd115, stcd115name,
-  stsldl, stsldlname, stsldu, stslduname, stschool, stschoolname, stsecon, stseconname,
-  trib, tribname, tsub, tsubname, stanrc, stanrcname, necta, nectaname, mil, milname,
-  stwib, stwibname, blklatdd, blklondd, createdate,
-  or_wa_census_blocks.geom_polygon_4326
-FROM xwalk_raw
-INNER JOIN or_wa_census_blocks
-ON xwalk_raw.tabblk2010 = or_wa_census_blocks.geoid10;
+-- geometry of interior point
+ALTER TABLE xwalk ADD COLUMN geom_intpt_4326 geometry;
+UPDATE xwalk
+  SET geom_intpt_4326 = ST_Transform(ST_SetSRID(ST_MakePoint(blklondd, blklatdd), 4269), 4326);
+
 ALTER TABLE xwalk ADD PRIMARY KEY (tabblk2010);
 
--- flows from h_geocode to w_geocode
 CREATE TABLE origin_destination (
   w_geocode text,
   h_geocode text,
