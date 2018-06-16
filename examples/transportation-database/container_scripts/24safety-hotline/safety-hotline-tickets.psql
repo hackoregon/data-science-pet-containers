@@ -15,6 +15,7 @@ CREATE TABLE safety_hotline_tickets (
   latitude double precision
 );
 \copy safety_hotline_tickets from '~/Raw/Safety_Hotline_Tickets.csv' with csv header
+ALTER TABLE safety_hotline_tickets OWNER TO "transportation-systems";
 
 ALTER TABLE safety_hotline_tickets ADD COLUMN geom_4326 geometry;
 UPDATE safety_hotline_tickets

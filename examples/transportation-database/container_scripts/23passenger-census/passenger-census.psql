@@ -8,6 +8,7 @@ SET search_path TO passenger_census, public;
 CREATE TABLE or_census_block_polygons
 AS
   SELECT geoid10 AS census_block, wkb_geometry FROM census_gis.tl_2017_41_tabblock10;
+ALTER TABLE or_census_block_polygons OWNER TO "transportation-systems";
 
 -- transform to SRID 4326
 ALTER TABLE or_census_block_polygons ADD COLUMN geom_polygon_4326 geometry;
@@ -20,6 +21,7 @@ CREATE INDEX ON or_census_block_polygons USING GIST (geom_polygon_4326);
 CREATE TABLE wa_census_block_polygons
 AS
   SELECT geoid10 AS census_block, wkb_geometry FROM census_gis.tl_2017_53_tabblock10;
+ALTER TABLE wa_census_block_polygons OWNER TO "transportation-systems";
 ALTER TABLE wa_census_block_polygons ADD COLUMN geom_polygon_4326 geometry;
 UPDATE wa_census_block_polygons
   SET geom_polygon_4326 = ST_Transform(wkb_geometry, 4326);

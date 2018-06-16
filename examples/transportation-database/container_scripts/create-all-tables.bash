@@ -4,8 +4,8 @@
 export DBOWNER=transportation-systems
 export PGDATABASE=transportation-systems-main
 
-echo "Installing R packages"
-./01install-r-packages.R
+#echo "Installing R packages"
+#./01install-r-packages.R
 echo "Creating a fresh database"
 ./02create-fresh-database.bash
 echo "Checking input sha512 sums"
@@ -34,6 +34,9 @@ if [ "$#" -eq 0 ]; then
 fi
 
 # vacuum analyze
+echo "Vacuuming the database"
 psql -U ${DBOWNER} -d ${PGDATABASE} -c "VACUUM ANALYZE;"
+echo "Check for correct ownership"
+psql -U ${DBOWNER} -d ${PGDATABASE} -f check-owners.psql
 echo "Creating database backup"
 ./90create-database-backup.bash

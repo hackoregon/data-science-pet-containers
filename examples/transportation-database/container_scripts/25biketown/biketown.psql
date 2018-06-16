@@ -27,6 +27,7 @@ CREATE TABLE biketown (
   duration_minutes double precision
 );
 \copy biketown from '~/Raw/cleaned_biketown.csv' with csv header
+ALTER TABLE biketown OWNER TO "transportation-systems";
 ALTER TABLE biketown ADD COLUMN id serial;
 ALTER TABLE biketown ADD PRIMARY KEY (id);
 
@@ -36,6 +37,7 @@ CREATE TABLE biketown_hubs(
   latitude double precision
 );
 \copy biketown_hubs from '~/Raw/biketown_hubs.csv' with csv header
+ALTER TABLE biketown_hubs OWNER TO "transportation-systems";
 ALTER TABLE biketown_hubs ADD COLUMN geom_4326 geometry;
 UPDATE biketown_hubs
   SET geom_4326 = ST_SetSRID(ST_MakePoint(longitude, latitude), 4326);

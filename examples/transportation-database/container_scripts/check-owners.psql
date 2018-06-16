@@ -1,0 +1,14 @@
+\connect transportation-systems-main
+SET search_path TO
+  trimet_gis,
+  census_gis,
+  odot_crash_data,
+  passenger_census,
+  safety_hotline_tickets,
+  biketown,
+  multnomah_county_permits,
+  origin_destination,
+  trimet_stop_events,
+  public
+;
+\d

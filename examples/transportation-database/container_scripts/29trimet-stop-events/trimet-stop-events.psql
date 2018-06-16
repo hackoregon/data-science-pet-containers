@@ -37,6 +37,7 @@ CREATE TABLE trimet_stop_events (
 \copy trimet_stop_events from '~/Raw/m2017_11_trimet_stop_events.csv' with csv header
 \copy trimet_stop_events from '~/Raw/m2018_04_trimet_stop_events.csv' with csv header
 \copy trimet_stop_events from '~/Raw/m2018_05_trimet_stop_events.csv' with csv header
+ALTER TABLE trimet_stop_events OWNER TO "transportation-systems";
 
 ALTER TABLE trimet_stop_events ADD COLUMN geom_point_4326 geometry;
 UPDATE trimet_stop_events
@@ -54,3 +55,4 @@ CREATE TABLE totals_ons_by_hour AS
   GROUP BY service_date, service_key, hour_of_day
   ORDER BY service_date, hour_of_day
 ;
+ALTER TABLE total_ons_by_hour OWNER TO "transportation-systems";

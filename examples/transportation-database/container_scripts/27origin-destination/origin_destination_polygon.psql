@@ -72,6 +72,7 @@ SELECT tabblk2010, st, stusps, stname, cty, ctyname, trct, trctname, bgrp, bgrpn
 FROM xwalk_raw
 INNER JOIN or_wa_census_blocks
 ON xwalk_raw.tabblk2010 = or_wa_census_blocks.geoid10;
+ALTER TABLE xwalk OWNER TO "transportation-systems";
 ALTER TABLE xwalk ADD PRIMARY KEY (tabblk2010);
 
 -- flows from h_geocode to w_geocode
@@ -83,6 +84,7 @@ CREATE TABLE origin_destination (
 );
 \copy origin_destination from '~/Raw/LODES/origin_destination.csv' with csv header
 
+ALTER TABLE origin_destination OWNER TO "transportation-systems";
 ALTER TABLE origin_destination ADD COLUMN id serial;
 ALTER TABLE origin_destination ADD PRIMARY KEY (id);
 
@@ -142,6 +144,7 @@ CREATE TABLE workplace_area_characteristics (
   year integer
 );
 \copy workplace_area_characteristics from '~/Raw/LODES/workplace_area_characteristics.csv' with csv header
+ALTER TABLE workplace_area_characteristics OWNER TO "transportation-systems";
 ALTER TABLE workplace_area_characteristics ADD PRIMARY KEY (w_geocode, year);
 
 CREATE TABLE residence_area_characteristics (
@@ -190,4 +193,5 @@ CREATE TABLE residence_area_characteristics (
   year integer
 );
 \copy residence_area_characteristics from '~/Raw/LODES/residence_area_characteristics.csv' with csv header
+ALTER TABLE residence_area_characteristics OWNER TO "transportation-systems";
 ALTER TABLE residence_area_characteristics ADD PRIMARY KEY (h_geocode, year);
