@@ -1,0 +1,193 @@
+\connect "transportation-systems-main"
+
+DROP SCHEMA IF EXISTS origin_destination CASCADE;
+CREATE SCHEMA origin_destination;
+SET search_path TO origin_destination, public;
+
+-- census block polygons
+CREATE TEMPORARY TABLE or_wa_census_blocks AS
+SELECT geoid10, ST_Transform(wkb_geometry, 4326) AS geom_polygon_4326
+FROM census_gis.tl_2017_41_tabblock10
+UNION
+SELECT geoid10, ST_Transform(wkb_geometry, 4326) AS geom_polygon_4326
+FROM census_gis.tl_2017_53_tabblock10;
+
+-- "crosswalk" table
+CREATE TEMPORARY TABLE xwalk_raw (
+  tabblk2010 text,
+  st text,
+  stusps text,
+  stname text,
+  cty text,
+  ctyname text,
+  trct text,
+  trctname text,
+  bgrp text,
+  bgrpname text,
+  cbsa text,
+  cbsaname text,
+  zcta text,
+  zctaname text,
+  stplc text,
+  stplcname text,
+  ctycsub text,
+  ctycsubname text,
+  stcd115 text,
+  stcd115name text,
+  stsldl text,
+  stsldlname text,
+  stsldu text,
+  stslduname text,
+  stschool text,
+  stschoolname text,
+  stsecon text,
+  stseconname text,
+  trib text,
+  tribname text,
+  tsub text,
+  tsubname text,
+  stanrc text,
+  stanrcname text,
+  necta text,
+  nectaname text,
+  mil text,
+  milname text,
+  stwib text,
+  stwibname text,
+  blklatdd double precision,
+  blklondd double precision,
+  createdate date
+);
+
+\copy xwalk_raw from '~/Raw/LODES/xwalk.csv' with csv header
+
+-- geotag with polygons
+CREATE TABLE xwalk AS
+SELECT tabblk2010, st, stusps, stname, cty, ctyname, trct, trctname, bgrp, bgrpname,
+  cbsa, cbsaname, zcta, zctaname, stplc, stplcname, ctycsub, ctycsubname, stcd115, stcd115name,
+  stsldl, stsldlname, stsldu, stslduname, stschool, stschoolname, stsecon, stseconname,
+  trib, tribname, tsub, tsubname, stanrc, stanrcname, necta, nectaname, mil, milname,
+  stwib, stwibname, blklatdd, blklondd, createdate,
+  or_wa_census_blocks.geom_polygon_4326
+FROM xwalk_raw
+INNER JOIN or_wa_census_blocks
+ON xwalk_raw.tabblk2010 = or_wa_census_blocks.geoid10;
+ALTER TABLE xwalk ADD PRIMARY KEY (tabblk2010);
+
+-- flows from h_geocode to w_geocode
+CREATE TABLE origin_destination (
+  w_geocode text,
+  h_geocode text,
+  commuters integer,
+  year integer
+);
+\copy origin_destination from '~/Raw/LODES/origin_destination.csv' with csv header
+
+ALTER TABLE origin_destination ADD COLUMN id serial;
+ALTER TABLE origin_destination ADD PRIMARY KEY (id);
+
+CREATE TABLE workplace_area_characteristics (
+  w_geocode text,
+  c000 integer,
+  ca01 integer,
+  ca02 integer,
+  ca03 integer,
+  ce01 integer,
+  ce02 integer,
+  ce03 integer,
+  cns01 integer,
+  cns02 integer,
+  cns03 integer,
+  cns04 integer,
+  cns05 integer,
+  cns06 integer,
+  cns07 integer,
+  cns08 integer,
+  cns09 integer,
+  cns10 integer,
+  cns11 integer,
+  cns12 integer,
+  cns13 integer,
+  cns14 integer,
+  cns15 integer,
+  cns16 integer,
+  cns17 integer,
+  cns18 integer,
+  cns19 integer,
+  cns20 integer,
+  cr01 integer,
+  cr02 integer,
+  cr03 integer,
+  cr04 integer,
+  cr05 integer,
+  cr07 integer,
+  ct01 integer,
+  ct02 integer,
+  cd01 integer,
+  cd02 integer,
+  cd03 integer,
+  cd04 integer,
+  cs01 integer,
+  cs02 integer,
+  cfa01 integer,
+  cfa02 integer,
+  cfa03 integer,
+  cfa04 integer,
+  cfa05 integer,
+  cfs01 integer,
+  cfs02 integer,
+  cfs03 integer,
+  cfs04 integer,
+  cfs05 integer,
+  year integer
+);
+\copy workplace_area_characteristics from '~/Raw/LODES/workplace_area_characteristics.csv' with csv header
+ALTER TABLE workplace_area_characteristics ADD PRIMARY KEY (w_geocode, year);
+
+CREATE TABLE residence_area_characteristics (
+  h_geocode text,
+  c000 integer,
+  ca01 integer,
+  ca02 integer,
+  ca03 integer,
+  ce01 integer,
+  ce02 integer,
+  ce03 integer,
+  cns01 integer,
+  cns02 integer,
+  cns03 integer,
+  cns04 integer,
+  cns05 integer,
+  cns06 integer,
+  cns07 integer,
+  cns08 integer,
+  cns09 integer,
+  cns10 integer,
+  cns11 integer,
+  cns12 integer,
+  cns13 integer,
+  cns14 integer,
+  cns15 integer,
+  cns16 integer,
+  cns17 integer,
+  cns18 integer,
+  cns19 integer,
+  cns20 integer,
+  cr01 integer,
+  cr02 integer,
+  cr03 integer,
+  cr04 integer,
+  cr05 integer,
+  cr07 integer,
+  ct01 integer,
+  ct02 integer,
+  cd01 integer,
+  cd02 integer,
+  cd03 integer,
+  cd04 integer,
+  cs01 integer,
+  cs02 integer,
+  year integer
+);
+\copy residence_area_characteristics from '~/Raw/LODES/residence_area_characteristics.csv' with csv header
+ALTER TABLE residence_area_characteristics ADD PRIMARY KEY (h_geocode, year);
