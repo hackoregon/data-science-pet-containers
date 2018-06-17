@@ -11,4 +11,4 @@ SET search_path TO
   trimet_stop_events,
   public
 ;
-\d
+\d+
