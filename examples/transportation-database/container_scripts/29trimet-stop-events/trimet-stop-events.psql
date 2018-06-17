@@ -4,6 +4,7 @@ DROP SCHEMA IF EXISTS trimet_stop_events CASCADE;
 CREATE SCHEMA trimet_stop_events;
 SET search_path TO trimet_stop_events, public;
 
+\echo creating trimet_stop_events
 CREATE TABLE trimet_stop_events (
   service_date date,
   vehicle_number integer,
@@ -38,7 +39,6 @@ CREATE TABLE trimet_stop_events (
 \copy trimet_stop_events from '~/Raw/m2018_04_trimet_stop_events.csv' with csv header
 \copy trimet_stop_events from '~/Raw/m2018_05_trimet_stop_events.csv' with csv header
 ALTER TABLE trimet_stop_events OWNER TO "transportation-systems";
-
 ALTER TABLE trimet_stop_events ADD COLUMN geom_point_4326 geometry;
 UPDATE trimet_stop_events
   SET geom_point_4326 = ST_Transform(ST_SetSRID(ST_MakePoint(x_coordinate, y_coordinate), 2913), 4326);
@@ -46,7 +46,8 @@ ALTER TABLE trimet_stop_events ADD COLUMN id serial;
 ALTER TABLE trimet_stop_events ADD PRIMARY KEY (id);
 
 -- create the detail table for time of day analysis
-CREATE TABLE totals_ons_by_hour AS
+\echo creating total_ons_by_hour
+CREATE TABLE total_ons_by_hour AS
   SELECT service_date, service_key,
     to_char(service_date, 'D') AS weekday,
     round(arrive_time / 3600.0, 1) AS hour_of_day,
