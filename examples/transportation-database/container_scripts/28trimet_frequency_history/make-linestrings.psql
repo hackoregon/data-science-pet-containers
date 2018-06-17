@@ -1,0 +1,43 @@
+\connect transportation-systems-main transportation-systems
+SET search_path TO passenger_census, public;
+
+DROP TABLE IF EXISTS annual_route_difference_with_shapes;
+CREATE TABLE annual_route_difference_with_shapes (
+  route_id text,
+  direction_id integer,
+  shape_id text,
+  y2009TripCount integer,
+  y2017TripCount integer
+);
+\copy annual_route_difference_with_shapes from '~/Raw/annual_route_difference_with_shapes.csv' with csv header
+
+DROP TABLE IF EXISTS route_shapes_final;
+CREATE TABLE route_shapes_final (
+  x1 text,
+  shape_id text,
+  shape_pt_lat double precision,
+  shape_pt_lon double precision,
+  shape_pt_sequence integer
+);
+\copy route_shapes_final from '~/Raw/route_shapes_final.csv' with csv header
+
+ALTER TABLE route_shapes_final ADD COLUMN geom_point_4326 geometry;
+UPDATE route_shapes_final
+SET geom_point_4326 = ST_SetSRID(ST_MakePoint(shape_pt_lon, shape_pt_lat), 4326);
+
+DROP TABLE IF EXISTS raw_linestrings;
+CREATE TABLE raw_linestrings
+AS
+SELECT shape_id, 
+       ST_MakeLine(geom_point_4326 ORDER BY shape_id, shape_pt_sequence) AS geom_linestring
+FROM passenger_census.route_shapes_final
+GROUP BY shape_id;
+
+DROP TABLE IF EXISTS route_differences;
+CREATE TABLE route_differences
+AS
+SELECT route_id, direction_id, raw_linestrings.shape_id, 
+       y2009tripcount, y2017tripcount, raw_linestrings.geom_linestring
+FROM passenger_census.annual_route_difference_with_shapes
+LEFT JOIN raw_linestrings
+ON annual_route_difference_with_shapes.shape_id = raw_linestrings.shape_id;
