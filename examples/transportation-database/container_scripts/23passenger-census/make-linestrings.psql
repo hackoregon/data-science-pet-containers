@@ -1,43 +1,58 @@
 \connect transportation-systems-main transportation-systems
 SET search_path TO passenger_census, public;
 
-DROP TABLE IF EXISTS annual_route_difference_with_shapes;
-CREATE TABLE annual_route_difference_with_shapes (
+DROP TABLE IF EXISTS ards;
+CREATE TEMPORARY TABLE ards (
   route_id text,
   direction_id integer,
   shape_id text,
-  y2009TripCount integer,
-  y2017TripCount integer
+  y2009_trip_count integer,
+  y2017_trip_count integer
 );
-\copy annual_route_difference_with_shapes from '~/Raw/annual_route_difference_with_shapes.csv' with csv header
+\copy ards from '~/Raw/annual_route_difference_with_shapes.csv' with csv header
 
-DROP TABLE IF EXISTS route_shapes_final;
-CREATE TABLE route_shapes_final (
-  x1 text,
+DROP TABLE IF EXISTS rsf;
+CREATE TEMPORARY TABLE rsf (
   shape_id text,
+  shape_pt_sequence integer,
   shape_pt_lat double precision,
-  shape_pt_lon double precision,
-  shape_pt_sequence integer
+  shape_pt_lon double precision
 );
-\copy route_shapes_final from '~/Raw/route_shapes_final.csv' with csv header
+\copy rsf from '~/Raw/route_shapes_final-2.csv' with csv header
 
-ALTER TABLE route_shapes_final ADD COLUMN geom_point_4326 geometry;
-UPDATE route_shapes_final
+DROP TABLE IF EXISTS raw_points;
+CREATE TEMPORARY TABLE raw_points
+AS
+SELECT rsf.shape_id, shape_pt_lat, shape_pt_lon, shape_pt_sequence, ards.route_id, ards.direction_id
+FROM rsf
+LEFT JOIN ards
+ON rsf.shape_id = ards.shape_id;
+ALTER TABLE raw_points ADD COLUMN geom_point_4326 geometry;
+UPDATE raw_points
 SET geom_point_4326 = ST_SetSRID(ST_MakePoint(shape_pt_lon, shape_pt_lat), 4326);
 
 DROP TABLE IF EXISTS raw_linestrings;
-CREATE TABLE raw_linestrings
+CREATE TEMPORARY TABLE raw_linestrings
 AS
-SELECT shape_id, 
-       ST_MakeLine(geom_point_4326 ORDER BY shape_id, shape_pt_sequence) AS geom_linestring
-FROM passenger_census.route_shapes_final
-GROUP BY shape_id;
+SELECT shape_id, route_id, direction_id, 
+       ST_MakeLine(geom_point_4326 ORDER BY shape_pt_sequence) AS geom_linestring
+FROM raw_points
+GROUP BY shape_id, route_id, direction_id;
 
-DROP TABLE IF EXISTS route_differences;
-CREATE TABLE route_differences
+DROP TABLE IF EXISTS route_change;
+CREATE TABLE route_change
 AS
-SELECT route_id, direction_id, raw_linestrings.shape_id, 
-       y2009tripcount, y2017tripcount, raw_linestrings.geom_linestring
-FROM passenger_census.annual_route_difference_with_shapes
+SELECT raw_linestrings.route_id, raw_linestrings.direction_id, raw_linestrings.shape_id, 
+       y2009_trip_count, y2017_trip_count, raw_linestrings.geom_linestring
+FROM ards
 LEFT JOIN raw_linestrings
-ON annual_route_difference_with_shapes.shape_id = raw_linestrings.shape_id;
+ON ards.shape_id = raw_linestrings.shape_id;
+
+ALTER TABLE route_change ADD COLUMN pct_change double precision;
+UPDATE route_change
+SET pct_change =
+CASE WHEN y2009_trip_count > 0 THEN
+  100.0 * (y2017_trip_count - y2009_trip_count) / y2009_trip_count
+ELSE 9999
+END;
+ALTER TABLE route_change ADD PRIMARY KEY (route_id, direction_id, shape_id);
