@@ -6,3 +6,4 @@ export PGDATABASE=transportation-systems-main
 
 echo "Importing passenger_census.csv"
 psql -U ${DBOWNER} -d ${PGDATABASE} -f "passenger-census.psql"
+psql -U ${DBOWNER} -d ${PGDATABASE} -f "make-linestrings.psql"
