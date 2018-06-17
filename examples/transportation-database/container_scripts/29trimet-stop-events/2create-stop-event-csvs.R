@@ -102,15 +102,27 @@ for (i in 1:nrow(month_table)) {
 # reformat the disturbance stops table
 cat(paste("\nFixing dates on disturbance stop table\n"))
 options(warn = 0)
-disturbance_stops <- read_csv(
-  "~/Raw/Lines4_14_73_Disturbance_Stops.csv",
-  col_types = cols(
-    .default = col_character(),
-    OPD_DATE_x = col_date(format = "%d%b%Y:%H:%M:%S"),
-    OPD_DATE_y = col_date(format = "%d%b%Y:%H:%M:%S")
-  )
-)
-colnames(disturbance_stops)[1] <- "serial"
+disturbance_stops <- tibble()
+for (file in c(
+  "~/Raw/Sept_Disturbance_Stops.csv",
+  "~/Raw/Oct_Disturbance_Stops_Test.csv",
+  "~/Raw/Nov_Disturbance_Stops.csv",
+  "~/Raw/Apr_Disturbance_Stops.csv",
+  "~/Raw/May_Disturbance_Stops.csv"
+)) {
+  temp <- read_csv(
+    file,
+    progress = FALSE,
+    col_types = cols(
+      .default = col_character(),
+      OPD_DATE_x = col_date(format = "%d%b%Y:%H:%M:%S"),
+      OPD_DATE_y = col_date(format = "%d%b%Y:%H:%M:%S")
+    )
+  ) %>%
+    select(-X1)
+  disturbance_stops <- disturbance_stops %>% bind_rows(temp)
+  rm(temp); gc(verbose = TRUE)
+}
 colnames(disturbance_stops) <- tolower(colnames(disturbance_stops))
 disturbance_stops %>% write_csv(
   "~/Raw/disturbance_stops.csv",
