@@ -114,7 +114,7 @@ CREATE TEMPORARY TABLE y2009
 AS
 SELECT census_block, CAST(total_ons AS double precision), CAST(stops AS double precision), geom_polygon_4326
 FROM annual_census_block_ridership
-WHERE year = 2009 AND total_ons > 0 AND stops > 0;
+WHERE year = 2009;
 
 CREATE TEMPORARY TABLE y2017
 AS
@@ -127,10 +127,16 @@ AS
 SELECT y2009.census_block,
        y2009.total_ons AS total_ons_2009,
        y2017.total_ons AS total_ons_2017,
-       100.0 * (y2017.total_ons - y2009.total_ons) / y2009.total_ons AS ons_pct_change,
+       CASE WHEN y2009.total_ons > 0 THEN
+         100.0 * (y2017.total_ons - y2009.total_ons) / y2009.total_ons
+       ELSE 999
+       END AS ons_pct_change,
        y2009.stops AS stops_2009,
        y2017.stops AS stops_2017,
-       100.0 * (y2017.stops - y2009.stops) / y2009.stops AS stops_pct_change,
+       CASE WHEN y2009.stops > 0 THEN
+         100.0 * (y2017.stops - y2009.stops) / y2009.stops
+       ELSE 999
+       END AS stops_pct_change,
        y2009.geom_polygon_4326
 FROM y2009
 INNER JOIN y2017
