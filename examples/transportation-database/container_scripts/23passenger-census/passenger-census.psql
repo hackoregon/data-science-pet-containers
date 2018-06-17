@@ -129,7 +129,7 @@ SELECT y2009.census_block,
        y2017.total_ons AS total_ons_2017,
        CASE WHEN y2009.total_ons > 0 THEN
          100.0 * (y2017.total_ons - y2009.total_ons) / y2009.total_ons
-       ELSE 999
+       ELSE 9999
        END AS ons_pct_change,
        y2009.stops AS stops_2009,
        y2017.stops AS stops_2017,
