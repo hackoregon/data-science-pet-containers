@@ -1,4 +1,4 @@
-\connect "transportation-systems-main"
+\connect transportation-systems-main transportation-systems
 
 DROP SCHEMA IF EXISTS origin_destination CASCADE;
 CREATE SCHEMA origin_destination;

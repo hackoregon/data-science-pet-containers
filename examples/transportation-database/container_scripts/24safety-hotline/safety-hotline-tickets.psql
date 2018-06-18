@@ -1,4 +1,4 @@
-\connect "transportation-systems-main"
+\connect transportation-systems-main transportation-systems
 
 DROP SCHEMA IF EXISTS safety_hotline_tickets CASCADE;
 CREATE SCHEMA safety_hotline_tickets;

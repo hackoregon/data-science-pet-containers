@@ -1,4 +1,4 @@
-\connect "transportation-systems-main"
+\connect transportation-systems-main transportation-systems
 
 DROP SCHEMA IF EXISTS biketown CASCADE;
 CREATE SCHEMA biketown;

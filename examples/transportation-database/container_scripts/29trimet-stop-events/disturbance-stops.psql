@@ -1,4 +1,4 @@
-\connect "transportation-systems-main"
+\connect transportation-systems-main transportation-systems
 SET search_path TO trimet_stop_events, public;
 
 \echo creating disturbance_stops

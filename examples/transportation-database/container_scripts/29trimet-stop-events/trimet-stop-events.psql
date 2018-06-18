@@ -1,4 +1,4 @@
-\connect "transportation-systems-main"
+\connect transportation-systems-main transportation-systems
 
 DROP SCHEMA IF EXISTS trimet_stop_events CASCADE;
 CREATE SCHEMA trimet_stop_events;
