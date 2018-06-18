@@ -13,6 +13,7 @@ echo "Checking input sha512 sums"
 
 for dataset in \
   20reference \
+  21pudl \
   22odot-crash-data \
   23passenger-census \
   24safety-hotline \
