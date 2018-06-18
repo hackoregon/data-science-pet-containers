@@ -1,0 +1,28 @@
+---
+title: "Passenger Census Time Series Analysis"
+output: html_notebook
+---
+
+## Load data from PostgreSQL via "sf"
+```{r}
+library(sf)
+layers <- st_layers("pg:dbname=transportation-systems-main")
+layers
+passenger_census <- st_read(
+  "pg:dbname=transportation-systems-main",
+  layer = "passenger_census.passenger_census")
+```
+
+```{r}
+passenger_census %>% 
+  as_tibble() %>% 
+  select(-geom_4326) %>% 
+  group_by(summary_begin_date) %>% 
+  summarize(total_ons = sum(ons)) %>%  
+  ungroup() %>% 
+  filter(summary_begin_date != "2001-01-01") -> 
+  time_series_data
+qplot(time_series_data$summary_begin_date, time_series_data$total_ons)
+
+```
+
