@@ -1,26 +1,29 @@
 ---
 title: "Passenger Census Time Series Analysis"
-output: html_notebook
+output: github_document
 ---
 
-## Load data from PostgreSQL via "sf"
+## Load data from CSV
 ```{r}
-library(sf)
-layers <- st_layers("pg:dbname=transportation-systems-main")
-layers
-passenger_census <- st_read(
-  "pg:dbname=transportation-systems-main",
-  layer = "passenger_census.passenger_census")
+library(tidyverse)
+passenger_census <- read_csv(
+  "~/Raw/passenger_census.csv",
+  col_types = cols(
+    SUMMARY_BEGIN_DATE = col_date(format = "%d-%b-%y")
+  )
+)
+colnames(passenger_census) <- tolower(colnames(passenger_census))
+
 ```
 
+## Plot total ons as a time series
 ```{r}
 passenger_census %>% 
-  as_tibble() %>% 
-  select(-geom_4326) %>% 
   group_by(summary_begin_date) %>% 
-  summarize(total_ons = sum(ons)) %>%  
-  ungroup() %>% 
-  filter(summary_begin_date != "2001-01-01") -> 
+  summarize(total_ons = sum(ons)) %>%
+  ungroup() %>%
+  filter(summary_begin_date != "2001-01-01")  %>% 
+  arrange(summary_begin_date) ->
   time_series_data
 qplot(time_series_data$summary_begin_date, time_series_data$total_ons)
 
