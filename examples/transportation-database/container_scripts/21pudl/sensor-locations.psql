@@ -1,0 +1,22 @@
+\connect transportation-systems-main transportation-systems
+
+DROP SCHEMA IF EXISTS pudl CASCADE;
+CREATE SCHEMA pudl;
+SET search_path TO pudl, public;
+
+DROP TABLE IF EXISTS sensor_locations;
+CREATE TABLE sensor_locations(
+  longitude double precision,
+  latitude double precision,
+  asset_count integer
+);
+\copy sensor_locations from '~/Raw/sensor_locations.csv' with csv header
+ALTER TABLE sensor_locations OWNER TO "transportation-systems";
+
+-- add geometry column
+ALTER TABLE sensor_locations ADD COLUMN geom_4326 geometry;
+UPDATE sensor_locations
+  SET geom_4326 = ST_SetSRID(ST_MakePoint(longitude, latitude), 4326);
+CREATE INDEX ON sensor_locations USING GIST (geom_4326);
+ALTER TABLE sensor_locations ADD COLUMN id serial;
+ALTER TABLE sensor_locations ADD PRIMARY KEY (id);

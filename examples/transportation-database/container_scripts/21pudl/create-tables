@@ -1,0 +1,10 @@
+#! /bin/bash
+
+# define parameters
+export DBOWNER=transportation-systems
+export PGDATABASE=transportation-systems-main
+
+echo "Converting sensor location JSON to CSV"
+./sensor-location-csv.R
+echo "Importing sensor-locations.csv"
+psql -U ${DBOWNER} -d ${PGDATABASE} -f "sensor-locations.psql"
