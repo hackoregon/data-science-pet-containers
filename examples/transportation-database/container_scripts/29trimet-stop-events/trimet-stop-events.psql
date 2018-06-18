@@ -57,3 +57,5 @@ CREATE TABLE total_ons_by_hour AS
   ORDER BY service_date, hour_of_day
 ;
 ALTER TABLE total_ons_by_hour OWNER TO "transportation-systems";
+ALTER TABLE total_ons_by_hour ADD COLUMN id serial;
+ALTER TABLE total_ons_by_hour ADD PRIMARY KEY (id);
