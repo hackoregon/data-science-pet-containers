@@ -10,8 +10,14 @@ docker cp ~/Raw/Safety_Hotline_Tickets.csv containers_postgis_1:/home/dbsuper/Ra
 docker cp ~/Raw/scrapes.rar containers_postgis_1:/home/dbsuper/Raw
 docker cp ~/Raw/April\ 2018.rar containers_postgis_1:/home/dbsuper/Raw
 docker cp ~/Raw/May\ 2018.rar containers_postgis_1:/home/dbsuper/Raw
-docker cp ~/Raw/Lines4_14_73_Disturbance_Stops.csv containers_postgis_1:/home/dbsuper/Raw
-docker cp ~/Raw/annual_route_difference.csv containers_postgis_1:/home/dbsuper/Raw
+docker cp ~/Raw/sensor_locations.json containers_postgis_1:/home/dbsuper/Raw
+docker cp ~/Raw/Nov_Disturbance_Stops.csv containers_postgis_1:/home/dbsuper/Raw
+docker cp ~/Raw/May_Disturbance_Stops.csv containers_postgis_1:/home/dbsuper/Raw
+docker cp ~/Raw/Sept_Disturbance_Stops.csv containers_postgis_1:/home/dbsuper/Raw
+docker cp ~/Raw/Apr_Disturbance_Stops.csv containers_postgis_1:/home/dbsuper/Raw
+docker cp ~/Raw/Oct_Disturbance_Stops_Test.csv containers_postgis_1:/home/dbsuper/Raw
+docker cp ~/Raw/annual_route_difference_with_shapes.csv containers_postgis_1:/home/dbsuper/Raw
+docker cp ~/Raw/route_shapes_final-2.csv containers_postgis_1:/home/dbsuper/Raw
 
 echo "Running the scripts in the container"
 echo ""
