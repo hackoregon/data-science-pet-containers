@@ -5,4 +5,4 @@ export DBOWNER=transportation-systems
 export PGDATABASE=transportation-systems-main
 
 echo "Importing Safety_Hotline_Tickets.csv"
-psql -U ${DBOWNER} -d ${PGDATABASE} -f "safety-hotline-tickets.psql"
+psql -U ${DBOWNER} -d ${PGDATABASE} -f "scrubbed.psql"

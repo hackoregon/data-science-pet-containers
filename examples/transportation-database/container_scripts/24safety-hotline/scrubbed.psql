@@ -1,0 +1,29 @@
+\connect transportation-systems-main transportation-systems
+
+DROP SCHEMA IF EXISTS safety_hotline_tickets CASCADE;
+CREATE SCHEMA safety_hotline_tickets;
+SET search_path TO safety_hotline_tickets, public;
+
+CREATE TABLE safety_hotline_tickets (
+  x1 text,
+  item_id integer,
+  date_created date,
+  description text,
+  problem_location text,
+  x double precision,
+  y double precision,
+  longitude double precision,
+  latitude double precision,
+  x2 text
+);
+\copy safety_hotline_tickets from '~/Raw/Manual_Scrubbed_823.csv' with csv header
+ALTER TABLE safety_hotline_tickets OWNER TO "transportation-systems";
+ALTER TABLE safety_hotline_tickets DROP COLUMN x1;
+ALTER TABLE safety_hotline_tickets DROP COLUMN x2;
+
+ALTER TABLE safety_hotline_tickets ADD COLUMN geom_4326 geometry;
+UPDATE safety_hotline_tickets
+  SET geom_4326 = ST_SetSRID(ST_MakePoint(longitude, latitude), 4326);
+
+ALTER TABLE safety_hotline_tickets ADD COLUMN id serial;
+ALTER TABLE safety_hotline_tickets ADD PRIMARY KEY (id);
