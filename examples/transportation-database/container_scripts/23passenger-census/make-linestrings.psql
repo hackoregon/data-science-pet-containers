@@ -4,12 +4,12 @@ SET search_path TO passenger_census, public;
 DROP TABLE IF EXISTS ards;
 CREATE TEMPORARY TABLE ards (
   route_id text,
-  direction_id integer,
   shape_id text,
-  y2009_trip_count integer,
-  y2017_trip_count integer
+  trip_count_2017 integer,
+  trip_count_2009 integer,
+  frequency_change double precision
 );
-\copy ards from '~/Raw/annual_route_difference_with_shapes.csv' with csv header
+\copy ards from '~/Raw/annual_route_difference_with_shapes-NEW.csv' with csv header
 
 DROP TABLE IF EXISTS rsf;
 CREATE TEMPORARY TABLE rsf (
@@ -23,7 +23,7 @@ CREATE TEMPORARY TABLE rsf (
 DROP TABLE IF EXISTS raw_points;
 CREATE TEMPORARY TABLE raw_points
 AS
-SELECT rsf.shape_id, shape_pt_lat, shape_pt_lon, shape_pt_sequence, ards.route_id, ards.direction_id
+SELECT rsf.shape_id, shape_pt_lat, shape_pt_lon, shape_pt_sequence, ards.route_id
 FROM rsf
 LEFT JOIN ards
 ON rsf.shape_id = ards.shape_id;
@@ -34,16 +34,16 @@ SET geom_point_4326 = ST_SetSRID(ST_MakePoint(shape_pt_lon, shape_pt_lat), 4326)
 DROP TABLE IF EXISTS raw_linestrings;
 CREATE TEMPORARY TABLE raw_linestrings
 AS
-SELECT shape_id, route_id, direction_id, 
+SELECT shape_id, route_id,
        ST_MakeLine(geom_point_4326 ORDER BY shape_pt_sequence) AS geom_linestring
 FROM raw_points
-GROUP BY shape_id, route_id, direction_id;
+GROUP BY shape_id, route_id;
 
 DROP TABLE IF EXISTS route_change;
 CREATE TABLE route_change
 AS
-SELECT raw_linestrings.route_id, raw_linestrings.direction_id, raw_linestrings.shape_id, 
-       y2009_trip_count, y2017_trip_count, raw_linestrings.geom_linestring
+SELECT raw_linestrings.route_id, raw_linestrings.shape_id, 
+       trip_count_2009, trip_count_2017, raw_linestrings.geom_linestring
 FROM ards
 LEFT JOIN raw_linestrings
 ON ards.shape_id = raw_linestrings.shape_id;
@@ -51,8 +51,8 @@ ON ards.shape_id = raw_linestrings.shape_id;
 ALTER TABLE route_change ADD COLUMN pct_change double precision;
 UPDATE route_change
 SET pct_change =
-CASE WHEN y2009_trip_count > 0 THEN
-  100.0 * (y2017_trip_count - y2009_trip_count) / y2009_trip_count
-ELSE 9999
+CASE WHEN trip_count_2009 > 0 THEN
+  100.0 * (trip_count_2017 - trip_count_2009) / trip_count_2009
+ELSE 99999
 END;
-ALTER TABLE route_change ADD PRIMARY KEY (route_id, direction_id, shape_id);
+ALTER TABLE route_change ADD PRIMARY KEY (shape_id);
