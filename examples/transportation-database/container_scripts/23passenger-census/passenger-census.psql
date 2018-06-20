@@ -5,30 +5,39 @@ CREATE SCHEMA passenger_census;
 SET search_path TO passenger_census, public;
 
 -- census block polygons
+\echo or_census_block_polygons
 CREATE TABLE or_census_block_polygons
 AS
-  SELECT geoid10 AS census_block, wkb_geometry FROM census_gis.tl_2017_41_tabblock10;
+SELECT geoid10 AS census_block, ST_Transform(wkb_geometry, 4326) AS geom_polygon_4326
+FROM census_gis.tl_2017_41_tabblock10;
 ALTER TABLE or_census_block_polygons OWNER TO "transportation-systems";
-
--- transform to SRID 4326
-ALTER TABLE or_census_block_polygons ADD COLUMN geom_polygon_4326 geometry;
-UPDATE or_census_block_polygons
-  SET geom_polygon_4326 = ST_Transform(wkb_geometry, 4326);
-ALTER TABLE or_census_block_polygons DROP COLUMN wkb_geometry;
 ALTER TABLE or_census_block_polygons ADD PRIMARY KEY (census_block);
 CREATE INDEX ON or_census_block_polygons USING GIST (geom_polygon_4326);
 
+\echo wa_census_block_polygons
 CREATE TABLE wa_census_block_polygons
 AS
-  SELECT geoid10 AS census_block, wkb_geometry FROM census_gis.tl_2017_53_tabblock10;
+SELECT geoid10 AS census_block, ST_Transform(wkb_geometry, 4326) AS geom_polygon_4326
+FROM census_gis.tl_2017_53_tabblock10;
 ALTER TABLE wa_census_block_polygons OWNER TO "transportation-systems";
-ALTER TABLE wa_census_block_polygons ADD COLUMN geom_polygon_4326 geometry;
-UPDATE wa_census_block_polygons
-  SET geom_polygon_4326 = ST_Transform(wkb_geometry, 4326);
-ALTER TABLE wa_census_block_polygons DROP COLUMN wkb_geometry;
 ALTER TABLE wa_census_block_polygons ADD PRIMARY KEY (census_block);
 CREATE INDEX ON wa_census_block_polygons USING GIST (geom_polygon_4326);
 
+\echo metro_census_block_lookup
+CREATE TABLE metro_census_block_lookup
+AS
+SELECT * FROM or_census_block_polygons
+INNER JOIN origin_destination.xwalk
+ON or_census_block_polygons.census_block = origin_destination.xwalk.tabblk2010
+UNION
+SELECT * FROM wa_census_block_polygons
+INNER JOIN origin_destination.xwalk
+ON wa_census_block_polygons.census_block = origin_destination.xwalk.tabblk2010;
+ALTER TABLE metro_census_block_lookup OWNER TO "transportation-systems";
+ALTER TABLE metro_census_block_lookup ADD PRIMARY KEY (census_block);
+CREATE INDEX ON metro_census_block_lookup USING GIST (geom_polygon_4326);
+
+\echo passenger_census_raw
 CREATE TEMPORARY TABLE passenger_census_raw (
   summary_begin_date date,
   route_number integer,
@@ -55,15 +64,16 @@ UPDATE passenger_census_raw
   SET service_key = trim(service_key);
 
 -- tag with census block
+\echo passenger_census
 CREATE TABLE passenger_census AS
 SELECT summary_begin_date, route_number, direction, service_key, stop_seq,
   location_id, public_location_description, ons, offs, x_coord, y_coord, geom_4326,
   census_block
 FROM passenger_census_raw
-LEFT JOIN or_census_block_polygons
-ON ST_Intersects(
-  or_census_block_polygons.geom_polygon_4326,
-  passenger_census_raw.geom_4326
+LEFT JOIN metro_census_block_lookup
+ON ST_Within(
+  passenger_census_raw.geom_4326,
+  metro_census_block_lookup.geom_polygon_4326
 );
 CREATE INDEX ON passenger_census USING GIST (geom_4326);
 ALTER TABLE passenger_census OWNER TO "transportation-systems";
@@ -73,6 +83,7 @@ ALTER TABLE passenger_census ADD COLUMN id serial;
 ALTER TABLE passenger_census ADD PRIMARY KEY (id);
 
 -- annual summary by route
+\echo annual_route_ridership
 CREATE TABLE annual_route_ridership
 AS
 SELECT
@@ -91,6 +102,7 @@ ALTER TABLE annual_route_ridership ADD COLUMN id serial;
 ALTER TABLE annual_route_ridership ADD PRIMARY KEY (id);
 
 -- annual summary by census_block
+\echo annual_census_block_ridership
 CREATE TABLE annual_census_block_ridership
 AS
 SELECT
@@ -98,12 +110,13 @@ SELECT
   passenger_census.census_block,
   SUM(ons) AS total_ons,
   COUNT(ons) AS stops,
-  or_census_block_polygons.geom_polygon_4326
+  SUM(ons) / COUNT(ons) AS ons_per_stop,
+  metro_census_block_lookup.geom_polygon_4326
 FROM passenger_census
-LEFT JOIN or_census_block_polygons
-ON passenger_census.census_block = or_census_block_polygons.census_block
-GROUP BY year, passenger_census.census_block, or_census_block_polygons.census_block
-ORDER BY passenger_census.census_block, year;
+LEFT JOIN metro_census_block_lookup
+ON passenger_census.census_block = metro_census_block_lookup.census_block
+GROUP BY year, passenger_census.census_block, metro_census_block_lookup.geom_polygon_4326
+ORDER BY census_block, year;
 
 ALTER TABLE annual_census_block_ridership OWNER TO "transportation-systems";
 ALTER TABLE annual_census_block_ridership ADD COLUMN id serial;
@@ -129,13 +142,13 @@ SELECT y2009.census_block,
        y2017.total_ons AS total_ons_2017,
        CASE WHEN y2009.total_ons > 0 THEN
          100.0 * (y2017.total_ons - y2009.total_ons) / y2009.total_ons
-       ELSE 9999
+       ELSE 99999
        END AS ons_pct_change,
        y2009.stops AS stops_2009,
        y2017.stops AS stops_2017,
        CASE WHEN y2009.stops > 0 THEN
          100.0 * (y2017.stops - y2009.stops) / y2009.stops
-       ELSE 999
+       ELSE 99999
        END AS stops_pct_change,
        y2009.geom_polygon_4326
 FROM y2009
