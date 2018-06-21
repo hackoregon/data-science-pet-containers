@@ -5,8 +5,8 @@ DROP TABLE IF EXISTS ards;
 CREATE TEMPORARY TABLE ards (
   route_id text,
   shape_id text,
-  trip_count_2017 integer,
-  trip_count_2009 integer,
+  y2017_trip_count integer,
+  y2009_trip_count integer,
   frequency_change double precision
 );
 \copy ards from '~/Raw/annual_route_difference_with_shapes-NEW.csv' with csv header
@@ -43,7 +43,7 @@ DROP TABLE IF EXISTS route_change;
 CREATE TABLE route_change
 AS
 SELECT raw_linestrings.route_id, raw_linestrings.shape_id, 
-       trip_count_2009, trip_count_2017, raw_linestrings.geom_linestring
+       y2009_trip_count, y2017_trip_count, raw_linestrings.geom_linestring
 FROM ards
 LEFT JOIN raw_linestrings
 ON ards.shape_id = raw_linestrings.shape_id;
@@ -51,8 +51,8 @@ ON ards.shape_id = raw_linestrings.shape_id;
 ALTER TABLE route_change ADD COLUMN pct_change double precision;
 UPDATE route_change
 SET pct_change =
-CASE WHEN trip_count_2009 > 0 THEN
-  100.0 * (trip_count_2017 - trip_count_2009) / trip_count_2009
+CASE WHEN y2009_trip_count > 0 THEN
+  100.0 * (y2017_trip_count - y2009_trip_count) / y2009_trip_count
 ELSE 99999
 END;
 ALTER TABLE route_change ADD PRIMARY KEY (shape_id);
