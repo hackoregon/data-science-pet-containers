@@ -2,7 +2,7 @@
 SET search_path TO passenger_census, public;
 
 DROP TABLE IF EXISTS annual_route_differences_for_scatter;
-CREATE TEMPORARY TABLE annual_route_differences_for_scatter (
+CREATE TABLE annual_route_differences_for_scatter (
   x1 text,
   route_id text,
   year integer,
