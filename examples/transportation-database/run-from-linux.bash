@@ -20,3 +20,4 @@ echo "Validating backup sha512sum"
 sha512sum -c transportation-systems-main.sql.gz.sha512sum
 echo "Testing backup decompression"
 gzip -dc transportation-systems-main.sql.gz | wc -c
+popd
