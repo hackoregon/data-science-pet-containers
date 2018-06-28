@@ -23,4 +23,4 @@ Requirements are listed in the `requirements.txt` file, but this script makes us
 of `python3 requests` and `beautifulsoup4`.
 
 ### NOTES:
-The first link contains 34 pages of .zip files, while the second contains 21. All told there's ~1000 archive folders of ~30 MB each.
+The first link contains 34 pages of .zip files, while the second contains 21. All told there's ~500 archive folders of ~30 MB each.
