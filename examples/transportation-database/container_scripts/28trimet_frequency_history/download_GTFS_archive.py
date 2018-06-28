@@ -5,7 +5,6 @@ import time
 from pathlib import Path
 
 import requests
-
 from bs4 import BeautifulSoup
 
 
@@ -35,7 +34,7 @@ if __name__ == '__main__':
     # Grab command line arguments.
     parser = get_command_line_args()
 
-    # Make sure we got something.
+    # Make sure we got something. If we don't, show help and exit.
     if len(sys.argv) == 1:
         parser.print_help()
         sys.exit()
