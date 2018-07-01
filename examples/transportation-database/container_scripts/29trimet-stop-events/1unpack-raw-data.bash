@@ -14,6 +14,7 @@ rm -f trimet_stop_event*csv
 for i in trimet_stop_event*.csv
 do
   sha512sum -c "${SHA512SUMS}/${i}.sha512sum"
-  csvgrep -c ROUTE_NUMBER -r "^4$|^14$|^73$" ${i} > trimmed_${i}
+  echo "Trimming ${i}"
+  csvgrep -c ROUTE_NUMBER -r "^4$|^14$|^73$" "${i}" > "trimmed_${i}"
 done
 popd
