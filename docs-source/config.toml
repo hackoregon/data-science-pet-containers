@@ -8,6 +8,7 @@ themesdir = "./themes"
 metaDataFormat = "yaml"
 defaultContentLanguageInSubdir= true
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
+publishDir = "../docs"
 
 [params]
   editURL = "https://github.com/matcornic/hugo-theme-learn/edit/master/exampleSite/content/"
