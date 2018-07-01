@@ -13,13 +13,13 @@ echo "Checking input sha512 sums"
 
 for dataset in \
   20reference \
+  27origin-destination \
   21pudl \
   22odot-crash-data \
   23passenger-census \
   24safety-hotline \
   25biketown \
-  26multnomah_county_permits \
-  27origin-destination
+  26multnomah_county_permits
 do
   pushd ${dataset}
   nice -10 ./create-tables

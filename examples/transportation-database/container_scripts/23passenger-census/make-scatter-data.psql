@@ -1,0 +1,18 @@
+\connect transportation-systems-main transportation-systems
+SET search_path TO passenger_census, public;
+
+DROP TABLE IF EXISTS annual_route_differences_for_scatter;
+CREATE TABLE annual_route_differences_for_scatter (
+  x1 text,
+  route_id text,
+  year integer,
+  trip_count integer,
+  frequency_change double precision,
+  ons integer,
+  ridership_change double precision
+);
+\copy annual_route_differences_for_scatter from '~/Raw/annual_route_differences_for_scatter.csv' with csv header
+ALTER TABLE annual_route_differences_for_scatter OWNER TO "transportation-systems";
+ALTER TABLE annual_route_differences_for_scatter DROP COLUMN x1;
+ALTER TABLE annual_route_differences_for_scatter ADD COLUMN id serial;
+ALTER TABLE annual_route_differences_for_scatter ADD PRIMARY KEY (id);

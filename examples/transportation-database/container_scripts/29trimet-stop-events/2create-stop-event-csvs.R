@@ -23,15 +23,15 @@ route_filter <- function(stop_events) {
 month_table <- tibble::tribble(
   ~output_file, ~input_file,
   "~/Raw/m2017_09_trimet_stop_events.csv",
-  "~/Raw/trimet_stop_event 1-30SEP2017.csv",
+  "~/Raw/trimmed_trimet_stop_event 1-30SEP2017.csv",
   "~/Raw/m2017_10_trimet_stop_events.csv",
-  "~/Raw/trimet_stop_event 1-31OCT2017.csv",
+  "~/Raw/trimmed_trimet_stop_event 1-31OCT2017.csv",
   "~/Raw/m2017_11_trimet_stop_events.csv",
-  "~/Raw/trimet_stop_event 1-30NOV2017.csv",
+  "~/Raw/trimmed_trimet_stop_event 1-30NOV2017.csv",
   "~/Raw/m2018_04_trimet_stop_events.csv",
-  "~/Raw/trimet_stop_event 1-30APR2018.csv",
+  "~/Raw/trimmed_trimet_stop_event 1-30APR2018.csv",
   "~/Raw/m2018_05_trimet_stop_events.csv",
-  "~/Raw/trimet_stop_event 1-31MAY2018.csv"
+  "~/Raw/trimmed_trimet_stop_event 1-31MAY2018.csv"
 )
 
 ## loop over months

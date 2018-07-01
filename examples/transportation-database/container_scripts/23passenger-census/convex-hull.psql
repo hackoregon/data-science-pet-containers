@@ -1,0 +1,11 @@
+\connect transportation-systems-main transportation-systems
+SET search_path TO passenger_census, public;
+
+DROP TABLE IF EXISTS census_block_change_hull;
+CREATE TABLE census_block_change_hull
+AS
+SELECT census_block, stops_pct_change, ST_ConvexHull(geom_polygon_4326) AS hull_4326
+FROM census_block_change;
+ALTER TABLE census_block_change_hull OWNER TO "transportation-systems";
+ALTER TABLE census_block_change_hull ADD COLUMN id serial;
+ALTER TABLE census_block_change_hull ADD PRIMARY KEY (id);
