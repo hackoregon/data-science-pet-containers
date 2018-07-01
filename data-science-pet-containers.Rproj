@@ -16,4 +16,7 @@ AutoAppendNewline: Yes
 StripTrailingWhitespace: Yes
 LineEndingConversion: Native
 
+BuildType: Website
+WebsitePath: docs
+
 QuitChildProcessesOnExit: Yes
