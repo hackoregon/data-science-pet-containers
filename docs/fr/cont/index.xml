@@ -2,31 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Contenu on Documentation du thème Hugo Learn</title>
-    <link>/localhost:1313/test/fr/cont/</link>
+    <link>/data-science-pet-containers/fr/cont/</link>
     <description>Recent content in Contenu on Documentation du thème Hugo Learn</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
     <lastBuildDate>Sat, 09 Apr 2016 16:50:16 +0200</lastBuildDate>
     
-	<atom:link href="/localhost:1313/test/fr/cont/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/data-science-pet-containers/fr/cont/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Archétypes</title>
-      <link>/localhost:1313/test/fr/cont/archetypes/</link>
+      <link>/data-science-pet-containers/fr/cont/archetypes/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/localhost:1313/test/fr/cont/archetypes/</guid>
+      <guid>/data-science-pet-containers/fr/cont/archetypes/</guid>
       <description>En utilisant la commande: hugo new [chemin vers nouveau contenu], vous pouvez créer un nouveau fichier avec la date et le title automatiquement initialisé. Même si c&amp;rsquo;est une fonctionnalité intéressante, elle reste limitée pour les auteurs actifs qui ont besoin de mieux : les archetypes.
 Les archétypes sont des squelettes de pages préconfigurées avec un Front Matter par défaut. Merci de vous référer à la documentation pour connaitre les différents types de page.</description>
     </item>
     
     <item>
       <title>Syntaxe Markdown</title>
-      <link>/localhost:1313/test/fr/cont/markdown/</link>
+      <link>/data-science-pet-containers/fr/cont/markdown/</link>
       <pubDate>Sat, 09 Apr 2016 16:50:16 +0200</pubDate>
       
-      <guid>/localhost:1313/test/fr/cont/markdown/</guid>
+      <guid>/data-science-pet-containers/fr/cont/markdown/</guid>
       <description>Cette page est une copie de la doc de Grav. La seule différence porte sur la personalisation des images (taille, ajout de classes CSS&amp;hellip;) Pour des raisons évidentes, cette page n&amp;rsquo;a pas été traduites en français 😁
  Let&amp;rsquo;s face it: Writing content for the Web is tiresome. WYSIWYG editors help alleviate this task, but they generally result in horrible code, or worse yet, ugly web pages.
 Markdown is a better way to write HTML, without all the complexities and ugliness that usually accompanies it.</description>
@@ -34,10 +34,10 @@ Markdown is a better way to write HTML, without all the complexities and uglines
     
     <item>
       <title>Raccourcis du menu</title>
-      <link>/localhost:1313/test/fr/cont/menushortcuts/</link>
+      <link>/data-science-pet-containers/fr/cont/menushortcuts/</link>
       <pubDate>Sat, 09 Apr 2016 16:50:16 +0200</pubDate>
       
-      <guid>/localhost:1313/test/fr/cont/menushortcuts/</guid>
+      <guid>/data-science-pet-containers/fr/cont/menushortcuts/</guid>
       <description>Vous pouvez définir des entrées ou raccourcis supplémentaires dans le menu sans avoir besoin d&amp;rsquo;être lié à un contenu du site.
 Configuration simple Editez le fichier de configuration config.toml et ajoutez une entrée [[menu.shortcuts]] pour chaque lien que vous voulez ajouter.
 Exemple pour ce site:

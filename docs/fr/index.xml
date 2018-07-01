@@ -2,31 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Learn Theme for Hugo on Documentation du thème Hugo Learn</title>
-    <link>/localhost:1313/test/fr/</link>
+    <link>/data-science-pet-containers/fr/</link>
     <description>Recent content in Learn Theme for Hugo on Documentation du thème Hugo Learn</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
     <lastBuildDate>Sat, 09 Apr 2016 16:50:16 +0200</lastBuildDate>
     
-	<atom:link href="/localhost:1313/test/fr/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/data-science-pet-containers/fr/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Archétypes</title>
-      <link>/localhost:1313/test/fr/cont/archetypes/</link>
+      <link>/data-science-pet-containers/fr/cont/archetypes/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/localhost:1313/test/fr/cont/archetypes/</guid>
+      <guid>/data-science-pet-containers/fr/cont/archetypes/</guid>
       <description>En utilisant la commande: hugo new [chemin vers nouveau contenu], vous pouvez créer un nouveau fichier avec la date et le title automatiquement initialisé. Même si c&amp;rsquo;est une fonctionnalité intéressante, elle reste limitée pour les auteurs actifs qui ont besoin de mieux : les archetypes.
 Les archétypes sont des squelettes de pages préconfigurées avec un Front Matter par défaut. Merci de vous référer à la documentation pour connaitre les différents types de page.</description>
     </item>
     
     <item>
       <title>Syntaxe Markdown</title>
-      <link>/localhost:1313/test/fr/cont/markdown/</link>
+      <link>/data-science-pet-containers/fr/cont/markdown/</link>
       <pubDate>Sat, 09 Apr 2016 16:50:16 +0200</pubDate>
       
-      <guid>/localhost:1313/test/fr/cont/markdown/</guid>
+      <guid>/data-science-pet-containers/fr/cont/markdown/</guid>
       <description>Cette page est une copie de la doc de Grav. La seule différence porte sur la personalisation des images (taille, ajout de classes CSS&amp;hellip;) Pour des raisons évidentes, cette page n&amp;rsquo;a pas été traduites en français 😁
  Let&amp;rsquo;s face it: Writing content for the Web is tiresome. WYSIWYG editors help alleviate this task, but they generally result in horrible code, or worse yet, ugly web pages.
 Markdown is a better way to write HTML, without all the complexities and ugliness that usually accompanies it.</description>
@@ -34,10 +34,10 @@ Markdown is a better way to write HTML, without all the complexities and uglines
     
     <item>
       <title>Raccourcis du menu</title>
-      <link>/localhost:1313/test/fr/cont/menushortcuts/</link>
+      <link>/data-science-pet-containers/fr/cont/menushortcuts/</link>
       <pubDate>Sat, 09 Apr 2016 16:50:16 +0200</pubDate>
       
-      <guid>/localhost:1313/test/fr/cont/menushortcuts/</guid>
+      <guid>/data-science-pet-containers/fr/cont/menushortcuts/</guid>
       <description>Vous pouvez définir des entrées ou raccourcis supplémentaires dans le menu sans avoir besoin d&amp;rsquo;être lié à un contenu du site.
 Configuration simple Editez le fichier de configuration config.toml et ajoutez une entrée [[menu.shortcuts]] pour chaque lien que vous voulez ajouter.
 Exemple pour ce site:
@@ -46,10 +46,10 @@ Exemple pour ce site:
     
     <item>
       <title>Attachments (Pièces jointes)</title>
-      <link>/localhost:1313/test/fr/shortcodes/attachments/</link>
+      <link>/data-science-pet-containers/fr/shortcodes/attachments/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/localhost:1313/test/fr/shortcodes/attachments/</guid>
+      <guid>/data-science-pet-containers/fr/shortcodes/attachments/</guid>
       <description>Le shortcode Attachments affiche une liste de pièces jointes d&amp;rsquo;une page.
   Pièces jointes   BachGavotteShort.mp3  (357 ko)   Carroll_AliceAuPaysDesMerveilles.pdf  (175 ko)   adivorciarsetoca00cape.pdf  (361 ko)   hugo.png  (17 ko)   movieselectricsheep-flock-244-32500-2.mp4  (340 ko)    Utilisation Le shortcode affiche la liste de fichiers trouvés dans un dossier spécifique A l&amp;rsquo;heure actuelle, il supporte deux implémentations
  Si votre page est un fichier Markdown, les pièces jointes doivent être placée dans un dossier nommé comme le nom de la page et suffixé par .</description>
@@ -57,40 +57,40 @@ Exemple pour ce site:
     
     <item>
       <title>Button (Bouton)</title>
-      <link>/localhost:1313/test/fr/shortcodes/button/</link>
+      <link>/data-science-pet-containers/fr/shortcodes/button/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/localhost:1313/test/fr/shortcodes/button/</guid>
+      <guid>/data-science-pet-containers/fr/shortcodes/button/</guid>
       <description>Le shortcode button est simplement un bouton cliquable avec une icône optionnelle.
 {{% button href=&amp;quot;https://getgrav.org/&amp;quot; %}}Téléchargez Grav{{% /button %}} {{% button href=&amp;quot;https://getgrav.org/&amp;quot; icon=&amp;quot;fa fa-download&amp;quot; %}}Téléchargez Grav avec icône{{% /button %}} {{% button href=&amp;quot;https://getgrav.org/&amp;quot; icon=&amp;quot;fa fa-download&amp;quot; icon-position=&amp;quot;right&amp;quot; %}}Téléchargez Grav avec icône à droite{{% /button %}}  Téléchargez Grav   Téléchargez Grav avec icône  Téléchargez Grav avec icône à droite   </description>
     </item>
     
     <item>
       <title>Crédits</title>
-      <link>/localhost:1313/test/fr/credits/</link>
+      <link>/data-science-pet-containers/fr/credits/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/localhost:1313/test/fr/credits/</guid>
+      <guid>/data-science-pet-containers/fr/credits/</guid>
       <description>Contributeurs Merci à eux  de rendre le monde Open Source meilleur !
 .ghContributors{ display:flex; flex-flow: wrap; align-content: flex-start } .ghContributors  div{ width: 50% ; display: inline-flex; margin-bottom: 5px; } .ghContributors  div label{ padding-left: 4px ; } .ghContributors  div span{ font-size: x-small; padding-left: 4px ; }   @matcornic 133 commits   @lierdakil 16 commits   @gwleclerc 13 commits   @mdavids 9 commits   @Xipas 5 commits   @mreithub 3 commits   @denisvm 2 commits   @gpospelov 2 commits   @lfalin 2 commits   @alexvargasbenamburg 1 commits   @MrMoio 1 commits   @giuliov 1 commits   @haitch 1 commits   @RealOrangeOne 1 commits   @tanzaho 1 commits   @JohnBlood 1 commits   @kamilchm 1 commits   @sykesm 1 commits   @ripienaar 1 commits   @EnigmaCurry 1 commits   @Thiht 1 commits   @kamar535 1 commits   @proelbtn 1 commits   Et un grand merci à @vjeantet pour son travail sur docdock, un fork de hugo-theme-learn.</description>
     </item>
     
     <item>
       <title>Expand</title>
-      <link>/localhost:1313/test/fr/shortcodes/expand/</link>
+      <link>/data-science-pet-containers/fr/shortcodes/expand/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/localhost:1313/test/fr/shortcodes/expand/</guid>
+      <guid>/data-science-pet-containers/fr/shortcodes/expand/</guid>
       <description>Le shortcode Expand affiche une section de texte qui se plie et se déplie. Ci-dessous un exemple.
   Déroulez-moi...   Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</description>
     </item>
     
     <item>
       <title>Mermaid</title>
-      <link>/localhost:1313/test/fr/shortcodes/mermaid/</link>
+      <link>/data-science-pet-containers/fr/shortcodes/mermaid/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/localhost:1313/test/fr/shortcodes/mermaid/</guid>
+      <guid>/data-science-pet-containers/fr/shortcodes/mermaid/</guid>
       <description>Mermaid est une bibliothèque Javascript qui permet de générer des diagrammes (séquence, état, gantt, etc.) à partir de texte, dans le même style que Markdown.
 Insérer votre code Mermaid dans un shortcode mermaid et c&amp;rsquo;est tout.
 Flowchart example {{&amp;lt;mermaid align=&amp;quot;left&amp;quot;&amp;gt;}} graph LR; A[Bords droits] --&amp;gt;|Lien texte| B(Bords arondis) B --&amp;gt; C{Décision} C --&amp;gt;|Un| D[Résultat un] C --&amp;gt;|Deux| E[Résultat deux] {{&amp;lt; /mermaid &amp;gt;}}  renders as
@@ -99,10 +99,10 @@ graph LR; A[Bords droits] --|Lien texte| B(Bords arondis) B -- C{Décision} C --
     
     <item>
       <title>Notice</title>
-      <link>/localhost:1313/test/fr/shortcodes/notice/</link>
+      <link>/data-science-pet-containers/fr/shortcodes/notice/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/localhost:1313/test/fr/shortcodes/notice/</guid>
+      <guid>/data-science-pet-containers/fr/shortcodes/notice/</guid>
       <description>Le shortcode Notice permet d&amp;rsquo;afficher 4 types de message pour vous aider à structurer votre contenu.
 Note {{% notice note %}} Une notice de type *note* {{% /notice %}}  s&amp;rsquo;affiche comme
 Une notice de type note
@@ -113,10 +113,10 @@ Une notice de type info
     
     <item>
       <title>Site param</title>
-      <link>/localhost:1313/test/fr/shortcodes/siteparam/</link>
+      <link>/data-science-pet-containers/fr/shortcodes/siteparam/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/localhost:1313/test/fr/shortcodes/siteparam/</guid>
+      <guid>/data-science-pet-containers/fr/shortcodes/siteparam/</guid>
       <description>Les shortcode siteparam est utilisé pour vous aider à afficher des valeurs provenant des paramètres globaux du site.
 Par exemple, dans ce site, le paramètre editURL est utilisé dans le fichier config.toml
 [params] editURL = &amp;quot;https://github.com/matcornic/hugo-theme-learn/edit/master/exampleSite/content/&amp;quot;  Utilisez le shortcode siteparam pour affichier sa valeur.
@@ -126,28 +126,28 @@ Valeur de editURL : https://github.com/matcornic/hugo-theme-learn/edit/master/ex
     
     <item>
       <title>Vitrine</title>
-      <link>/localhost:1313/test/fr/vitrine/</link>
+      <link>/data-science-pet-containers/fr/vitrine/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/localhost:1313/test/fr/vitrine/</guid>
+      <guid>/data-science-pet-containers/fr/vitrine/</guid>
       <description> TAT par OVH </description>
     </item>
     
     <item>
       <title>page test</title>
-      <link>/localhost:1313/test/fr/shortcodes/children/test/</link>
+      <link>/data-science-pet-containers/fr/shortcodes/children/test/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/localhost:1313/test/fr/shortcodes/children/test/</guid>
+      <guid>/data-science-pet-containers/fr/shortcodes/children/test/</guid>
       <description>Ceci est une page de demo</description>
     </item>
     
     <item>
       <title>page test 3</title>
-      <link>/localhost:1313/test/fr/shortcodes/children/children-2/test3/</link>
+      <link>/data-science-pet-containers/fr/shortcodes/children/children-2/test3/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/localhost:1313/test/fr/shortcodes/children/children-2/test3/</guid>
+      <guid>/data-science-pet-containers/fr/shortcodes/children/children-2/test3/</guid>
       <description>Ceci est une page de demo test 3</description>
     </item>
     

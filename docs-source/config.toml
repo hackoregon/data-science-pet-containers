@@ -1,4 +1,4 @@
-baseURL = "localhost:1313/test"
+baseURL = "https://hackoregon.github.io/data-science-pet-containers"
 languageCode = "en-US"
 defaultContentLanguage = "en"
 

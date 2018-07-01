@@ -2,14 +2,14 @@
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	
 	<sitemap>
-	   	<loc>/localhost:1313/test/en/sitemap.xml</loc>
+	   	<loc>/data-science-pet-containers/en/sitemap.xml</loc>
 		
 	   	<lastmod>2016-04-09T16:50:16+02:00</lastmod>
 		
 	</sitemap>
 	
 	<sitemap>
-	   	<loc>/localhost:1313/test/fr/sitemap.xml</loc>
+	   	<loc>/data-science-pet-containers/fr/sitemap.xml</loc>
 		
 	   	<lastmod>2016-04-09T16:50:16+02:00</lastmod>
 		

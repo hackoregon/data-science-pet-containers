@@ -3,525 +3,525 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/localhost:1313/test/en/cont/pages/</loc>
+    <loc>/data-science-pet-containers/en/cont/pages/</loc>
     <lastmod>2016-04-09T16:50:16+02:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="fr"
-                href="/localhost:1313/test/fr/cont/pages/"
+                href="/data-science-pet-containers/fr/cont/pages/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/localhost:1313/test/en/cont/pages/"
+                href="/data-science-pet-containers/en/cont/pages/"
                 />
   </url>
   
   <url>
-    <loc>/localhost:1313/test/en/basics/</loc>
+    <loc>/data-science-pet-containers/en/basics/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="fr"
-                href="/localhost:1313/test/fr/basics/"
+                href="/data-science-pet-containers/fr/basics/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/localhost:1313/test/en/basics/"
+                href="/data-science-pet-containers/en/basics/"
                 />
   </url>
   
   <url>
-    <loc>/localhost:1313/test/en/cont/archetypes/</loc>
+    <loc>/data-science-pet-containers/en/cont/archetypes/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="fr"
-                href="/localhost:1313/test/fr/cont/archetypes/"
+                href="/data-science-pet-containers/fr/cont/archetypes/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/localhost:1313/test/en/cont/archetypes/"
+                href="/data-science-pet-containers/en/cont/archetypes/"
                 />
   </url>
   
   <url>
-    <loc>/localhost:1313/test/en/cont/</loc>
+    <loc>/data-science-pet-containers/en/cont/</loc>
     <lastmod>2016-04-09T16:50:16+02:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="fr"
-                href="/localhost:1313/test/fr/cont/"
+                href="/data-science-pet-containers/fr/cont/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/localhost:1313/test/en/cont/"
+                href="/data-science-pet-containers/en/cont/"
                 />
   </url>
   
   <url>
-    <loc>/localhost:1313/test/en/basics/requirements/</loc>
+    <loc>/data-science-pet-containers/en/basics/requirements/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="fr"
-                href="/localhost:1313/test/fr/basics/requirements/"
+                href="/data-science-pet-containers/fr/basics/requirements/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/localhost:1313/test/en/basics/requirements/"
+                href="/data-science-pet-containers/en/basics/requirements/"
                 />
   </url>
   
   <url>
-    <loc>/localhost:1313/test/en/cont/markdown/</loc>
+    <loc>/data-science-pet-containers/en/cont/markdown/</loc>
     <lastmod>2016-04-09T16:50:16+02:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="fr"
-                href="/localhost:1313/test/fr/cont/markdown/"
+                href="/data-science-pet-containers/fr/cont/markdown/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/localhost:1313/test/en/cont/markdown/"
+                href="/data-science-pet-containers/en/cont/markdown/"
                 />
   </url>
   
   <url>
-    <loc>/localhost:1313/test/en/shortcodes/</loc>
+    <loc>/data-science-pet-containers/en/shortcodes/</loc>
     <lastmod>2016-04-09T16:50:16+02:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="fr"
-                href="/localhost:1313/test/fr/shortcodes/"
+                href="/data-science-pet-containers/fr/shortcodes/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/localhost:1313/test/en/shortcodes/"
+                href="/data-science-pet-containers/en/shortcodes/"
                 />
   </url>
   
   <url>
-    <loc>/localhost:1313/test/en/basics/installation/</loc>
+    <loc>/data-science-pet-containers/en/basics/installation/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="fr"
-                href="/localhost:1313/test/fr/basics/installation/"
+                href="/data-science-pet-containers/fr/basics/installation/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/localhost:1313/test/en/basics/installation/"
+                href="/data-science-pet-containers/en/basics/installation/"
                 />
   </url>
   
   <url>
-    <loc>/localhost:1313/test/en/basics/configuration/</loc>
+    <loc>/data-science-pet-containers/en/basics/configuration/</loc>
     <lastmod>2016-04-09T16:50:16+02:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="fr"
-                href="/localhost:1313/test/fr/basics/configuration/"
+                href="/data-science-pet-containers/fr/basics/configuration/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/localhost:1313/test/en/basics/configuration/"
+                href="/data-science-pet-containers/en/basics/configuration/"
                 />
   </url>
   
   <url>
-    <loc>/localhost:1313/test/en/cont/menushortcuts/</loc>
+    <loc>/data-science-pet-containers/en/cont/menushortcuts/</loc>
     <lastmod>2016-04-09T16:50:16+02:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="fr"
-                href="/localhost:1313/test/fr/cont/menushortcuts/"
+                href="/data-science-pet-containers/fr/cont/menushortcuts/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/localhost:1313/test/en/cont/menushortcuts/"
+                href="/data-science-pet-containers/en/cont/menushortcuts/"
                 />
   </url>
   
   <url>
-    <loc>/localhost:1313/test/en/basics/style-customization/</loc>
+    <loc>/data-science-pet-containers/en/basics/style-customization/</loc>
     <lastmod>2016-04-09T16:50:16+02:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="fr"
-                href="/localhost:1313/test/fr/basics/style-customization/"
+                href="/data-science-pet-containers/fr/basics/style-customization/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/localhost:1313/test/en/basics/style-customization/"
+                href="/data-science-pet-containers/en/basics/style-customization/"
                 />
   </url>
   
   <url>
-    <loc>/localhost:1313/test/en/cont/i18n/</loc>
+    <loc>/data-science-pet-containers/en/cont/i18n/</loc>
     <lastmod>2016-04-09T16:50:16+02:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="fr"
-                href="/localhost:1313/test/fr/cont/i18n/"
+                href="/data-science-pet-containers/fr/cont/i18n/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/localhost:1313/test/en/cont/i18n/"
+                href="/data-science-pet-containers/en/cont/i18n/"
                 />
   </url>
   
   <url>
-    <loc>/localhost:1313/test/en/post/2015-07-23-r-rmarkdown/</loc>
+    <loc>/data-science-pet-containers/en/post/2015-07-23-r-rmarkdown/</loc>
     <lastmod>2015-07-23T21:13:14-05:00</lastmod>
   </url>
   
   <url>
-    <loc>/localhost:1313/test/en/shortcodes/attachments/</loc>
+    <loc>/data-science-pet-containers/en/shortcodes/attachments/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="fr"
-                href="/localhost:1313/test/fr/shortcodes/attachments/"
+                href="/data-science-pet-containers/fr/shortcodes/attachments/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/localhost:1313/test/en/shortcodes/attachments/"
+                href="/data-science-pet-containers/en/shortcodes/attachments/"
                 />
   </url>
   
   <url>
-    <loc>/localhost:1313/test/en/shortcodes/button/</loc>
+    <loc>/data-science-pet-containers/en/shortcodes/button/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="fr"
-                href="/localhost:1313/test/fr/shortcodes/button/"
+                href="/data-science-pet-containers/fr/shortcodes/button/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/localhost:1313/test/en/shortcodes/button/"
+                href="/data-science-pet-containers/en/shortcodes/button/"
                 />
   </url>
   
   <url>
-    <loc>/localhost:1313/test/en/categories/</loc>
+    <loc>/data-science-pet-containers/en/categories/</loc>
     <priority>0</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="fr"
-                href="/localhost:1313/test/fr/categories/"
+                href="/data-science-pet-containers/fr/categories/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/localhost:1313/test/en/categories/"
+                href="/data-science-pet-containers/en/categories/"
                 />
   </url>
   
   <url>
-    <loc>/localhost:1313/test/en/shortcodes/children/</loc>
+    <loc>/data-science-pet-containers/en/shortcodes/children/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="fr"
-                href="/localhost:1313/test/fr/shortcodes/children/"
+                href="/data-science-pet-containers/fr/shortcodes/children/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/localhost:1313/test/en/shortcodes/children/"
+                href="/data-science-pet-containers/en/shortcodes/children/"
                 />
   </url>
   
   <url>
-    <loc>/localhost:1313/test/en/credits/</loc>
+    <loc>/data-science-pet-containers/en/credits/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="fr"
-                href="/localhost:1313/test/fr/credits/"
+                href="/data-science-pet-containers/fr/credits/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/localhost:1313/test/en/credits/"
+                href="/data-science-pet-containers/en/credits/"
                 />
   </url>
   
   <url>
-    <loc>/localhost:1313/test/en/shortcodes/expand/</loc>
+    <loc>/data-science-pet-containers/en/shortcodes/expand/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="fr"
-                href="/localhost:1313/test/fr/shortcodes/expand/"
+                href="/data-science-pet-containers/fr/shortcodes/expand/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/localhost:1313/test/en/shortcodes/expand/"
+                href="/data-science-pet-containers/en/shortcodes/expand/"
                 />
   </url>
   
   <url>
-    <loc>/localhost:1313/test/en/</loc>
+    <loc>/data-science-pet-containers/en/</loc>
     <lastmod>2016-04-09T16:50:16+02:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="fr"
-                href="/localhost:1313/test/fr/"
+                href="/data-science-pet-containers/fr/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/localhost:1313/test/en/"
+                href="/data-science-pet-containers/en/"
                 />
   </url>
   
   <url>
-    <loc>/localhost:1313/test/en/shortcodes/mermaid/</loc>
+    <loc>/data-science-pet-containers/en/shortcodes/mermaid/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="fr"
-                href="/localhost:1313/test/fr/shortcodes/mermaid/"
+                href="/data-science-pet-containers/fr/shortcodes/mermaid/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/localhost:1313/test/en/shortcodes/mermaid/"
+                href="/data-science-pet-containers/en/shortcodes/mermaid/"
                 />
   </url>
   
   <url>
-    <loc>/localhost:1313/test/en/shortcodes/notice/</loc>
+    <loc>/data-science-pet-containers/en/shortcodes/notice/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="fr"
-                href="/localhost:1313/test/fr/shortcodes/notice/"
+                href="/data-science-pet-containers/fr/shortcodes/notice/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/localhost:1313/test/en/shortcodes/notice/"
+                href="/data-science-pet-containers/en/shortcodes/notice/"
                 />
   </url>
   
   <url>
-    <loc>/localhost:1313/test/en/tags/plot/</loc>
-    <lastmod>2015-07-23T21:13:14-05:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/localhost:1313/test/en/post/</loc>
+    <loc>/data-science-pet-containers/en/tags/plot/</loc>
     <lastmod>2015-07-23T21:13:14-05:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/localhost:1313/test/en/categories/r/</loc>
+    <loc>/data-science-pet-containers/en/post/</loc>
     <lastmod>2015-07-23T21:13:14-05:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/localhost:1313/test/en/tags/r-markdown/</loc>
+    <loc>/data-science-pet-containers/en/categories/r/</loc>
     <lastmod>2015-07-23T21:13:14-05:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/localhost:1313/test/en/tags/regression/</loc>
+    <loc>/data-science-pet-containers/en/tags/r-markdown/</loc>
     <lastmod>2015-07-23T21:13:14-05:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/localhost:1313/test/en/showcase/</loc>
+    <loc>/data-science-pet-containers/en/tags/regression/</loc>
+    <lastmod>2015-07-23T21:13:14-05:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/data-science-pet-containers/en/showcase/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="fr"
-                href="/localhost:1313/test/fr/vitrine/"
+                href="/data-science-pet-containers/fr/vitrine/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/localhost:1313/test/en/showcase/"
+                href="/data-science-pet-containers/en/showcase/"
                 />
   </url>
   
   <url>
-    <loc>/localhost:1313/test/en/shortcodes/siteparam/</loc>
+    <loc>/data-science-pet-containers/en/shortcodes/siteparam/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="fr"
-                href="/localhost:1313/test/fr/shortcodes/siteparam/"
+                href="/data-science-pet-containers/fr/shortcodes/siteparam/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/localhost:1313/test/en/shortcodes/siteparam/"
+                href="/data-science-pet-containers/en/shortcodes/siteparam/"
                 />
   </url>
   
   <url>
-    <loc>/localhost:1313/test/en/tags/</loc>
+    <loc>/data-science-pet-containers/en/tags/</loc>
     <lastmod>2015-07-23T21:13:14-05:00</lastmod>
     <priority>0</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="fr"
-                href="/localhost:1313/test/fr/tags/"
+                href="/data-science-pet-containers/fr/tags/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/localhost:1313/test/en/tags/"
+                href="/data-science-pet-containers/en/tags/"
                 />
   </url>
   
   <url>
-    <loc>/localhost:1313/test/en/shortcodes/children/children-1/</loc>
+    <loc>/data-science-pet-containers/en/shortcodes/children/children-1/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="fr"
-                href="/localhost:1313/test/fr/shortcodes/children/children-1/"
+                href="/data-science-pet-containers/fr/shortcodes/children/children-1/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/localhost:1313/test/en/shortcodes/children/children-1/"
+                href="/data-science-pet-containers/en/shortcodes/children/children-1/"
                 />
   </url>
   
   <url>
-    <loc>/localhost:1313/test/en/shortcodes/children/children-1/children-1-1/</loc>
+    <loc>/data-science-pet-containers/en/shortcodes/children/children-1/children-1-1/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="fr"
-                href="/localhost:1313/test/fr/shortcodes/children/children-1/children-1-1/"
+                href="/data-science-pet-containers/fr/shortcodes/children/children-1/children-1-1/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/localhost:1313/test/en/shortcodes/children/children-1/children-1-1/"
+                href="/data-science-pet-containers/en/shortcodes/children/children-1/children-1-1/"
                 />
   </url>
   
   <url>
-    <loc>/localhost:1313/test/en/shortcodes/children/children-1/children-1-1/children-1-1-1/</loc>
+    <loc>/data-science-pet-containers/en/shortcodes/children/children-1/children-1-1/children-1-1-1/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="fr"
-                href="/localhost:1313/test/fr/shortcodes/children/children-1/children-1-1/children-1-1-1/"
+                href="/data-science-pet-containers/fr/shortcodes/children/children-1/children-1-1/children-1-1-1/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/localhost:1313/test/en/shortcodes/children/children-1/children-1-1/children-1-1-1/"
+                href="/data-science-pet-containers/en/shortcodes/children/children-1/children-1-1/children-1-1-1/"
                 />
   </url>
   
   <url>
-    <loc>/localhost:1313/test/en/shortcodes/children/children-1/children-1-1/children-1-1-1/children-1-1-1-1/</loc>
+    <loc>/data-science-pet-containers/en/shortcodes/children/children-1/children-1-1/children-1-1-1/children-1-1-1-1/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="fr"
-                href="/localhost:1313/test/fr/shortcodes/children/children-1/children-1-1/children-1-1-1/children-1-1-1-1/"
+                href="/data-science-pet-containers/fr/shortcodes/children/children-1/children-1-1/children-1-1-1/children-1-1-1-1/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/localhost:1313/test/en/shortcodes/children/children-1/children-1-1/children-1-1-1/children-1-1-1-1/"
+                href="/data-science-pet-containers/en/shortcodes/children/children-1/children-1-1/children-1-1-1/children-1-1-1-1/"
                 />
   </url>
   
   <url>
-    <loc>/localhost:1313/test/en/shortcodes/children/children-1/children-1-1/children-1-1-1/children-1-1-1-1/children-1-1-1-1-1/</loc>
+    <loc>/data-science-pet-containers/en/shortcodes/children/children-1/children-1-1/children-1-1-1/children-1-1-1-1/children-1-1-1-1-1/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="fr"
-                href="/localhost:1313/test/fr/shortcodes/children/children-1/children-1-1/children-1-1-1/children-1-1-1-1/children-1-1-1-1-1/"
+                href="/data-science-pet-containers/fr/shortcodes/children/children-1/children-1-1/children-1-1-1/children-1-1-1-1/children-1-1-1-1-1/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/localhost:1313/test/en/shortcodes/children/children-1/children-1-1/children-1-1-1/children-1-1-1-1/children-1-1-1-1-1/"
+                href="/data-science-pet-containers/en/shortcodes/children/children-1/children-1-1/children-1-1-1/children-1-1-1-1/children-1-1-1-1-1/"
                 />
   </url>
   
   <url>
-    <loc>/localhost:1313/test/en/shortcodes/children/children-2/</loc>
+    <loc>/data-science-pet-containers/en/shortcodes/children/children-2/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="fr"
-                href="/localhost:1313/test/fr/shortcodes/children/children-2/"
+                href="/data-science-pet-containers/fr/shortcodes/children/children-2/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/localhost:1313/test/en/shortcodes/children/children-2/"
+                href="/data-science-pet-containers/en/shortcodes/children/children-2/"
                 />
   </url>
   
   <url>
-    <loc>/localhost:1313/test/en/shortcodes/children/children-3/</loc>
+    <loc>/data-science-pet-containers/en/shortcodes/children/children-3/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="fr"
-                href="/localhost:1313/test/fr/shortcodes/children/children-3/"
+                href="/data-science-pet-containers/fr/shortcodes/children/children-3/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/localhost:1313/test/en/shortcodes/children/children-3/"
+                href="/data-science-pet-containers/en/shortcodes/children/children-3/"
                 />
   </url>
   
   <url>
-    <loc>/localhost:1313/test/en/shortcodes/children/children-4/</loc>
+    <loc>/data-science-pet-containers/en/shortcodes/children/children-4/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="fr"
-                href="/localhost:1313/test/fr/shortcodes/children/children-4/"
+                href="/data-science-pet-containers/fr/shortcodes/children/children-4/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/localhost:1313/test/en/shortcodes/children/children-4/"
+                href="/data-science-pet-containers/en/shortcodes/children/children-4/"
                 />
   </url>
   
   <url>
-    <loc>/localhost:1313/test/en/shortcodes/children/test/</loc>
+    <loc>/data-science-pet-containers/en/shortcodes/children/test/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="fr"
-                href="/localhost:1313/test/fr/shortcodes/children/test/"
+                href="/data-science-pet-containers/fr/shortcodes/children/test/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/localhost:1313/test/en/shortcodes/children/test/"
+                href="/data-science-pet-containers/en/shortcodes/children/test/"
                 />
   </url>
   
   <url>
-    <loc>/localhost:1313/test/en/shortcodes/children/children-2/test3/</loc>
+    <loc>/data-science-pet-containers/en/shortcodes/children/children-2/test3/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="fr"
-                href="/localhost:1313/test/fr/shortcodes/children/children-2/test3/"
+                href="/data-science-pet-containers/fr/shortcodes/children/children-2/test3/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/localhost:1313/test/en/shortcodes/children/children-2/test3/"
+                href="/data-science-pet-containers/en/shortcodes/children/children-2/test3/"
                 />
   </url>
   

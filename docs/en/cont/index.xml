@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Content on Documentation for Hugo Learn Theme</title>
-    <link>/localhost:1313/test/en/cont/</link>
+    <link>/data-science-pet-containers/en/cont/</link>
     <description>Recent content in Content on Documentation for Hugo Learn Theme</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
     <lastBuildDate>Sat, 09 Apr 2016 16:50:16 +0200</lastBuildDate>
     
-	<atom:link href="/localhost:1313/test/en/cont/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/data-science-pet-containers/en/cont/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Archetypes</title>
-      <link>/localhost:1313/test/en/cont/archetypes/</link>
+      <link>/data-science-pet-containers/en/cont/archetypes/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/localhost:1313/test/en/cont/archetypes/</guid>
+      <guid>/data-science-pet-containers/en/cont/archetypes/</guid>
       <description>Using the command: hugo new [relative new content path], you can start a content file with the date and title automatically set. While this is a welcome feature, active writers need more : archetypes.
 It is pre-configured skeleton pages with default front matter. Please refer to the documentation for types of page to understand the differences.
 Chapter To create a Chapter page, run the following commands
@@ -25,10 +25,10 @@ hugo new --kind chapter &amp;lt;name&amp;gt;/_index.</description>
     
     <item>
       <title>Markdown syntax</title>
-      <link>/localhost:1313/test/en/cont/markdown/</link>
+      <link>/data-science-pet-containers/en/cont/markdown/</link>
       <pubDate>Sat, 09 Apr 2016 16:50:16 +0200</pubDate>
       
-      <guid>/localhost:1313/test/en/cont/markdown/</guid>
+      <guid>/data-science-pet-containers/en/cont/markdown/</guid>
       <description>This page is a shameful copy of the great Grav original page. Only difference is information about image customization (resizing, add CSS classes&amp;hellip;)
  Let&amp;rsquo;s face it: Writing content for the Web is tiresome. WYSIWYG editors help alleviate this task, but they generally result in horrible code, or worse yet, ugly web pages.
 Markdown is a better way to write HTML, without all the complexities and ugliness that usually accompanies it.</description>
@@ -36,10 +36,10 @@ Markdown is a better way to write HTML, without all the complexities and uglines
     
     <item>
       <title>Menu extra shortcuts</title>
-      <link>/localhost:1313/test/en/cont/menushortcuts/</link>
+      <link>/data-science-pet-containers/en/cont/menushortcuts/</link>
       <pubDate>Sat, 09 Apr 2016 16:50:16 +0200</pubDate>
       
-      <guid>/localhost:1313/test/en/cont/menushortcuts/</guid>
+      <guid>/data-science-pet-containers/en/cont/menushortcuts/</guid>
       <description>You can define additional menu entries or shortcuts in the navigation menu without any link to content.
 Basic configuration Edit the website configuration config.toml and add a [[menu.shortcuts]] entry for each link your want to add.
 Example from the current website:

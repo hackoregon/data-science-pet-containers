@@ -2,13 +2,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Personnalisation du style on Documentation du thème Hugo Learn</title>
-    <link>/localhost:1313/test/fr/basics/style-customization/</link>
+    <link>/data-science-pet-containers/fr/basics/style-customization/</link>
     <description>Recent content in Personnalisation du style on Documentation du thème Hugo Learn</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
     <lastBuildDate>Sat, 09 Apr 2016 16:50:16 +0200</lastBuildDate>
     
-	<atom:link href="/localhost:1313/test/fr/basics/style-customization/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/data-science-pet-containers/fr/basics/style-customization/index.xml" rel="self" type="application/rss+xml" />
     
     
   </channel>
