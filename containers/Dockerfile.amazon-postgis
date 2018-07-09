@@ -109,7 +109,7 @@ RUN wget -q http://download.osgeo.org/gdal/${GDAL_VERSION}/gdal-${GDAL_VERSION}.
   && tar xf gdal-${GDAL_VERSION}.tar.gz \
   && cd /usr/local/src/gdal-${GDAL_VERSION} \
   && ./configure > ../gdal.configure \
-  && make > /dev/null \
+  && make -j 4 > /dev/null \
   && make install > /dev/null \
   && ldconfig
 
