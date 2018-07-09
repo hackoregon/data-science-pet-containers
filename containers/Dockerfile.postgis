@@ -3,7 +3,7 @@ LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
 
 # Repo for up-to-date R
 COPY cran.list.stretch /etc/apt/sources.list.d/cran.list
-RUN apt-key adv --keyserver keys.gnupg.net --recv-key 'E19F5F87128899B192B1A2C2AD5F960A256A04AF'
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-key 'E19F5F87128899B192B1A2C2AD5F960A256A04AF'
 
 # Backports
 COPY backports.list.stretch /etc/apt/sources.list.d/backports.list
