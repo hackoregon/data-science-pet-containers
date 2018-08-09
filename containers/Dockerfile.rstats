@@ -25,6 +25,7 @@ RUN apt-get update \
     libcairo2-dev \
     libgdal-dev \
     libjq-dev \
+    libmagick++-dev \
     libpq-dev \
     libpqxx-dev \
     libprotobuf-dev \
