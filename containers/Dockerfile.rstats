@@ -39,6 +39,7 @@ RUN apt-get update \
     protobuf-compiler \
     unixodbc-dev \
     vim-nox \
+    virtualenvwrapper \
     wget \
   && apt-get clean \
   && apt-file update \
