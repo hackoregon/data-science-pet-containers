@@ -38,6 +38,8 @@ RUN apt-get update \
     openssh-client \
     postgresql-client-9.6 \
     protobuf-compiler \
+    python-pip \
+    python3-pip \
     unixodbc-dev \
     vim-nox \
     virtualenvwrapper \
