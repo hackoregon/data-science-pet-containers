@@ -1,9 +1,10 @@
 #! /usr/bin/env Rscript
 
 install.packages(c(
+  "ggmap",
   "RPostgres",
   "sf",
+  "sp",
   "stplanr",
-  "tidyverse",
   "tmap"),
   quiet = TRUE)
