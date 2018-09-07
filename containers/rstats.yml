@@ -7,6 +7,8 @@ services:
     image: rstats
     ports:
       - 8787:8787
+    environment:
+      - RSTUDIO_PASSWORD
   postgis:
     build:
       context: .

@@ -75,14 +75,18 @@ The container and its filesystem will persist across host reboots. To destroy th
         * `HOST_POSTGRES_PORT`: If you have PostgreSQL installed on your host, it's probably listening on port 5432. The `postgis` service listens on port 5432 inside the Docker network, so you'll need to map its port 5432 to another port. Set `HOST_POSTGRES_PORT` to the value you want; 5439 is what I use.
         * `POSTGRES_PASSWORD`: To connect to the `postgis` service, you need a user name and a password. The user name is the default, the database superuser `postgres`. Docker will set the password for the `postgres` user in the `postgis` service to the value of `POSTGRES_PASSWORD`.
         * `DB_USERS_TO_CREATE`: When the `postgis` service first comes up, the users in this list are created in the database. If you're working on the 2018 Hack Oregon projects, there's no reason to change this.
+        * `RSTUDIO_PASSWORD`: To log in to the `rstats` service, you need a user name and a password. The user name is the default, `rstudio`. Docker will set the password for the `rstudio` user in the `rstats` service to the value of `RSTUDIO_PASSWORD`.
 
 Here's `sample.env`:
 
 ```
 # postgis container
 HOST_POSTGRES_PORT=5439
-POSTGRES_PASSWORD=some.string.you.can.remember.that.nobody.else.can.guess
+POSTGRES_PASSWORD=sit-down-c0mic
 DB_USERS_TO_CREATE=disaster-resilience housing-affordability local-elections transportation-systems urban-development
+
+# rstats container
+RSTUDIO_PASSWORD=ir0ny.deficient
 ```
 
 ### About `DB_USERS_TO_CREATE`
@@ -287,7 +291,7 @@ Follow the instructions to set up the project.
 ## Rstats
 This service is based on the `rocker/rstudio` image from Docker Hub: <https://hub.docker.com/r/rocker/rstudio/>. I've added header files so that the R packages `RPostgres`, `odbc`, `sf` and `devtools` will install from source, but there are no R packages on the image besides those that ship with `rocker/rstudio`.
 
-Browse to `localhost:8787`. The user name and password are both `rstudio`. ***Note that if you're using Firefox, you may have to adjust a setting to use the terminal feature.***
+Browse to `localhost:8787`. The user name is `rstudio`. The password is the value of `RSTUDIO_PASSWORD` you set in the `.env` file. ***Note that if you're using Firefox, you may have to adjust a setting to use the terminal feature.***
 
 * Go to `Tools -> Global Options -> Terminal`.
 * For Firefox, uncheck the `Connect with WebSockets` option.
