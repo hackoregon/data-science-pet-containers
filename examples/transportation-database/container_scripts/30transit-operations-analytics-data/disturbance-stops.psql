@@ -1,0 +1,61 @@
+\connect transportation-systems-main transportation-systems
+SET search_path TO transit_operations_analytics_data, public;
+
+\echo creating disturbance_stops
+DROP TABLE IF EXISTS disturbance_stops;
+CREATE TABLE disturbance_stops (
+  opd_date_x date,
+  vehicle_id_x integer,
+  event_no_x integer,
+  event_no_course integer,
+  meters_x integer,
+  act_dep_time_x integer,
+  nom_dep_time_x integer,
+  nom_end_time integer,
+  act_end_time integer,
+  line_id integer,
+  course_id integer,
+  trip_id integer,
+  pattern_id integer,
+  pattern_direction text,
+  trip_type integer,
+  pattern_quality integer,
+  block_id integer,
+  passenger_data integer,
+  time_grp_id integer,
+  trip_code integer,
+  driver_id integer,
+  data_source integer,
+  is_additional_trip text,
+  trip_role text,
+  trip_subrole text,
+  event_no_y integer,
+  event_no_trip integer,
+  event_no_prev integer,
+  opd_date_y date,
+  vehicle_id_y integer,
+  meters_y integer,
+  act_arr_time integer,
+  act_dep_time_y integer,
+  point_id integer,
+  stop_pos integer,
+  distance_to_next integer,
+  doors_opening integer,
+  positioning_method integer,
+  stop_type integer,
+  gps_longitude double precision,
+  gps_latitude double precision,
+  door_open_time integer,
+  point_role text,
+  point_action text,
+  plan_status text,
+  time_diff integer,
+  time_diff_min double precision
+);
+\copy disturbance_stops from '~/Raw/disturbance_stops.csv' with csv header
+ALTER TABLE disturbance_stops OWNER TO "transportation-systems";
+ALTER TABLE disturbance_stops ADD COLUMN id serial;
+ALTER TABLE disturbance_stops ADD PRIMARY KEY (id);
+ALTER TABLE disturbance_stops ADD COLUMN geom_4326 geometry;
+UPDATE disturbance_stops
+  SET geom_4326 = ST_SetSRID(ST_MakePoint(gps_longitude, gps_latitude), 4326);

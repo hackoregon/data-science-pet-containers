@@ -32,12 +32,13 @@ if [ "$#" -eq 0 ]; then
   pushd 29trimet-stop-events
   nice -10 ./create-tables
   popd
+  pushd 30transit-operations-analytics-data
+  nice -10 ./create-tables
+  popd
 fi
 
 # vacuum analyze
 echo "Vacuuming the database"
 psql -U ${DBOWNER} -d ${PGDATABASE} -c "VACUUM ANALYZE;"
-echo "Check for correct ownership"
-psql -U ${DBOWNER} -d ${PGDATABASE} -f check-owners.psql
 echo "Creating database backup"
 ./90create-database-backup.bash

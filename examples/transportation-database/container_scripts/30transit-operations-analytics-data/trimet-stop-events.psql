@@ -1,0 +1,61 @@
+\connect transportation-systems-main transportation-systems
+
+DROP SCHEMA IF EXISTS transit_operations_analytics_data CASCADE;
+CREATE SCHEMA transit_operations_analytics_data;
+SET search_path TO transit_operations_analytics_data, public;
+
+\echo creating trimet_stop_events
+CREATE TABLE trimet_stop_events (
+  service_date date,
+  vehicle_number integer,
+  train integer,
+  route_number integer,
+  direction integer,
+  trip_number integer,
+  service_key text,
+  stop_time integer,
+  arrive_time integer,
+  seconds_late integer,
+  leave_time integer,
+  dwell integer,
+  location_id integer,
+  door integer,
+  lift integer,
+  ons integer,
+  offs integer,
+  estimated_load integer,
+  train_mileage double precision,
+  from_location integer,
+  mileage_there double precision,
+  left_there integer,
+  travel_miles double precision,
+  travel_seconds integer,
+  x_coordinate double precision,
+  y_coordinate double precision
+);
+\copy trimet_stop_events from '~/Raw/m2017_09_trimet_stop_events.csv' with csv header
+\copy trimet_stop_events from '~/Raw/m2017_10_trimet_stop_events.csv' with csv header
+\copy trimet_stop_events from '~/Raw/m2017_11_trimet_stop_events.csv' with csv header
+\copy trimet_stop_events from '~/Raw/m2018_04_trimet_stop_events.csv' with csv header
+\copy trimet_stop_events from '~/Raw/m2018_05_trimet_stop_events.csv' with csv header
+ALTER TABLE trimet_stop_events OWNER TO "transportation-systems";
+ALTER TABLE trimet_stop_events ADD COLUMN geom_point_4326 geometry;
+UPDATE trimet_stop_events
+  SET geom_point_4326 = ST_Transform(ST_SetSRID(ST_MakePoint(x_coordinate, y_coordinate), 2913), 4326);
+ALTER TABLE trimet_stop_events ADD COLUMN id serial;
+ALTER TABLE trimet_stop_events ADD PRIMARY KEY (id);
+
+-- create the detail table for time of day analysis
+\echo creating total_ons_by_hour
+CREATE TABLE total_ons_by_hour AS
+  SELECT service_date, service_key,
+    to_char(service_date, 'D') AS weekday,
+    round(arrive_time / 3600.0, 1) AS hour_of_day,
+    sum(ons) AS total_ons
+  FROM trimet_stop_events
+  GROUP BY service_date, service_key, hour_of_day
+  ORDER BY service_date, hour_of_day
+;
+ALTER TABLE total_ons_by_hour OWNER TO "transportation-systems";
+ALTER TABLE total_ons_by_hour ADD COLUMN id serial;
+ALTER TABLE total_ons_by_hour ADD PRIMARY KEY (id);
