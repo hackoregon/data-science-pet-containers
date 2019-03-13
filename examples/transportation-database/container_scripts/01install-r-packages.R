@@ -7,21 +7,24 @@ if (as.list(Sys.info())$user != 'root') {
   }
 }
 
-install.packages(
-  c(
-    "devtools",
-    "Hmisc",
-    "sf",
-    "snakecase",
-    "stplanr",
-    "sp",
-    "tidytext",
-    "tidyverse",
-    "tmap",
-    "topicmodels",
-    "RPostgres"
-  ),
-  quiet = TRUE,
-  lib = Sys.getenv('R_LIBS_USER'),
-  repos = "https://cran.rstudio.com/"
-)
+if (!require(stplanr)) {
+  install.packages(
+    c(
+      "codetools",
+      "devtools",
+      "Hmisc",
+      "sf",
+      "snakecase",
+      "stplanr",
+      "sp",
+      "tidytext",
+      "tidyverse",
+      "tmap",
+      "topicmodels",
+      "RPostgres"
+    ),
+    quiet = TRUE,
+    lib = Sys.getenv('R_LIBS_USER'),
+    repos = "https://cran.rstudio.com/"
+  )
+}
