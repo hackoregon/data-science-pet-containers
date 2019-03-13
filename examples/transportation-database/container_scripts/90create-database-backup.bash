@@ -6,7 +6,7 @@ export PGDATABASE=transportation-systems-main
 
 echo "Creating the database backup"
 pushd ~/Raw/
-pg_dump --format=p --verbose --clean --create --if-exists --dbname=${PGDATABASE} \
+pg_dump --format=p --clean --create --if-exists --dbname=${PGDATABASE} \
   | gzip -c > ${PGDATABASE}.sql.gz
 
 echo "Decompression check"
