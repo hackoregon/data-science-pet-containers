@@ -3,10 +3,7 @@ title: "Getting Started with PostgreSQL"
 author: "M. Edward (Ed) Borasky"
 date: "`r Sys.Date()`"
 bibliography: bibliography.bib
-output: 
-  beamer_presentation:
-    theme: EastLansing
-    slide_level: 2
+output: powerpoint_presentation
 ---
 # Introduction: PostgreSQL in Context
 
