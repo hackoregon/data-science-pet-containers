@@ -17,7 +17,7 @@ if [ ! -e /usr/bin/osm2pgrouting ]
 then
   cd /usr/local/src
   rm -fr osm2pgrouting-*
-  curl -Ls https://github.com/pgRouting/osm2pgrouting/archive/v2.3.4.tar.gz | tar xzf -
+  curl -Ls https://github.com/pgRouting/osm2pgrouting/archive/v2.3.6.tar.gz | tar xzf -
   cd osm2pgrouting-*
   cmake -H. -Bbuild
   cd build

@@ -1,4 +1,4 @@
-FROM postgres:9.6
+FROM postgres:11
 LABEL maintainer="M. Edward (Ed) Borasky <znmeb@znmeb.net>"
 
 # Repo for up-to-date R
@@ -12,12 +12,12 @@ COPY backports.list.stretch /etc/apt/sources.list.d/backports.list
 RUN apt-get update \
   && apt-get install -qqy --no-install-recommends \
     postgis \
-    postgresql-9.6-postgis-2.4 \
-    postgresql-9.6-postgis-2.4-scripts \
-    postgresql-9.6-pgrouting \
-    postgresql-9.6-mysql-fdw \
-    postgresql-9.6-ogr-fdw \
-    postgresql-9.6-python3-multicorn \
+    postgresql-11-postgis-2.5 \
+    postgresql-11-postgis-2.5-scripts \
+    postgresql-11-pgrouting \
+    postgresql-11-mysql-fdw \
+    postgresql-11-ogr-fdw \
+    postgresql-11-python3-multicorn \
     awscli \
     bash-completion \
     build-essential \
@@ -55,7 +55,7 @@ RUN apt-get update \
     nano \
     openssh-client \
     p7zip \
-    postgresql-client-9.6 \
+    postgresql-client-11 \
     proj-bin \
     protobuf-compiler \
     python-dev \
