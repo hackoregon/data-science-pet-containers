@@ -125,8 +125,8 @@ if __name__ == '__main__':
     # Second source URL.
     url = 'http://transitfeeds.com/p/trimet/43?p='
 
-    # I cheated and knew there were 21 pages.
-    for page in [str(i+1) for i in range(21)]:
+    # I cheated and knew there were 25 pages.
+    for page in [str(i+1) for i in range(25)]:
         # Add the page number into the url
         this_url = url + page
 
