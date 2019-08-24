@@ -3,7 +3,7 @@ title: "TriMet Service Area Desire Lines"
 author: "M. Edward (Ed) Borasky"
 date: '2018-06-09'
 output:
-  html_document:
+  github_document:
     df_print: paged
 bibliography: desire_lines.bib
 ---
@@ -147,7 +147,7 @@ gc()
 We make interactive maps with `qtm` from `tmap` [@Tennekes2018]. This is a Leaflet map. The "+" and "-" buttons can be used to zoom in and out and you can drag the map around with the mouse to center it before zooming in. You can select the basemap and whether to display plotted features with the "layers" button below the "-". If you click on one of the circles you'll see the number of workers.
 
 ```{r}
-tmap_mode("view")
+tmap_mode("plot")
 qtm(
   metro_rac %>% 
     filter(year == 2015) %>% 
